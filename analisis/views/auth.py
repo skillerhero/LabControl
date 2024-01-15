@@ -35,20 +35,31 @@ def register():
 
 @auth.route('/login',methods=['GET','POST'])
 def login():
-    if request.method=='POST':
-        username=request.form.get('username')
-        password=request.form.get('password')
+    print("inicio")
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-        error=""
-        user=User.query.filter_by(username=username).first()
-        if user==None:
-            error+="nombre de usuario incorrecto"
-        elif not check_password_hash(user.password,password):
-            error+="contraseña incorrecta"
-        if error=='':
-            session.clear()
-            session['user_id']=user.user_id
+        print("username: ", username)
+        print("password: ", password)
+
+        error = ""
+        user = User.query.filter_by(user_username=username).first()
+        print("user: ", user)
+        if user is None:
+            error += "nombre de usuario incorrecto"
+        elif not check_password_hash(user.user_password, password):
+            error += "contraseña incorrecta"
+        if error != '':
+            print(error)
             flash(error)
+        else:
+            session.clear()
+            session['user_id'] = user.user_id
+            print("No hay errores, redirigiendo...")
+            return redirect(url_for('index'))  # Replace 'index' with the actual name of your main route
+
+    print("fin")
     return render_template('auth/login.html')
 @auth.before_app_request
 def load_logged_in_user():
