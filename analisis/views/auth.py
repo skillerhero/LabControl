@@ -57,7 +57,7 @@ def login():
             session.clear()
             session['user_id'] = user.user_id
             print("No hay errores, redirigiendo...")
-            return redirect(url_for('index'))  # Replace 'index' with the actual name of your main route
+            return render_template('home.html')
 
     print("fin")
     return render_template('auth/login.html')
