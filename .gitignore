@@ -1,0 +1,32 @@
+# Ignora archivos de configuración del sistema
+.env
+.venv
+*.env
+*.venv
+
+# Ignora archivos generados por Python
+__pycache__
+__pycache__/
+*.pyc
+datos/
+static/
+# Ignora archivos de base de datos
+db.sqlite3
+
+# Ignora archivos de log
+logs/*
+
+# Ignora archivos de cobertura de código
+.coverage
+
+# Ignora archivos temporales
+tmp/*
+
+# Ignora archivos de caché
+cache/*
+
+# Ignora archivos de minificación
+static/minified/*
+
+# Ignora archivos de desarrollo
+.idea/*

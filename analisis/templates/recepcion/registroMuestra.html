@@ -1,0 +1,192 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center" >
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Registro de muestra</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{{url_for('recepcion.registrarMuestra')}}">
+            <h6 class="heading-small text-muted mb-4">Información de la muestra</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="folio">Folio</label>
+                    <input type="text" id="folio" name="folio" class="form-control" placeholder="Folio" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="Nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="apellido_paterno">Apellido Paterno</label>
+                    <input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" placeholder="Apellido Paterno" value="">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="apellido_materno">Apellido Materno</label>
+                    <input type="text" id="apellido_materno" name="apellido_materno" class="form-control" placeholder="Apellido Materno" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="edad">Edad</label>
+                    <input type="text" id="edad" name="edad" class="form-control" placeholder="Edad" value="">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="nacimeinto_fec">Fecha de Nacimiento</label>
+                    <input type="date" id="nacimeinto_fec" name="nacimeinto_fec" class="form-control" placeholder="aaaa-mm-dd" value="">
+                  </div>
+                </div>
+              </div>              
+              <div class="row">                
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="calle">Calle</label>
+                    <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle">
+                  </div>
+                </div>
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label class="form-control-label" for="num_ext">Número Exterior</label>
+                    <input type="text" id="num_ext" name="num_ext" class="form-control" placeholder="# Exterior">
+                  </div>
+                </div>
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label class="form-control-label" for="num_int">Número Interior</label>
+                    <input type="text" id="num_int" name="num_int" class="form-control" placeholder="# Interior">
+                  </div>
+                </div>
+              </div>
+              <div class="row" >
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="colonia">Colonia</label>
+                    <input type="text" id="colonia" name="colonia" class="form-control" placeholder="Colonia">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="tel">Teléfono</label>
+                    <input type="text" id="tel" name="tel" class="form-control" placeholder="Teléfono">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">E-mail</label>
+                    <input type="text" id="email" name="email" class="form-control" placeholder="E-mail">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label for="descuento">Descuento</label>
+                    <select class="form-control" id="descuento" name="descuento">
+                      {% for descuento in descuentos%}
+                        <option value="{{descuento.des_id}}"> {{descuento.des_nombre}} - {{descuento.des_descuento}}%</option>
+                      {%endfor%}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="horas_ayuno">Horas de ayuno</label>
+                    <input type="number" id="horas_ayuno" name="horas_ayuno" class="form-control" placeholder="Horas de ayuno">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="hora_recolecion">Horas de recolección</label>
+                    <input type="time" id="hora_recoleccion" name="hora_recoleccion" class="form-control" placeholder="Hora de recoleccion">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <div class="pl-lg-4">
+              <div class="form-group">
+                <label class="form-control-label">Alimentos consumidos durante la última comida</label>
+                <textarea rows="3" class="form-control" name="alimentos" id="alimentos" placeholder="Alimentos consumidos durante la última comida"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">Enfermedades</label>
+                <textarea rows="3" class="form-control" name="enfermedades" id="enfermedades" placeholder="Enfermedades"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">Medicamentos</label>
+                <textarea rows="3" class="form-control" name="medicamentos" id="medicamentos" placeholder="Medicamentos"></textarea>
+              </div>              
+              <div class="form-group">
+                <label class="form-control-label" for="rubrica">Rúbrica</label>
+                <input type="text" id="rubrica" name="rubrica" class="form-control" placeholder="Rúbrica" value="">
+              </div>
+            </div>
+            <hr class="my-4" />
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group" id="paraquejale">
+                    <label class="form-control-label" for="analisis">Analisis</label>
+                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis"  tabindex="-1" aria-hidden="true">
+                      {% for analis in analisis%}
+                            <option value="{{analis.ana_id}}"> {{analis.ana_nombre}} - ${{analis.ana_costo}}</option>
+                      {%endfor%}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <input type="submit" class="btn btn-primary my-4" value="Registrar Muestra">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include "includes/footer.html" %}
+
+</div>
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %} 
+<script>
+$(document).ready(function() {
+  $('#analisis').select2({dropdownParent: $('#paraquejale')});
+  $('#analisis2').select2();
+});
+</script>
+{% endblock javascripts %}
