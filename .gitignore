@@ -5,11 +5,9 @@
 *.venv
 
 # Ignora archivos generados por Python
-__pycache__
-__pycache__/
+__pycache__/*
 *.pyc
-datos/
-static/
+
 # Ignora archivos de base de datos
 db.sqlite3
 
