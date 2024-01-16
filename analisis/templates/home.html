@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Bienvenido a mi aplicación Flask</h1>
-    <p>Esta es la página de inicio.</p>
+    {% extends 'layouts/base-fullscreen.html' %}
+
+
+    {% block title %} Esta es la página de inicio. {% endblock title %}
+
+
+    {% block stylesheets %}{% endblock stylesheets %}
+
+    {% block content %}
+    {% endblock content %}
+
+    <!-- Specific JS goes HERE --> 
+    {% block javascripts %}{% endblock javascripts %}
+    
 </body>
 </html>
