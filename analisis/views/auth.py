@@ -45,7 +45,9 @@ def login():
 
         error = ""
         user = User.query.filter_by(user_username=username).first()
+        
         print("user: ", user)
+        print("area: ", user.user_area_id_fk)
         if user is None:
             error += "nombre de usuario incorrecto"
         elif not check_password_hash(user.user_password, password):
@@ -57,7 +59,7 @@ def login():
             session.clear()
             session['user_id'] = user.user_id
             print("No hay errores, redirigiendo...")
-            return render_template('home.html')
+            return redirect('../home')
 
     print("fin")
     return render_template('auth/login.html')
