@@ -7,9 +7,8 @@ from analisis.views.auth import auth
 def index():
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
-    return redirect('home.html')
-    # Si el usuario está autenticado, puedes renderizar la página principal aquí
-    # ...
+    print('user_id: ', session)
+    return redirect(url_for('home.index'))
 
 if __name__ == '__main__':
     app.run()

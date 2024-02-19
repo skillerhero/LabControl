@@ -1,0 +1,20 @@
+<!-- Areas/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Áreas</title>
+</head>
+<body>
+    <h1>Lista de Áreas</h1>
+    <ul>
+        {% for area in areas %}
+            <li>{{ area.area_nombre }} - {{ area.area_sta }}</li>
+            <a href="{{ url_for('areas.editar_area', area_id=area.area_id) }}">Editar</a> |
+            <a href="{{ url_for('areas.eliminar_area', area_id=area.area_id) }}">Eliminar</a>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('areas.agregar_area') }}">Agregar Área</a>
+</body>
+</html>
