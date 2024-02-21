@@ -18,4 +18,12 @@ def index():
     descuentos=Descuento.query.all()
     analisis=Analisis.query.all()
     db.session.commit()
-    return render_template('home.html',muestras=muestras,descuentos=descuentos,analisis=analisis)
+    return render_template('analistas/home.html',muestras=muestras,descuentos=descuentos,analisis=analisis)
+
+@home.route("/recepcion")
+def indexRecepcion():
+    muestras=Muestra.query.all()
+    descuentos=Descuento.query.all()
+    analisis=Analisis.query.all()
+    db.session.commit()
+    return render_template('recepcion/home.html',muestras=muestras,descuentos=descuentos,analisis=analisis)

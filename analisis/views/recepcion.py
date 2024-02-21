@@ -21,7 +21,7 @@ def index():
     descuentos=Descuento.query.all()
     analisis=Analisis.query.all()
     db.session.commit()
-    return render_template('recepcion/consulta.html',muestras=muestras,descuentos=descuentos,analisis=analisis)
+    return render_template('recepcion/home.html',muestras=muestras,descuentos=descuentos,analisis=analisis)
 
 @recepcion.route("/create",methods=['GET','POST'])
 #@login_required
@@ -59,4 +59,4 @@ def registrarMuestra():
     muestras=Muestra.query.all()
     descuentos=Descuento.query.all()
     analisis=Analisis.query.all()
-    return render_template('recepcion/registroMuestra.html',muestras=muestras,descuentos=descuentos,analisis=analisis)
+    return render_template('analisis/registroMuestra.html',muestras=muestras,descuentos=descuentos,analisis=analisis)

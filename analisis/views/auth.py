@@ -59,10 +59,14 @@ def login():
             session.clear()
             session['user_id'] = user.user_id
             print("No hay errores, redirigiendo...")
-            return redirect('../home')
 
+            if user.user_area_id_fk == 6 or user.user_area_id_fk == 7:
+                return redirect(url_for("home.indexRecepcion")) 
+            else:
+                return redirect(url_for("home.index"))
     print("fin")
     return render_template('auth/login.html')
+
 @auth.before_app_request
 def load_logged_in_user():
     user_id=session.get("user_id")
