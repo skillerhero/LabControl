@@ -13,7 +13,6 @@
             <li>{{ area.area_nombre }} - {{ area.area_sta }}</li>
             <a href="{{ url_for('areas.editar_area', area_id=area.area_id) }}">Editar</a> |
             <a href="{{ url_for('areas.eliminar_area', area_id=area.area_id) }}">Eliminar</a>
-            <a href="{{ url_for('areas.detalle_area', area_id=area.area_id) }}">Detalle</a>
         {% endfor %}
     </ul>
     <a href="{{ url_for('areas.agregar_area') }}">Agregar Área</a>

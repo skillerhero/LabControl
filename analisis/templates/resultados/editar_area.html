@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Área</title>
+</head>
+<body>
+    <h1>Editar Área</h1>
+    <form action="{{ url_for('areas.editar_area', area_id=area.area_id) }}" method="POST">
+        <label for="area_nombre">Nombre del Área:</label><br>
+        <input type="text" id="area_nombre" name="area_nombre" value="{{ area.area_nombre }}"><br>
+        <label for="area_sta">Status del Área:</label><br>
+        <input type="text" id="area_sta" name="area_sta" value="{{ area.area_sta }}"><br>
+        <button type="submit">Guardar Cambios</button>
+    </form>
+</body>
+</html>

@@ -32,6 +32,17 @@ def editar_area(area_id):
         return redirect(url_for('areas.index'))
     return render_template('areas/editar_area.html', area=area)
 
+
+@areas.route('/detalle_area/<int:area_id>', methods=['GET', 'POST'])
+def detalle_area(area_id):
+    area = Area.query.get_or_404(area_id)
+    if request.method == 'POST':
+        area.area_nombre = request.form['area_nombre']
+        area.area_sta = request.form['area_sta']
+        db.session.commit()
+        return redirect(url_for('areas.index'))
+    return render_template('areas/detalle_area.html', area=area)
+
 @areas.route('/eliminar_area/<int:area_id>')
 def eliminar_area(area_id):
     print('area a eliminar: ',area_id)
