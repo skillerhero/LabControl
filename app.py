@@ -1,7 +1,6 @@
 from analisis import app
 from flask import redirect, url_for
 from flask import session
-from analisis.views.auth import auth
 
 @app.route('/')
 def index():

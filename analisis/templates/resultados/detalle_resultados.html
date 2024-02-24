@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Resultado</title>
+</head>
+<body>
+    <h1>Detalles del Resultado</h1>
+    <p><strong>Fecha del Resultado:</strong> {{ resultado.resul_fecha }}</p>
+    <p><strong>Componente:</strong> {{ resultado.resul_componente }}</p>
+    <p><strong>Unidad:</strong> {{ resultado.resul_unidad }}</p>
+    <p><strong>Resultado:</strong> {{ resultado.resul_resultado }}</p>
+    <p><strong>Rango:</strong> {{ resultado.resul_rango }}</p>
+    <p><strong>Fuera de Rango:</strong> {{ resultado.resul_fuera_de_rango }}</p>
+    <a href="{{ url_for('resultados.index') }}">Regresar</a>
+</body>
+</html>

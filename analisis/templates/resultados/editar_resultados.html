@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Resultado</title>
+</head>
+<body>
+    <h1>Editar Resultado</h1>
+    <form action="{{ url_for('resultados.editar_resultado', resul_id=resultado.resul_id) }}" method="POST">
+        <label for="resul_fecha">Fecha del Resultado:</label><br>
+        <input type="text" id="resul_fecha" name="resul_fecha" value="{{ resultado.resul_fecha }}"><br>
+        <label for="resul_componente">Componente:</label><br>
+        <input type="text" id="resul_componente" name="resul_componente" value="{{ resultado.resul_componente }}"><br>
+        <label for="resul_unidad">Unidad:</label><br>
+        <input type="text" id="resul_unidad" name="resul_unidad" value="{{ resultado.resul_unidad }}"><br>
+        <label for="resul_resultado">Resultado:</label><br>
+        <input type="text" id="resul_resultado" name="resul_resultado" value="{{ resultado.resul_resultado }}"><br>
+        <label for="resul_rango">Rango:</label><br>
+        <input type="text" id="resul_rango" name="resul_rango" value="{{ resultado.resul_rango }}"><br>
+        <label for="resul_fuera_de_rango">Fuera de Rango:</label><br>
+        <input type="text" id="resul_fuera_de_rango" name="resul_fuera_de_rango" value="{{ resultado.resul_fuera_de_rango }}"><br>
+        <button type="submit">Guardar Cambios</button>
+    </form>
+</body>
+</html>

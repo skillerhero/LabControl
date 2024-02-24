@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar resultado</title>
+</head>
+<body>
+    <h1>Agregar resultado</h1>
+    <form action="{{ url_for('resultados.agregar_resultados') }}" method="POST">
+        <label for="resul_componente">Componente:</label><br>
+        <input type="text" id="resul_componente" name="resul_componente"><br>
+        <label for="resul_unidad">Unidad:</label><br>
+        <input type="text" id="resul_unidad" name="resul_unidad"><br>
+        <label for="resul_resultado">Resultado:</label><br>
+        <input type="text" id="resul_resultado" name="resul_resultado"><br>
+        <label for="resul_rango">Rango:</label><br>
+        <input type="text" id="resul_rango" name="resul_rango"><br>
+        <label for="resul_fuera_de_rango">Fuera de rango:</label><br>
+        <input type="checkbox" id="resul_fuera_de_rango" name="resul_fuera_de_rango" value="true">
+        <label for="resul_ana_id">Análisis:</label><br>
+        <select id="resul_ana_id" name="resul_ana_id">
+            {% for analisis in lista_de_analisis %}
+                <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }}</option>
+            {% endfor %}
+        </select><br>
+        
+        <label for="resul_mues_id">Muestra:</label><br>
+        <select id="resul_mues_id" name="resul_mues_id">
+            {% for muestra in lista_de_muestras %}
+                <option value="{{ muestra.mues_id }}">{{ muestra.mues_folio }}</option>
+            {% endfor %}
+        </select><br>
+    
+        <button type="submit">Agregar Resultado</button>
+    </form>
+</body>
+</html>
