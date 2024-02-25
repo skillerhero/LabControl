@@ -8,7 +8,7 @@ areas=Blueprint('areas',__name__,url_prefix='/areas')
 @areas.route('/')
 def index():
     areas = Area.query.all()
-    return render_template('areas/index.html', areas=areas)
+    return render_template('areas/index.html', areas=areas, segment='index')
 
 @areas.route('/agregar_area', methods=['GET', 'POST'])
 def agregar_area():
@@ -30,7 +30,7 @@ def editar_area(area_id):
         area.area_sta = request.form['area_sta']
         db.session.commit()
         return redirect(url_for('areas.index'))
-    return render_template('areas/editar_area.html', area=area)
+    return render_template('areas/editar_area.html', area=area, segment='editar_area')
 
 
 @areas.route('/detalle_area/<int:area_id>', methods=['GET', 'POST'])
@@ -41,7 +41,7 @@ def detalle_area(area_id):
         area.area_sta = request.form['area_sta']
         db.session.commit()
         return redirect(url_for('areas.index'))
-    return render_template('areas/detalle_area.html', area=area)
+    return render_template('areas/detalle_area.html', area=area, segment='detalle_area')
 
 @areas.route('/eliminar_area/<int:area_id>')
 def eliminar_area(area_id):

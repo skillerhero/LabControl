@@ -1,18 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Área</title>
-</head>
-<body>
-    <h1>Editar Área</h1>
-    <form action="{{ url_for('areas.editar_area', area_id=area.area_id) }}" method="POST">
-        <label for="area_nombre">Nombre del Área:</label><br>
-        <input type="text" id="area_nombre" name="area_nombre" value="{{ area.area_nombre }}"><br>
-        <label for="area_sta">Status del Área:</label><br>
-        <input type="text" id="area_sta" name="area_sta" value="{{ area.area_sta }}"><br>
-        <button type="submit">Guardar Cambios</button>
-    </form>
-</body>
-</html>
+{% extends 'layouts/base.html' %}
+
+{% block title %} Editar Área {% endblock title %}
+
+{% block content %}
+  <!-- Header -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h1 class="text-white">Editar Área</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card">
+          <!-- Card body -->
+          <div class="card-body">
+            <form action="{{ url_for('areas.editar_area', area_id=area.area_id) }}" method="POST">
+              <div class="form-group">
+                <label for="area_nombre">Nombre del Área:</label>
+                <input type="text" class="form-control" id="area_nombre" name="area_nombre" value="{{ area.area_nombre }}">
+              </div>
+              <div class="form-group">
+                <label for="area_sta">Status del Área:</label>
+                <input type="text" class="form-control" id="area_sta" name="area_sta" value="{{ area.area_sta }}">
+              </div>
+              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
