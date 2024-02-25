@@ -26,7 +26,8 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="folio">Folio</label>
-                    <input type="text" id="folio" name="folio" class="form-control" placeholder="Folio" value="">
+                    <input type="text" id="folio" name="folio" class="form-control" placeholder="Folio" required>
+                    <div class="invalid-feedback">Por favor ingresa un folio válido.</div>
                   </div>
                 </div>
               </div>
@@ -34,7 +35,8 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="Nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" value="">
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required pattern="[A-Za-z\s]+">
+                    <div class="invalid-feedback">Por favor ingresa un nombre válido (solo letras).</div>
                   </div>
                 </div>
               </div>
@@ -42,13 +44,15 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="apellido_paterno">Apellido Paterno</label>
-                    <input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" placeholder="Apellido Paterno" value="">
+                    <input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" placeholder="Apellido Paterno" required pattern="[A-Za-z\s]+">
+                        <div class="invalid-feedback">Por favor ingresa un apellido paterno válido (solo letras).</div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="apellido_materno">Apellido Materno</label>
-                    <input type="text" id="apellido_materno" name="apellido_materno" class="form-control" placeholder="Apellido Materno" value="">
+                    <input type="text" id="apellido_materno" name="apellido_materno" class="form-control" placeholder="Apellido Materno" required pattern="[A-Za-z\s]+">
+                        <div class="invalid-feedback">Por favor ingresa un apellido materno válido (solo letras).</div>
                   </div>
                 </div>
               </div>
@@ -57,13 +61,15 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="edad">Edad</label>
-                    <input type="text" id="edad" name="edad" class="form-control" placeholder="Edad" value="">
+                    <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" required>
+                        <div class="invalid-feedback">Por favor ingresa una edad válida (solo números).</div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="nacimeinto_fec">Fecha de Nacimiento</label>
-                    <input type="date" id="nacimeinto_fec" name="nacimeinto_fec" class="form-control" placeholder="aaaa-mm-dd" value="">
+                    <input type="date" id="nacimeinto_fec" name="nacimeinto_fec" class="form-control" placeholder="aaaa-mm-dd" required>
+                        <div class="invalid-feedback">Por favor ingresa una fecha de nacimiento válida.</div>
                   </div>
                 </div>
               </div>              
@@ -71,13 +77,15 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="calle">Calle</label>
-                    <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle">
+                    <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle" required>
+                    <div class="invalid-feedback">Por favor ingresa una calle válida.</div>
                   </div>
                 </div>
                 <div class="col-lg-2">
                   <div class="form-group">
                     <label class="form-control-label" for="num_ext">Número Exterior</label>
-                    <input type="text" id="num_ext" name="num_ext" class="form-control" placeholder="# Exterior">
+                    <input type="text" id="num_ext" name="num_ext" class="form-control" placeholder="# Exterior" required>
+                    <div class="invalid-feedback">Por favor ingresa un número exterior válido.</div>
                   </div>
                 </div>
                 <div class="col-lg-2">
@@ -86,24 +94,28 @@
                     <input type="text" id="num_int" name="num_int" class="form-control" placeholder="# Interior">
                   </div>
                 </div>
+                </div>
               </div>
               <div class="row" >
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="colonia">Colonia</label>
-                    <input type="text" id="colonia" name="colonia" class="form-control" placeholder="Colonia">
+                    <input type="text" id="colonia" name="colonia" class="form-control" placeholder="Colonia" required>
+                        <div class="invalid-feedback">Por favor ingresa una colonia válida.</div>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="tel">Teléfono</label>
-                    <input type="text" id="tel" name="tel" class="form-control" placeholder="Teléfono">
+                    <input type="tel" id="tel" name="tel" class="form-control" placeholder="Teléfono" required pattern="[0-9]{10}">
+                        <div class="invalid-feedback">Por favor ingresa un número de teléfono válido.</div>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="email">E-mail</label>
-                    <input type="text" id="email" name="email" class="form-control" placeholder="E-mail">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                        <div class="invalid-feedback">Por favor ingresa un correo electrónico válido.</div>
                   </div>
                 </div>
               </div>
@@ -157,12 +169,13 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group" id="paraquejale">
-                    <label class="form-control-label" for="analisis">Analisis</label>
-                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis"  tabindex="-1" aria-hidden="true">
-                      {% for analis in analisis%}
-                            <option value="{{analis.ana_id}}"> {{analis.ana_nombre}} - ${{analis.ana_costo}}</option>
-                      {%endfor%}
-                    </select>
+                    <label class="form-control-label" for="analisis">Análisis</label>
+                            <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true" required>
+                                {% for analisis in analisis %}
+                                    <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }} - ${{ analisis.ana_costo }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="invalid-feedback">Por favor selecciona al menos un análisis.</div>
                   </div>
                 </div>
               </div>
