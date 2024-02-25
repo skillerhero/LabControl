@@ -27,7 +27,7 @@
         
         <label for="resul_mues_id">Muestra:</label><br>
         <select id="resul_mues_id" name="resul_mues_id">
-            {% for muestra in lista_de_muestras %}
+            {% for muestra in muestras %}
                 <option value="{{ muestra.mues_id }}">{{ muestra.mues_folio }}</option>
             {% endfor %}
         </select><br>

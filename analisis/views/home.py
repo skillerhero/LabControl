@@ -14,7 +14,6 @@ def get_user(id):
 
 @home.route("/")
 def index():
-    muestras=Muestra.query.all()
     descuentos=Descuento.query.all()
     analisis=Analisis.query.all()
     db.session.commit()
@@ -22,7 +21,6 @@ def index():
 
 @home.route("/recepcion")
 def indexRecepcion():
-    muestras=Muestra.query.all()
     descuentos=Descuento.query.all()
     analisis=Analisis.query.all()
     db.session.commit()
