@@ -32,7 +32,17 @@
                 <label for="area_sta">Status del Área:</label>
                 <input type="text" class="form-control" id="area_sta" name="area_sta" value="{{ area.area_sta }}">
               </div>
-              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+              
+              <div class="row">
+                <div class="col">
+                    <a href="{{ url_for('areas.index') }}" class="btn btn-primary">Regresar</a>
+                </div>
+                <div class="col text-right">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </div>
+              
+              
             </form>
           </div>
         </div>
