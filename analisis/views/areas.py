@@ -20,7 +20,7 @@ def agregar_area():
         db.session.commit()
         print('area agregada con exito')
         return redirect(url_for('areas.index'))
-    return render_template('areas/agregar_area.html')
+    return render_template('areas/agregar_area.html', segment='agregar_area')
 
 @areas.route('/editar_area/<int:area_id>', methods=['GET', 'POST'])
 def editar_area(area_id):
