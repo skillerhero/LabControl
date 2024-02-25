@@ -25,12 +25,18 @@
             {% endfor %}
         </select><br>
         
-        <label for="resul_mues_id">Muestra:</label><br>
+        <label for="resul_mues_id">Muestra:</label>
+        
+        <br>
+
         <select id="resul_mues_id" name="resul_mues_id">
             {% for muestra in muestras %}
-                <option value="{{ muestra.mues_id }}">{{ muestra.mues_folio }}</option>
+                <option value="{{ muestra.mues_id }}">{{ muestra.mues_nombre }}</option>
             {% endfor %}
-        </select><br>
+        </select>
+        
+        
+        <br>
     
         <button type="submit">Agregar Resultado</button>
     </form>

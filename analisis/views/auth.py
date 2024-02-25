@@ -58,6 +58,7 @@ def login():
         else:
             session.clear()
             session['user_id'] = user.user_id
+            session['user_area_id_fk'] = user.user_area_id_fk
             print("No hay errores, redirigiendo...")
 
             if user.user_area_id_fk == 6 or user.user_area_id_fk == 7:

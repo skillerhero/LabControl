@@ -1,18 +1,20 @@
-# Importaciones necesarias
 from flask import render_template, request, redirect, url_for
 from analisis import db
 from flask import render_template,Blueprint
 from analisis.models.resultado import Resultado
 from datetime import datetime 
+from analisis.models.muestra import Muestra
 resultados=Blueprint('resultados',__name__,url_prefix='/resultados')
 
 @resultados.route('/')
 def index():
     resultados = Resultado.query.all()
-    return render_template('resultados/index.html', resultados=resultados)
+    muestras=Muestra.query.all()
+    return render_template('resultados/index.html', resultados=resultados,muestras=muestras)
 
 @resultados.route('/agregar_resultados', methods=['GET', 'POST'])
 def agregar_resultados():
+    muestras=Muestra.query.all()
     if request.method == 'POST':
         resul_fecha = datetime.now()  
         resul_componente = request.form.get('resul_componente')
@@ -28,9 +30,9 @@ def agregar_resultados():
         db.session.add(nuevo_resultado)
         db.session.commit()
         print('Resultado agregado con éxito')
-        return redirect(url_for('resultados.index'))
-    
-    return render_template('resultados/agregar_resultados.html')
+        return redirect(url_for('resultados.index'),muestras=muestras)
+    print("Muestras agregar resultados: ", muestras)
+    return render_template('resultados/agregar_resultados.html',muestras=muestras)
 
 @resultados.route('/editar_resultados/<int:resul_id>', methods=['GET', 'POST'])
 def editar_resultados(resul_id):
@@ -45,7 +47,9 @@ def editar_resultados(resul_id):
         
         db.session.commit()
         return redirect(url_for('resultados.index'))
-    return render_template('resultados/editar_resultados.html', resultado=resultado)
+    muestras=Muestra.query.all()
+    print("Muestras editar resultados: ", muestras)
+    return render_template('resultados/editar_resultados.html', resultado=resultado,muestras=muestras)
 
 @resultados.route('/eliminar_resultados/<int:resul_id>')
 def eliminar_resultados(resul_id):
@@ -54,4 +58,6 @@ def eliminar_resultados(resul_id):
     db.session.delete(resultado)
     db.session.commit()
     print('resultado eliminado con éxito')
-    return redirect(url_for('resultados.index'))
+    muestras=Muestra.query.all()
+    print("Muestras eliminar resultados: ", muestras)
+    return redirect(url_for('resultados.index'),muestras=muestras)
