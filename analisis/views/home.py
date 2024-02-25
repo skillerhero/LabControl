@@ -28,4 +28,5 @@ def indexRecepcion():
     analisis=Analisis.query.all()
     db.session.commit()
     print("muestras recepcion: ", muestras)
-    return render_template('recepcion/home.html',muestras=muestras,descuentos=descuentos,analisis=analisis)
+    segment = 'recepcion'  # Define el valor de segment
+    return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, segment='index')
