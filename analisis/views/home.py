@@ -19,7 +19,7 @@ def index():
     db.session.commit()
 
     print("muestras index: ", muestras)
-    return render_template('analistas/home.html',muestras=muestras,descuentos=descuentos,analisis=analisis)
+    return render_template('analistas/home.html',muestras=muestras,descuentos=descuentos,analisis=analisis, segment='index')
 
 @home.route("/recepcion")
 def indexRecepcion():
@@ -29,4 +29,4 @@ def indexRecepcion():
     db.session.commit()
     print("muestras recepcion: ", muestras)
     segment = 'recepcion'  # Define el valor de segment
-    return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, segment='index')
+    return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, segment='indexRecepcion')

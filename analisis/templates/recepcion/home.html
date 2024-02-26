@@ -30,47 +30,41 @@
           <!-- Light table -->
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
-              <thead class="thead-light">
+              <thead class="thead-light text-center">
                 <tr>
                   <th scope="col" class="sort" data-sort="name">Recepción</th>
                   <th scope="col" class="sort" data-sort="budget">Folio</th>
                   <th scope="col" class="sort" data-sort="status">Nombre</th>
                   <th scope="col">Estatus</th>
-                  <th scope="col"></th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody class="list">
                 {%for muestra in muestras%}
-                <tr scope="row">                  
-                  <td scope="col">
-                        <span class="name mb-0 text-sm">{{muestra.mues_alta_fec}}</span>
-                  </td>
-                  <td scope="col">
-                    <span class="name mb-0 text-sm">{{muestra.mues_folio}}</span>
-                  </td>
-                  <td scope="col">                   
-                    <span class="name mb-0 text-sm">{{muestra.mues_nombre}} {{muestra.muestra_apellido_paterno}} {{muestra.mues_apellido_materno}}</span>
-                  </td>
-                  <td>
-                    {% if muestra.mues_sta == 'A' %}
-                    <span class="name mb-0 text-sm">Activa</span>
-                    {% else %}
-                    <span class="name mb-0 text-sm">Terminada</span>
-                    {% endif %}
-                  </td>
-                  
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Ver detalles</a>
-                        <a class="dropdown-item" href="#">Modificar</a>
-                        <a class="dropdown-item" href="#">Eliminar</a>
-                      </div>
-                    </div>
-                  </td>
+                  <tr scope="row">                  
+                    <td scope="col" class="text-center">
+                        <span class="name mb-0 text-sm">{{ muestra.mues_alta_fec }}</span>
+                    </td>
+                    <td scope="col" class="text-center">
+                        <span class="name mb-0 text-sm">{{ muestra.mues_folio }}</span>
+                    </td>
+                    <td scope="col" class="text-center">                   
+                        <span class="name mb-0 text-sm">{{ muestra.mues_nombre }} {{ muestra.muestra_apellido_paterno }} {{ muestra.mues_apellido_materno }}</span>
+                    </td>
+                    <td class="text-center">
+                        {% if muestra.mues_sta == 'A' %}
+                            <span class="name mb-0 text-sm">Activa</span>
+                        {% else %}
+                            <span class="name mb-0 text-sm">Terminada</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Acciones">
+                            <a href="#" class="btn btn-sm btn-primary mr-2">Ver detalles</a>
+                            <a href="#" class="btn btn-sm btn-info mr-2">Modificar</a>
+                            <a href="#" class="btn btn-sm btn-danger mr-2">Eliminar</a>
+                        </div>
+                    </td>
                 </tr>
                 {%endfor%}                
               </tbody>
