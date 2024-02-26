@@ -10,7 +10,7 @@ resultados=Blueprint('resultados',__name__,url_prefix='/resultados')
 @resultados.route('/')
 def index():
     resultados = Resultado.query.all()
-    return render_template('resultados/index.html', resultados=resultados)
+    return render_template('resultados/index.html', resultados=resultados, segment='resultados')
 
 @resultados.route('/agregar_resultados', methods=['GET', 'POST'])
 def agregar_resultados():
@@ -35,7 +35,7 @@ def agregar_resultados():
         db.session.commit()
         print('Resultado agregado con éxito')
         return redirect(url_for('resultados.index'))
-    return render_template('resultados/agregar_resultados.html',muestras=muestras,lista_de_analisis=lista_de_analisis)
+    return render_template('resultados/agregar_resultados.html',muestras=muestras,lista_de_analisis=lista_de_analisis, segment='agregarresultados')
 
 @resultados.route('/editar_resultados/<int:resul_id>', methods=['GET', 'POST'])
 def editar_resultados(resul_id):
@@ -54,7 +54,7 @@ def editar_resultados(resul_id):
         db.session.commit()
         return redirect(url_for('resultados.index'))
     print("Muestras editar resultados: ", muestras)
-    return render_template('resultados/editar_resultados.html', resultado=resultado,muestras=muestras,lista_de_analisis=lista_de_analisis)
+    return render_template('resultados/editar_resultados.html', resultado=resultado,muestras=muestras,lista_de_analisis=lista_de_analisis, segment='editarresult')
 
 @resultados.route('/eliminar_resultados/<int:resul_id>')
 def eliminar_resultados(resul_id):

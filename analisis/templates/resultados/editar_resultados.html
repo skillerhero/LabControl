@@ -1,43 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Resultado</title>
-</head>
-<body>
-    <h1>Editar Resultado</h1>
-    <form action="{{ url_for('resultados.editar_resultados', resul_id=resultado.resul_id) }}" method="POST">
-        <label for="resul_fecha">Fecha del Resultado:</label><br>
-        <input type="text" id="resul_fecha" name="resul_fecha" value="{{ resultado.resul_fecha }}"><br>
-        <label for="resul_componente">Componente:</label><br>
-        <input type="text" id="resul_componente" name="resul_componente" value="{{ resultado.resul_componente }}"><br>
-        <label for="resul_unidad">Unidad:</label><br>
-        <input type="text" id="resul_unidad" name="resul_unidad" value="{{ resultado.resul_unidad }}"><br>
-        <label for="resul_resultado">Resultado:</label><br>
-        <input type="text" id="resul_resultado" name="resul_resultado" value="{{ resultado.resul_resultado }}"><br>
-        <label for="resul_rango">Rango:</label><br>
-        <input type="text" id="resul_rango" name="resul_rango" value="{{ resultado.resul_rango }}"><br>
-        <label for="resul_fuera_de_rango">Fuera de Rango:</label><br>
-        <input type="text" id="resul_fuera_de_rango" name="resul_fuera_de_rango" value="{{ resultado.resul_fuera_de_rango }}"><br>
-        <select id="resul_ana_id" name="resul_ana_id" disabled>
-            {% for analisis in lista_de_analisis %}
-                <option value="{{ analisis.ana_id }}" {% if analisis.ana_id == resultado.resul_ana_id %} selected {% endif %}>{{ analisis.ana_nombre }}</option>
-            {% endfor %}
-        </select><br>
-        
-        <label for="resul_mues_id">Muestra:</label>
-        <br>
-        
-        <select id="resul_mues_id" name="resul_mues_id" disabled>
-            {% for muestra in muestras %}
-                <option value="{{ muestra.mues_id }}" {% if muestra.mues_id == resultado.resul_mues_id %} selected {% endif %}>{{ muestra.mues_folio }}</option>
-            {% endfor %}
-        </select>
-        
-        
-        
-        <button type="submit">Guardar Cambios</button>
-    </form>
-</body>
-</html>
+{% extends 'layouts/base.html' %}
+
+{% block title %} Editar Resultado {% endblock title %}
+
+{% block content %}
+  <!-- Header -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h1 class="text-white">Editar Resultado</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card">
+          <!-- Card body -->
+          <div class="card-body">
+            <form action="{{ url_for('resultados.editar_resultados', resul_id=resultado.resul_id) }}" method="POST">
+              <div class="form-group">
+                <label for="resul_fecha" >Fecha del Resultado:</label>
+                <input type="text" class="form-control" id="resul_fecha" name="resul_fecha" value="{{ resultado.resul_fecha }}" readonly>
+              </div>
+              <div class="form-group">
+                <label for="resul_componente">Componente:</label>
+                <input type="text" class="form-control" id="resul_componente" name="resul_componente" value="{{ resultado.resul_componente }}">
+              </div>
+              <div class="form-group">
+                <label for="resul_unidad">Unidad:</label>
+                <input type="text" class="form-control" id="resul_unidad" name="resul_unidad" value="{{ resultado.resul_unidad }}">
+              </div>
+              <div class="form-group">
+                <label for="resul_resultado">Resultado:</label>
+                <input type="text" class="form-control" id="resul_resultado" name="resul_resultado" value="{{ resultado.resul_resultado }}">
+              </div>
+              <div class="form-group">
+                <label for="resul_rango">Rango:</label>
+                <input type="text" class="form-control" id="resul_rango" name="resul_rango" value="{{ resultado.resul_rango }}">
+              </div>
+              <div class="form-group">
+                <label for="resul_fuera_de_rango">Fuera de Rango:</label>
+                <input type="text" class="form-control" id="resul_fuera_de_rango" name="resul_fuera_de_rango" value="{{ resultado.resul_fuera_de_rango }}">
+              </div>
+              <div class="form-group">
+                <label for="resul_ana_id">Análisis:</label>
+                <select class="form-control" id="resul_ana_id" name="resul_ana_id">
+                  {% for analisis in lista_de_analisis %}
+                    <option value="{{ analisis.ana_id }}" {% if analisis.ana_id == resultado.resul_ana_id %} selected {% endif %}>{{ analisis.ana_nombre }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="resul_mues_id">Muestra:</label>
+                <select class="form-control" id="resul_mues_id" name="resul_mues_id">
+                  {% for muestra in muestras %}
+                    <option value="{{ muestra.mues_id }}" {% if muestra.mues_id == resultado.resul_mues_id %} selected {% endif %}>{{ muestra.mues_folio }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

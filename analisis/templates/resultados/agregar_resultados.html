@@ -1,44 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar resultado</title>
-</head>
-<body>
-    <h1>Agregar resultado</h1>
-    <form action="{{ url_for('resultados.agregar_resultados') }}" method="POST">
-        <label for="resul_componente">Componente:</label><br>
-        <input type="text" id="resul_componente" name="resul_componente"><br>
-        <label for="resul_unidad">Unidad:</label><br>
-        <input type="text" id="resul_unidad" name="resul_unidad"><br>
-        <label for="resul_resultado">Resultado:</label><br>
-        <input type="text" id="resul_resultado" name="resul_resultado"><br>
-        <label for="resul_rango">Rango:</label><br>
-        <input type="text" id="resul_rango" name="resul_rango"><br>
-        <label for="resul_fuera_de_rango">Fuera de rango:</label><br>
-        <input type="checkbox" id="resul_fuera_de_rango" name="resul_fuera_de_rango" value="true">
-        <label for="resul_ana_id">Análisis:</label><br>
-        <select id="resul_ana_id" name="resul_ana_id">
-            {% for analisis in lista_de_analisis %}
-                <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }}</option>
-            {% endfor %}
-        </select><br>
-        
-        <label for="resul_mues_id">Muestra:</label>
-        
-        <br>
+{% extends 'layouts/base.html' %}
 
-        <select id="resul_mues_id" name="resul_mues_id">
-            {% for muestra in muestras %}
-                <option value="{{ muestra.mues_id }}">{{ muestra.mues_nombre }}</option>
-            {% endfor %}
-        </select>
-        
-        
-        <br>
-    
-        <button type="submit">Agregar Resultado</button>
-    </form>
-</body>
-</html>
+{% block title %} Agregar Resultado {% endblock title %}
+
+{% block content %}
+  <!-- Header -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h1 class="text-white">Agregar Resultado</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card">
+          <!-- Card body -->
+          <div class="card-body">
+            <form action="{{ url_for('resultados.agregar_resultados') }}" method="POST">
+              <div class="form-group">
+                <label for="resul_componente">Componente:</label>
+                <input type="text" class="form-control" id="resul_componente" name="resul_componente">
+              </div>
+              <div class="form-group">
+                <label for="resul_unidad">Unidad:</label>
+                <input type="text" class="form-control" id="resul_unidad" name="resul_unidad">
+              </div>
+              <div class="form-group">
+                <label for="resul_resultado">Resultado:</label>
+                <input type="text" class="form-control" id="resul_resultado" name="resul_resultado">
+              </div>
+              <div class="form-group">
+                <label for="resul_rango">Rango:</label>
+                <input type="text" class="form-control" id="resul_rango" name="resul_rango">
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="resul_fuera_de_rango" name="resul_fuera_de_rango" value="true">
+                <label class="form-check-label" for="resul_fuera_de_rango">Fuera de rango</label>
+              </div>
+              <div class="form-group">
+                <label for="resul_ana_id">Análisis:</label>
+                <select class="form-control" id="resul_ana_id" name="resul_ana_id">
+                  {% for analisis in lista_de_analisis %}
+                    <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="resul_mues_id">Muestra:</label>
+                <select class="form-control" id="resul_mues_id" name="resul_mues_id">
+                  {% for muestra in muestras %}
+                    <option value="{{ muestra.mues_id }}">{{ muestra.mues_nombre }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Agregar Resultado</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
