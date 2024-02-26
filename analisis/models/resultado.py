@@ -13,7 +13,7 @@ class Resultado(db.Model):
     resul_rango = db.Column(db.String(255))
     resul_fuera_de_rango = db.Column(db.Boolean)
 
-    def __init__(self, resul_fecha, resul_componente, resul_unidad, resul_resultado, resul_rango, resul_fuera_de_rango):
+    def __init__(self, resul_fecha, resul_componente, resul_unidad, resul_resultado, resul_rango, resul_fuera_de_rango,resul_ana_id,resul_mues_id):
         super(Resultado, self).__init__()
         self.resul_fecha = resul_fecha
         self.resul_componente = resul_componente
@@ -21,3 +21,5 @@ class Resultado(db.Model):
         self.resul_resultado = resul_resultado
         self.resul_rango = resul_rango
         self.resul_fuera_de_rango = resul_fuera_de_rango
+        self.resul_ana_id = resul_ana_id
+        self.resul_mues_id = resul_mues_id

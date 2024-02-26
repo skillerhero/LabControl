@@ -13,6 +13,20 @@
     <p><strong>Resultado:</strong> {{ resultado.resul_resultado }}</p>
     <p><strong>Rango:</strong> {{ resultado.resul_rango }}</p>
     <p><strong>Fuera de Rango:</strong> {{ resultado.resul_fuera_de_rango }}</p>
+    <select id="resul_ana_id" name="resul_ana_id">
+        {% for analisis in lista_de_analisis %}
+            <option value="{{ analisis.ana_id }}" {% if analisis.ana_id == resultado.resul_ana_id %} selected {% endif %}>{{ analisis.ana_nombre }}</option>
+        {% endfor %}
+    </select><br>
+    
+    <label for="resul_mues_id">Muestra:</label>
+    <br>
+    
+    <select id="resul_mues_id" name="resul_mues_id">
+        {% for muestra in muestras %}
+            <option value="{{ muestra.mues_id }}" {% if muestra.mues_id == resultado.resul_mues_id %} selected {% endif %}>{{ muestra.mues_folio }}</option>
+        {% endfor %}
+    </select>
     <a href="{{ url_for('resultados.index') }}">Regresar</a>
 </body>
 </html>

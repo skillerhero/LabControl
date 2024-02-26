@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Editar Resultado</h1>
-    <form action="{{ url_for('resultados.editar_resultado', resul_id=resultado.resul_id) }}" method="POST">
+    <form action="{{ url_for('resultados.editar_resultados', resul_id=resultado.resul_id) }}" method="POST">
         <label for="resul_fecha">Fecha del Resultado:</label><br>
         <input type="text" id="resul_fecha" name="resul_fecha" value="{{ resultado.resul_fecha }}"><br>
         <label for="resul_componente">Componente:</label><br>
@@ -20,6 +20,23 @@
         <input type="text" id="resul_rango" name="resul_rango" value="{{ resultado.resul_rango }}"><br>
         <label for="resul_fuera_de_rango">Fuera de Rango:</label><br>
         <input type="text" id="resul_fuera_de_rango" name="resul_fuera_de_rango" value="{{ resultado.resul_fuera_de_rango }}"><br>
+        <select id="resul_ana_id" name="resul_ana_id" disabled>
+            {% for analisis in lista_de_analisis %}
+                <option value="{{ analisis.ana_id }}" {% if analisis.ana_id == resultado.resul_ana_id %} selected {% endif %}>{{ analisis.ana_nombre }}</option>
+            {% endfor %}
+        </select><br>
+        
+        <label for="resul_mues_id">Muestra:</label>
+        <br>
+        
+        <select id="resul_mues_id" name="resul_mues_id" disabled>
+            {% for muestra in muestras %}
+                <option value="{{ muestra.mues_id }}" {% if muestra.mues_id == resultado.resul_mues_id %} selected {% endif %}>{{ muestra.mues_folio }}</option>
+            {% endfor %}
+        </select>
+        
+        
+        
         <button type="submit">Guardar Cambios</button>
     </form>
 </body>
