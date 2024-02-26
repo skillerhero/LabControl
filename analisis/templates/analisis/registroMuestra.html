@@ -35,7 +35,7 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="Nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required pattern="[A-Za-z\s]+">
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+">
                     <div class="invalid-feedback">Por favor ingresa un nombre válido (solo letras).</div>
                   </div>
                 </div>
@@ -44,14 +44,14 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="apellido_paterno">Apellido Paterno</label>
-                    <input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" placeholder="Apellido Paterno" required pattern="[A-Za-z\s]+">
+                    <input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" placeholder="Apellido Paterno" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+">
                         <div class="invalid-feedback">Por favor ingresa un apellido paterno válido (solo letras).</div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="apellido_materno">Apellido Materno</label>
-                    <input type="text" id="apellido_materno" name="apellido_materno" class="form-control" placeholder="Apellido Materno" required pattern="[A-Za-z\s]+">
+                    <input type="text" id="apellido_materno" name="apellido_materno" class="form-control" placeholder="Apellido Materno" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+">
                         <div class="invalid-feedback">Por favor ingresa un apellido materno válido (solo letras).</div>
                   </div>
                 </div>
@@ -61,14 +61,15 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" required>
+                    <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" readonly>
+
                         <div class="invalid-feedback">Por favor ingresa una edad válida (solo números).</div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="nacimeinto_fec">Fecha de Nacimiento</label>
-                    <input type="date" id="nacimeinto_fec" name="nacimeinto_fec" class="form-control" placeholder="aaaa-mm-dd" required>
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Fecha de Nacimiento" required>
                         <div class="invalid-feedback">Por favor ingresa una fecha de nacimiento válida.</div>
                   </div>
                 </div>
@@ -200,6 +201,27 @@
 $(document).ready(function() {
   $('#analisis').select2({dropdownParent: $('#paraquejale')});
   $('#analisis2').select2();
+
+  // Función para calcular la edad
+  $('#fecha_nacimiento').change(function() {
+    var fechaNacimiento = new Date($(this).val());
+    var hoy = new Date();
+    var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    var mes = hoy.getMonth() - fechaNacimiento.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+      edad--;
+    }
+    $('#edad').val(edad);
+  });
+
+  // Validación personalizada para el campo de teléfono
+  $('#registroMuestraForm').submit(function(event) {
+    var telefono = $('#tel').val();
+    if (telefono.length !== 10 || isNaN(telefono)) {
+      event.preventDefault(); // Evita que el formulario se envíe si la validación falla
+      $('#tel').addClass('is-invalid'); // Marca el campo como inválido
+    }
+  });
 });
 </script>
 {% endblock javascripts %}
