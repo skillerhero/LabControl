@@ -59,4 +59,4 @@ def registrarMuestra():
     muestras=Muestra.query.all()
     descuentos=Descuento.query.all()
     analisis=Analisis.query.all()
-    return render_template('analisis/registroMuestra.html',muestras=muestras,descuentos=descuentos,analisis=analisis)
+    return render_template('analisis/registroMuestra.html',muestras=muestras,descuentos=descuentos,analisis=analisis, segment="registrarM")
