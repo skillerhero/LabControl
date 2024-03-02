@@ -60,8 +60,8 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-group" role="group" aria-label="Acciones">
-                            <a href="#" class="btn btn-sm btn-primary mr-2">Ver detalles</a>
-                            <a href="#" class="btn btn-sm btn-info mr-2">Modificar</a>
+                            <a href="{{ url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-info mr-2">Detalles</a>
+                            <a href="#" class="btn btn-sm btn-primary mr-2">Modificar</a>
                             <a href="#" class="btn btn-sm btn-danger mr-2">Eliminar</a>
                         </div>
                     </td>
@@ -71,6 +71,7 @@
             </table>
           </div>
           <!-- Card footer -->
+          <!--
           <div class="card-footer py-4">
             <nav aria-label="...">
               <ul class="pagination justify-content-end mb-0">
@@ -96,6 +97,7 @@
               </ul>
             </nav>
           </div>
+        -->
         </div>
       </div>
     </div>
