@@ -70,11 +70,23 @@ def login():
 
 @auth.before_app_request
 def load_logged_in_user():
-    user_id=session.get("user_id")
-    if user_id==None:
-        g.user=None
+    user_id = session.get("user_id")
+    user_area_id = session.get("user_area_id_fk")
+    if user_id is None:
+        g.user = None
+        g.area_nombre = None
     else:
-        g.user=User.query.get_or_404(user_id)
+        user = User.query.get_or_404(user_id)
+        g.user = user
+        if user_area_id:
+            area = Area.query.filter_by(area_id=user_area_id).first()
+            if area:
+                g.area_nombre = area.area_nombre
+            else:
+                g.area_nombre = None
+        else:
+            g.area_nombre = None
+
 
 @auth.route("logout")
 def logout():
