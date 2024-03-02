@@ -1,27 +1,56 @@
 <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      
       <!-- Navbar links -->
-      <ul class="navbar-nav align-items-center  ml-md-auto ">
-        
-        
+      <ul class="navbar-nav align-items-center ml-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="/recepcion">
+            <i class="ni ni-tv-2 text-primary"></i>
+            <span class="nav-link-text">Inicio</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('auth.logout') }}">
+            <i class="ni ni-user-run text-red"></i>
+            <span class="nav-link-text">Logout</span>
+          </a>
+        </li>  
+        <!-- Agregar más enlaces aquí si es necesario -->
       </ul>
-      <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+      
+      <!-- Agregar el contenido del sidenav aquí -->
+      <ul class="navbar-nav align-items-center ml-auto">
+        {% if g.user.user_area_id_fk == 6 or g.user.user_area_id_fk == 7 %}
         <li class="nav-item dropdown">
-          <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link pr-0" href="{{ url_for('home.indexRecepcion') }}" role="button" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
                 <img alt="Image placeholder" src="/static/assets/img/logo.jpg">
               </span>
-              <div class="media-body  ml-2  d-none d-lg-block">
-                <span class="mb-0 text-sm  font-weight-bold">
-                  {{ g.user.user_username }}
+              <div class="media-body ml-2 d-none d-lg-block">
+                <span class="mb-0 text-sm font-weight-bold">
+                  {{ g.user.user_username }} (Área: {{ g.user.user_area_id_fk }})
                 </span>
               </div>
             </div>
           </a>
         </li>
+        {% else %}
+        <li class="nav-item dropdown">
+          <a class="nav-link pr-0" href="{{ url_for('home.index') }}" role="button" aria-haspopup="true" aria-expanded="false">
+            <div class="media align-items-center">
+              <span class="avatar avatar-sm rounded-circle">
+                <img alt="Image placeholder" src="/static/assets/img/logo.jpg">
+              </span>
+              <div class="media-body ml-2 d-none d-lg-block">
+                <span class="mb-0 text-sm font-weight-bold">
+                  {{ g.user.user_username }} (Área: {{ g.user.user_area_id_fk }})
+                </span>
+              </div>
+            </div>
+          </a>
+        </li>
+        {% endif %}
       </ul>
     </div>
   </div>
