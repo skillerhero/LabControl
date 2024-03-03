@@ -1,5 +1,5 @@
 from analisis import app
-from flask import redirect, url_for, render_template
+from flask import redirect, url_for
 from flask import session
 
 
