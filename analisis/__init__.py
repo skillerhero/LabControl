@@ -19,5 +19,6 @@ app.register_blueprint(home)
 app.register_blueprint(areas)
 app.register_blueprint(analisis)
 app.register_blueprint(resultados)
+
 with app.app_context():
     db.create_all()

@@ -106,3 +106,12 @@ def editar_muestra(mues_id):
         db.session.commit()
         return redirect(url_for('recepcion.home'))
     return render_template('recepcion/editar_muestra.html', recepcion=recepcion, segment='editar_muestra')
+
+@recepcion.route('/eliminar_muestra/<int:mues_id>')
+def eliminar_muestra(mues_id):
+    print('muestra a eliminar: ',mues_id)
+    recepcion = Muestra.query.get_or_404(mues_id)
+    db.session.delete(recepcion)
+    db.session.commit()
+    print('muestra eliminado con éxito')
+    return redirect(url_for('recepcion.home'))
