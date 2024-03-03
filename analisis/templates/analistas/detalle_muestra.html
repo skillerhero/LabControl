@@ -1,0 +1,61 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Detalles de muestra {% endblock title %}
+
+{% block content %}
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h1 class="text-white">Detalles de la muestra</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="mb-4"><span class="section-title">Datos del paciente</span></h2>
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>Folio:</strong> {{ recepcion.mues_folio }}</p>
+                <p><strong>Nombre:</strong> {{ recepcion.mues_nombre }}</p>
+                <p><strong>Apellido Paterno:</strong> {{ recepcion.mues_apellido_paterno }}</p>
+                <p><strong>Apellido Materno:</strong> {{ recepcion.mues_apellido_materno }}</p>
+                <p><strong>Teléfono:</strong> {{ recepcion.mues_telefono }}</p>
+                <p><strong>Email:</strong> {{ recepcion.mues_email }}</p>
+              </div>
+              <div class="col-md-6">
+                <h4 class="mb-4"><span>Datos del domicilio</span></h4>
+                <p><strong>Calle:</strong> {{ recepcion.mues_calle }}</p>
+                <p><strong>Colonia:</strong> {{ recepcion.mues_colonia }}</p>
+                <p><strong>Número exterior:</strong> {{ recepcion.mues_num_ext }}</p>
+                <p><strong>Número interior:</strong> {{ recepcion.mues_num_int }}</p>
+              </div>
+            </div>
+            <hr>
+            <h2 class="mb-4"><span class="section-title">Datos clínicos</span></h2>
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>Horas de ayuno:</strong> {{ recepcion.mues_horas_ayuno }}</p>            
+                <p><strong>Alimentos consumidos durante la última comida:</strong> {{ recepcion.mues_alimentos }}</p>
+              </div>
+              <div class="col-md-6">
+                <p><strong>Enfermedades:</strong> {{ recepcion.mues_enfermedades }}</p>
+                <p><strong>Medicamentos:</strong> {{ recepcion.mues_medicamentos }}</p>
+                <p><strong>Rúbrica:</strong> {{ recepcion.mues_rubrica }}</p>
+              </div>
+            </div>
+            <hr>
+            <a href="{{ url_for('analistas.home') }}" class="btn btn-primary">Regresar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

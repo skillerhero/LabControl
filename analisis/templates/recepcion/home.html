@@ -8,15 +8,21 @@
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
-          <div class="col-lg-6 col-7">
+          <div class="col-lg-6 col-6">
+            <!-- Botón alineado a la izquierda -->
+            <a href="{{url_for('auth.register')}}" class="btn btn-sm btn-neutral">Agregar Usuario</a>
           </div>
-          <div class="col-lg-6 col-5 text-right">
+          <div class="col-lg-6 col-6 text-right">
+            <!-- Botón alineado a la derecha -->
             <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+
+
   
   <!-- Page content -->
   <div class="container-fluid mt--6">
