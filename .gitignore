@@ -7,6 +7,9 @@
 # Ignora archivos generados por Python
 __pycache__/*
 *.pyc
+__pycache__
+analisis/__pycache__
+analisis/models/__pycache__
 
 # Ignora archivos de base de datos
 db.sqlite3
