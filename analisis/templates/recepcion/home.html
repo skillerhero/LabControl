@@ -15,8 +15,8 @@
           {% else %}
             <div class="col-lg-6 col-6"> <!-- Botones de agregar usuario -->
               <a href="{{url_for('auth.register')}}" class="btn btn-sm btn-neutral mr-2">Agregar Usuario</a>
-              <a href="{{url_for('areas.agregar_area')}}" class="btn btn-sm btn-neutral">Agregar Área</a>
-              <a href="{{url_for('analisis.agregar_analisis')}}" class="btn btn-sm btn-neutral">Agregar Análisis</a>
+              <a href="{{url_for('areas.index')}}" class="btn btn-sm btn-neutral">Áreas</a>
+              <a href="{{url_for('analisis.index')}}" class="btn btn-sm btn-neutral">Análisis</a>
             </div>
             <div class="col-lg-6 col-6 text-right"> <!-- Botón de nueva muestra -->
               <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>
