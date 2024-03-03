@@ -1,14 +1,19 @@
 # Importaciones necesarias
 from flask import Flask, render_template, request, redirect, url_for
 from analisis import db
-from flask import render_template,Blueprint
+from flask import render_template, Blueprint
 from analisis.models.analisis import Analisis
-analisis=Blueprint('analisis',__name__,url_prefix='/analisis')
+from math import ceil
+
+analisis = Blueprint('analisis', __name__, url_prefix='/analisis')
 
 @analisis.route('/')
+@analisis.route('/')
 def index():
-    analisis = Analisis.query.all()
-    return render_template('analisis/index.html', analisis=analisis, segment='index')
+    analisis_por_pagina = 20
+    pagina_actual = request.args.get('pagina', 1, type=int)
+    analisis_paginados = Analisis.query.paginate(page=pagina_actual, per_page=analisis_por_pagina)
+    return render_template('analisis/index.html', analisis=analisis_paginados)
 
 @analisis.route('/agregar_analisis', methods=['GET', 'POST'])
 def agregar_analisis():
@@ -19,7 +24,7 @@ def agregar_analisis():
         nuevo_analisis = Analisis(analisis_nombre=analisis_nombre, analisis_costo=analisis_costo, analisis_sta=analisis_sta)
         db.session.add(nuevo_analisis)
         db.session.commit()
-        print('analisis agregada con exito')
+        print('Analisis agregada con exito')
         return redirect(url_for('analisis.index'))
     return render_template('analisis/agregar_analisis.html', segment='agregar_analisis')
 
@@ -47,9 +52,9 @@ def detalle_analisis(ana_id):
 
 @analisis.route('/eliminar_analisis/<int:ana_id>')
 def eliminar_analisis(ana_id):
-    print('analisis a eliminar: ',ana_id)
+    print('Analisis a eliminar: ', ana_id)
     analisis = Analisis.query.get_or_404(ana_id)
     db.session.delete(analisis)
     db.session.commit()
-    print('analisis eliminado con éxito')
+    print('Analisis eliminado con éxito')
     return redirect(url_for('analisis.index'))

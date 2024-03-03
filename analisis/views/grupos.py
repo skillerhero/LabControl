@@ -1,14 +1,22 @@
 # Importaciones necesarias
 from flask import Flask, render_template, request, redirect, url_for
 from analisis import db
-from flask import render_template,Blueprint
+from flask import render_template, Blueprint
 from analisis.models.grupos import Grupo
+from math import ceil
+
 grupos = Blueprint('grupos', __name__, url_prefix='/grupos')
 
 @grupos.route('/')
 def index():
-    grupos = Grupo.query.all()
-    return render_template('grupos/index.html', grupos=grupos, segment='index')
+    grupos_por_pagina = 20
+    pagina_actual = request.args.get('pagina', 1, type=int)
+    grupos_totales = Grupo.query.count()
+    total_paginas = ceil(grupos_totales / grupos_por_pagina)
+    inicio = (pagina_actual - 1) * grupos_por_pagina
+    fin = inicio + grupos_por_pagina
+    grupos_paginados = Grupo.query.slice(inicio, fin).all()
+    return render_template('grupos/index.html', grupos=grupos_paginados, segment='index', total_paginas=total_paginas, pagina_actual=pagina_actual)
 
 @grupos.route('/agregar', methods=['GET', 'POST'])
 def agregar():

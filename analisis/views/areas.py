@@ -1,14 +1,22 @@
 # Importaciones necesarias
-from flask import Flask, render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for
 from analisis import db
-from flask import render_template,Blueprint
+from flask import render_template, Blueprint
 from analisis.models.area import Area
-areas=Blueprint('areas',__name__,url_prefix='/areas')
+from math import ceil
+
+areas = Blueprint('areas', __name__, url_prefix='/areas')
 
 @areas.route('/')
 def index():
-    areas = Area.query.all()
-    return render_template('areas/index.html', areas=areas, segment='index')
+    areas_por_pagina = 10
+    pagina_actual = request.args.get('pagina', 1, type=int)
+    areas_totales = Area.query.count()
+    total_paginas = ceil(areas_totales / areas_por_pagina)
+    inicio = (pagina_actual - 1) * areas_por_pagina
+    fin = inicio + areas_por_pagina
+    areas_paginadas = Area.query.slice(inicio, fin).all()
+    return render_template('areas/index.html', areas=areas_paginadas, segment='index', total_paginas=total_paginas, pagina_actual=pagina_actual)
 
 @areas.route('/agregar_area', methods=['GET', 'POST'])
 def agregar_area():
@@ -18,7 +26,7 @@ def agregar_area():
         nueva_area = Area(area_nombre=area_nombre, area_sta=area_sta)
         db.session.add(nueva_area)
         db.session.commit()
-        print('area agregada con exito')
+        print('Área agregada con éxito')
         return redirect(url_for('areas.index'))
     return render_template('areas/agregar_area.html', segment='agregar_area')
 
@@ -32,7 +40,6 @@ def editar_area(area_id):
         return redirect(url_for('areas.index'))
     return render_template('areas/editar_area.html', area=area, segment='editar_area')
 
-
 @areas.route('/detalle_area/<int:area_id>', methods=['GET', 'POST'])
 def detalle_area(area_id):
     area = Area.query.get_or_404(area_id)
@@ -45,9 +52,9 @@ def detalle_area(area_id):
 
 @areas.route('/eliminar_area/<int:area_id>')
 def eliminar_area(area_id):
-    print('area a eliminar: ',area_id)
+    print('Área a eliminar: ', area_id)
     area = Area.query.get_or_404(area_id)
     db.session.delete(area)
     db.session.commit()
-    print('area eliminada con éxito')
+    print('Área eliminada con éxito')
     return redirect(url_for('areas.index'))

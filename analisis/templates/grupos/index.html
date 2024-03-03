@@ -67,4 +67,17 @@
       </div>
     </div>
   </div>
+
+  <!-- Pagination -->
+  {% if total_paginas > 1 %}
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      {% for pagina in range(1, total_paginas + 1) %}
+      <li class="page-item {% if pagina == pagina_actual %}active{% endif %}">
+        <a class="page-link" href="{{ url_for('grupos.index', pagina=pagina) }}">{{ pagina }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  {% endif %}
 {% endblock content %}
