@@ -23,7 +23,7 @@
         <div class="card">
           <!-- Card body -->
           <div class="card-body">
-            <form action="{{ url_for('recepcion.editar_muestra', mues_id=recepcion.mues_id) }}" method="POST">
+            <form id="registroMuestraForm" action="{{ url_for('recepcion.editar_muestra', mues_id=recepcion.mues_id) }}" method="POST">
               
               <h2>Datos del paciente</h2>
               <div class="form-group">
@@ -44,11 +44,14 @@
               </div>
               <div class="form-group">
                 <label for="mues_tel">Teléfono:</label>
-                <input type="text" class="form-control" id="mues_tel" name="mues_tel" value="{{ recepcion.mues_tel }}">
+                <input type="tel" class="form-control" id="mues_tel" name="mues_tel" value="{{ recepcion.mues_tel }}" autocomplete="off">
+                <div class="invalid-feedback">Por favor ingresa un número de teléfono válido.</div>
               </div>
+              
               <div class="form-group">
                 <label for="mues_email">Email:</label>
-                <input type="text" class="form-control" id="mues_email" name="mues_email" value="{{ recepcion.mues_email }}">
+                <input type="email" class="form-control" id="mues_email" name="mues_email" value="{{ recepcion.mues_email }}">
+                <div class="invalid-feedback">Por favor ingresa un correo electrónico válido.</div>
               </div>
 
               <h2>Datos del domicilio</h2>
@@ -72,7 +75,7 @@
               <h2>Datos clínicos</h2>
               <div class="form-group">
                 <label for="mues_horas_ayuno">Horas de ayuno:</label>
-                <input type="text" class="form-control" id="mues_horas_ayuno" name="mues_horas_ayuno" value="{{ recepcion.mues_horas_ayuno }}">
+                <input type="number" class="form-control" id="mues_horas_ayuno" name="mues_horas_ayuno" value="{{ recepcion.mues_horas_ayuno }}">
               </div>
               <div class="form-group">
                 <label for="mues_alimentos">Alimentos consumidos durante la última comida:</label>
@@ -80,7 +83,7 @@
               </div>
               <div class="form-group">
                 <label for="mues_enfermedades">Enfermedades:</label>
-                <input type="text" class="form-control" id="mues_enfermedades" name="mues_enfermedadest" value="{{ recepcion.mues_enfermedades }}">
+                <input type="text" class="form-control" id="mues_enfermedades" name="mues_enfermedades" value="{{ recepcion.mues_enfermedades }}">
               </div>
               <div class="form-group">
                 <label for="mues_medicamentos">Medicamentos:</label>
@@ -104,3 +107,18 @@
     </div>
   </div>
 {% endblock content %}
+
+{% block javascripts %} 
+<script>
+$(document).ready(function() {
+  // Validación personalizada para el campo de teléfono
+  $('#registroMuestraForm').submit(function(event) {
+    var telefono = $('#mues_tel').val();
+    if (telefono.length !== 10 || isNaN(telefono)) {
+      event.preventDefault(); // Evita que el formulario se envíe si la validación falla
+      $('#mues_tel').addClass('is-invalid'); // Marca el campo como inválido
+    }
+  });
+});
+</script>
+{% endblock javascripts %}
