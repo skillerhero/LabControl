@@ -49,7 +49,7 @@
                     <span class="name mb-0 text-sm">{{muestra.mues_folio}}</span>
                   </td>
                   <td scope="col" class="text-center">                   
-                    <span class="name mb-0 text-sm">{{muestra.mues_nombre}} {{muestra.muestra_apellido_paterno}} {{muestra.mues_apellido_materno}}</span>
+                    <span class="name mb-0 text-sm">{{muestra.mues_nombre}} {{muestra.mues_apellido_paterno}} {{muestra.mues_apellido_materno}}</span>
                   </td>
                   <td class="text-center">
                     {% if muestra.mues_sta == 'A' %}
@@ -61,7 +61,7 @@
                   
                   <td class="text-center">
                     <div class="btn-group" role="group" aria-label="Acciones">
-                        <a href="" class="btn btn-sm btn-primary mr-2">Ver detalles</a>
+                        <a href="{{ url_for('home.detalle_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-primary mr-2">Ver detalles</a>
                         <a href="{{ url_for('resultados.agregar_resultados') }}" class="btn btn-sm btn-info mr-2">Agregar Resultado</a>
 
                       </div>
