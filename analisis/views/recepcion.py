@@ -5,6 +5,7 @@ from analisis.models.user import User
 from analisis.models.muestra import Muestra
 from analisis.models.descuento import Descuento
 from analisis.models.analisis import Analisis
+from analisis.models.grupos import Grupo
 from analisis.models.muestra_analisis_rel import MuestraAnalisisRel
 from werkzeug.security import check_password_hash,generate_password_hash
 from analisis import db
@@ -59,7 +60,8 @@ def registrarMuestra():
     muestras=Muestra.query.all()
     descuentos=Descuento.query.all()
     analisis=Analisis.query.all()
-    return render_template('analisis/registroMuestra.html',muestras=muestras,descuentos=descuentos,analisis=analisis, segment="registrarM")
+    grupos = Grupo.query.all()
+    return render_template('analisis/registroMuestra.html',muestras=muestras,descuentos=descuentos,analisis=analisis, grupos=grupos, segment="registrarM")
 
 @recepcion.route('/detalle_muestra/<int:mues_id>', methods=['GET', 'POST'])
 def detalle_muestra(mues_id):

@@ -7,7 +7,7 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <head>
+    <header>
         <div>
             <a href="">
                 <h1>
@@ -19,15 +19,15 @@
             <a href="">Registrar usuario</a>
             <a href="">Iniciar Sesion</a>
         </nav>        
-    </head>
+    </header>
     <section>
         <header>
-            {% block header %}{% endblock%}            
+            {% block header %}{% endblock %}
         </header>
-        {% for message in get_flashed_messages()%}
+        {% for message in get_flashed_messages() %}
         <div>{{ message }}</div>
         {% endfor %}
-        {% block content %}{% endblock%}
+        {% block content %}{% endblock %}
     </section>
 </body>
 </html>

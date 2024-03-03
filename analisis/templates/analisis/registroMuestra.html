@@ -147,8 +147,6 @@
             </div>
             <hr class="my-4" />
             <!-- Address -->
-
-
             <div class="pl-lg-4 mr-4">
               <div class="form-group">
                 <label class="form-control-label">Alimentos consumidos durante la última comida</label>
@@ -168,27 +166,40 @@
               </div>
             </div>
 
-            
-            <hr class="my-4" />
             <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group mr-4" id="paraquejale2">
+                    <label class="form-control-label" for="grupo_analisis">Grupos de Análisis</label>
+                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="grupo_analisis[]" id="grupo_analisis" tabindex="-1" aria-hidden="true" required>
+                      {% for grupo in grupos %}
+                      <option value="{{ grupo.grupo_id }}">{{ grupo.grupo_nombre }}    -   ${{ grupo.grupo_costo }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group mr-4" id="paraquejale">
                     <label class="form-control-label" for="analisis">Análisis</label>
-                            <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true" required>
-                                {% for analisis in analisis %}
-                                    <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }} - ${{ analisis.ana_costo }}</option>
-                                {% endfor %}
-                            </select>
-                            <div class="invalid-feedback">Por favor selecciona al menos un análisis.</div>
+                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true" required>
+                      {% for analisis_item in analisis %}
+                      <option value="{{ analisis_item.ana_id }}">{{ analisis_item.ana_nombre }} - ${{ analisis_item.ana_costo }}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">Por favor selecciona al menos un análisis.</div>
                   </div>
                 </div>
               </div>
+
               <div class="row">
-                <input type="submit" class="btn btn-primary my-4" value="Registrar Muestra">
+                <div class="col-lg-12">
+                  <input type="submit" class="btn btn-primary my-4" value="Registrar Muestra">
+                </div>
               </div>
             </div>
-            
           </form>
         </div>
       </div>
@@ -200,12 +211,12 @@
 </div>
 {% endblock content %}
 
-<!-- Specific JS goes HERE --> 
-{% block javascripts %} 
+
+{% block javascripts %}
 <script>
 $(document).ready(function() {
   $('#analisis').select2({dropdownParent: $('#paraquejale')});
-  $('#analisis2').select2();
+  $('#grupo_analisis').select2({dropdownParent: $('#paraquejale2')});
 
   // Función para calcular la edad
   $('#fecha_nacimiento').change(function() {

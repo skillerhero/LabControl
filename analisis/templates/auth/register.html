@@ -1,74 +1,46 @@
-{% extends 'layouts/base-fullscreen.html' %}
+{% extends 'layouts/base.html' %}
 
 {% block title %} Register {% endblock title %}
 
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
 
-  <!-- Page content -->
-  <div class="container mt--8 pb-5">
-    <!-- Table -->
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-8">
-        <div class="card bg-secondary border-0">
-          <div class="text-muted text-center mt-2 mb-3">
-            Registrar
-            <br />
-            {% if msg %}
-              <span class="text-danger">{{ msg | safe }}</span>
-            {% else %}
-              Ingresa tus datos
-            {% endif %}
-          </div>
-          <div class="card-body px-lg-5 py-lg-5">
-            <form role="form" method="post">
-              <div class="form-group">
-                <div class="input-group input-group-merge input-group-alternative mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                  </div>
-                  <input class="form-control" placeholder="Usuario" type="text" name="username" id="username" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="input-group input-group-merge input-group-alternative">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                  </div>
-                  <input class="form-control" placeholder="Password" type="password" name="password" id="password" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="input-group input-group-merge input-group-alternative">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="ni ni-badge"></i></span>
-                  </div>
-                  <select class="form-control" id="area" name="area">
-                    <option value=""></option>
-                    {% for area in areas%}
-                      <option value="{{area.area_id}}"> {{area.area_nombre}}</option>
-                    {%endfor%}
-                  </select>
-                </div>
-              </div>
-             <div class="text-center">
-                <button type="submit" class="btn btn-primary mt-4">Crear Usuario</button>
-              </div>
-            </form>
-            <div class="row mt-3">
-              <div class="col-6">
-                <a href="{{ url_for('auth.login') }}" class="text-light"><small>Iniciar sesion</small></a>
-              </div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center mb-0">Registro</h5>
+        </div>
+        <div class="card-body">
+          {% if msg %}
+            <div class="alert alert-danger">{{ msg }}</div>
+          {% endif %}
+          <form method="post">
+            <div class="form-group">
+              <label for="username">Usuario</label>
+              <input class="form-control" placeholder="Usuario" type="text" name="username" id="username" required>
             </div>
-          </div>
+            <div class="form-group">
+              <label for="password">Contraseña</label>
+              <input class="form-control" placeholder="Contraseña" type="password" name="password" id="password" required>
+            </div>
+            <div class="form-group">
+              <label for="area">Área</label>
+              <select class="form-control" id="area" name="area" required>
+                <option value="">Selecciona un área</option>
+                {% for area in areas %}
+                  <option value="{{ area.area_id }}">{{ area.area_nombre }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Crear Usuario</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 {% endblock %}
-
-<!-- Specific JS goes HERE --> 
-{% block javascripts %}{% endblock javascripts %}

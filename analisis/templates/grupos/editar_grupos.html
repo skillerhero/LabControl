@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %} Editar Análisis {% endblock title %}
+{% block title %} Editar Grupo {% endblock title %}
 
 {% block content %}
   <!-- Header -->
@@ -9,7 +9,7 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h1 class="text-white">Editar Análisis</h1>
+            <h1 class="text-white">Editar Grupo</h1>
           </div>
         </div>
       </div>
@@ -23,20 +23,20 @@
         <div class="card">
           <!-- Card body -->
           <div class="card-body">
-            <form action="{{ url_for('analisis.editar_analisis', ana_id=analisis.ana_id) }}" method="POST">
+            <form action="{{ url_for('grupos.editar', grupo_id=grupo.grupo_id) }}" method="POST">
               <div class="form-group">
-                <label for="ana_nombre">Nombre del Análisis:</label>
-                <input type="text" class="form-control" id="ana_nombre" name="ana_nombre" value="{{ analisis.ana_nombre }}">
+                <label for="grupo_nombre">Nombre del Grupo:</label>
+                <input type="text" class="form-control" id="grupo_nombre" name="grupo_nombre" value="{{ grupo.grupo_nombre }}">
               </div>
 
               <div class="form-group">
-                <label for="ana_costo">Costo del Análisis:</label>
-                <input type="text" class="form-control" id="ana_costo" name="ana_costo" value="{{ analisis.ana_costo }}">
+                <label for="grupo_costo">Costo del Grupo:</label>
+                <input type="text" class="form-control" id="grupo_costo" name="grupo_costo" value="{{ grupo.grupo_costo }}">
               </div>
 
               <div class="form-group">
-                <label for="ana_sta">Status del Análisis:</label>
-                <select class="form-control" id="ana_sta" name="ana_sta">
+                <label for="grupo_sta">Estatus del Grupo:</label>
+                <select class="form-control" id="grupo_sta" name="grupo_sta">
                   <option value="A">Activo</option>
                   <option value="O">Offline</option>
                 </select>

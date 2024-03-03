@@ -1,0 +1,70 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Lista de Grupos {% endblock title %}
+
+{% block content %}
+  <!-- Header -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h1 class="text-white">Lista de Grupos</h1>
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+            <a href="{{ url_for('grupos.agregar') }}" class="btn btn-sm btn-neutral">Agregar Grupo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header bg-transparent">
+            <div class="row justify-content-center text-center">
+                <div class="col">
+                    <h3 class="mb-0">Nombre del Grupo</h3>
+                </div>
+                <div class="col-3 ml-7">
+                  <h3 class="mb-0">Costo del Grupo</h3>
+              </div>
+                <div class="col-2 mr-2">
+                    <span class="text-muted">Estatus</span>
+                </div>
+                <div class="col">
+                    <span class="text-muted">Acciones</span>
+                </div>
+            </div>
+        </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <ul class="list-group">
+              {% for grupo in grupos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div style="width: 300px;"> 
+                        <span>{{ grupo.grupo_nombre }}</span>
+                    </div>
+                    <div style="width: 100px;"> 
+                      <span>${{ grupo.grupo_costo }}</span>
+                  </div>
+                    <div style="width: 50px;"> <!-- Ancho fijo para la columna del estado -->
+                        <span class="text-muted">{{ grupo.grupo_sta }}</span>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Acciones">
+                        <a href="{{ url_for('grupos.editar', grupo_id=grupo.grupo_id) }}" class="btn btn-sm btn-info mr-2">Modificar</a>
+                        <a href="{{ url_for('grupos.eliminar', grupo_id=grupo.grupo_id) }}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
