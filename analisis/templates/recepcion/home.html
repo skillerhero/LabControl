@@ -61,7 +61,7 @@
                     <td class="text-center">
                         <div class="btn-group" role="group" aria-label="Acciones">
                           <a href="{{ url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-info mr-2">Detalles</a>
-                          <a href="#" class="btn btn-sm btn-primary mr-2">Modificar</a>
+                          <a href="{{ url_for('recepcion.editar_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-primary mr-2">Modificar</a>
                           <a href="#" class="btn btn-sm btn-danger mr-2">Eliminar</a>
                         </div>
                     </td>
