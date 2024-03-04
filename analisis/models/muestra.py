@@ -21,6 +21,8 @@ class Muestra(db.Model):
     mues_medicamentos=db.Column(db.String(1024))
     mues_rubrica=db.Column(db.String(80))
     mues_des_id_fk=db.Column(db.Integer)
+    mues_edad = db.Column(db.Integer)
+    mues_fec_nac = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
 
     def __init__(self,mues_folio, mues_nombre, mues_apellido_paterno, mues_apellido_materno, mues_calle, mues_num_ext, mues_num_int, mues_colonia, mues_tel, mues_email, mues_horas_ayuno, mues_alimentos, mues_enfermedades, mues_medicamentos, mues_rubrica,mues_des_id_fk)->None:
         self.mues_folio=mues_folio
