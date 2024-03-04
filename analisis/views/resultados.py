@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from analisis import db
-from flask import render_template,Blueprint
+from flask import render_template,Blueprint, session
 from analisis.models.resultado import Resultado
 from datetime import datetime 
 from analisis.models.muestra import Muestra
@@ -14,8 +14,14 @@ def index():
 
 @resultados.route('/agregar_resultados', methods=['GET', 'POST'])
 def agregar_resultados():
-    muestras=Muestra.query.all()
-    lista_de_analisis=Analisis.query.all()
+    muestras = Muestra.query.all()
+    
+    # Obtener los identificadores de los análisis asociados almacenados en la sesión
+    analisis_asociados_ids = session.get('analisis_asociados', [])
+    
+    # Consultar los análisis asociados a los identificadores
+    lista_de_analisis = Analisis.query.filter(Analisis.ana_id.in_(analisis_asociados_ids)).all()
+    
     if request.method == 'POST':
         resul_fecha = datetime.now()  
         resul_componente = request.form.get('resul_componente')
@@ -25,16 +31,18 @@ def agregar_resultados():
         resul_fuera_de_rango = request.form.get('resul_fuera_de_rango', '').lower() == 'true'
         resul_ana_id = request.form.get('resul_ana_id')
         resul_mues_id = request.form.get('resul_mues_id')
-        nuevo_resultado = Resultado(resul_ana_id_fk=resul_ana_id, resul_mues_id_fk=resul_mues_id, resul_fecha=resul_fecha, resul_componente=resul_componente, 
+        nuevo_resultado = Resultado(resul_fecha=resul_fecha, resul_componente=resul_componente, 
                             resul_unidad=resul_unidad, resul_resultado=resul_resultado,
-                            resul_rango=resul_rango, resul_fuera_de_rango=resul_fuera_de_rango, resul_sta='F')
+                            resul_rango=resul_rango, resul_fuera_de_rango=resul_fuera_de_rango,
+                            resul_ana_id=resul_ana_id, resul_mues_id=resul_mues_id)
 
         
         db.session.add(nuevo_resultado)
         db.session.commit()
         print('Resultado agregado con éxito')
         return redirect(url_for('resultados.index'))
-    return render_template('resultados/agregar_resultados.html',muestras=muestras,lista_de_analisis=lista_de_analisis, segment='agregarresultados')
+    
+    return render_template('resultados/agregar_resultados.html', muestras=muestras, lista_de_analisis=lista_de_analisis, segment='agregarresultados')
 
 @resultados.route('/editar_resultados/<int:resul_id>', methods=['GET', 'POST'])
 def editar_resultados(resul_id):

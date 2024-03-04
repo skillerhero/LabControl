@@ -53,13 +53,17 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="resul_mues_id">Muestra:</label>
-                <select class="form-control" id="resul_mues_id" name="resul_mues_id">
-                  {% for muestra in muestras %}
-                    <option value="{{ muestra.mues_id }}">{{ muestra.mues_folio }}</option>
-                  {% endfor %}
-                </select>
-              </div>
+    <label for="resul_mues_id">Muestra:</label>
+    <select class="form-control" id="resul_mues_id" name="resul_mues_id">
+        {% for muestra in muestras %}
+            {% if folio_muestra == muestra.mues_folio %}
+                <option value="{{ muestra.mues_id }}" selected>{{ muestra.mues_folio }}</option>
+            {% else %}
+                <option value="{{ muestra.mues_id }}">{{ muestra.mues_folio }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>
               <button type="submit" class="btn btn-primary">Agregar Resultado</button>
             </form>
           </div>

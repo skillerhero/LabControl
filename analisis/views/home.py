@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, Blueprint
+from flask import render_template, request, redirect, url_for, Blueprint, session
 from analisis.models.user import User
 from analisis.models.muestra import Muestra
 from analisis.models.descuento import Descuento
@@ -33,6 +33,7 @@ def index():
     db.session.commit()
 
     print("muestras index: ", muestras)
+    
     return render_template('analistas/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, segment='index')
 
 @home.route("/recepcion")
@@ -60,9 +61,11 @@ def detalle_muestra(mues_id):
     else:
         analisis_asociados = []
 
+    # Almacenar los análisis asociados en la sesión
+    session['analisis_asociados'] = [analisis.ana_id for analisis in analisis_asociados]
+
     if request.method == 'POST':
         recepcion.muestra_folio = request.form['mues_folio']
-        print(recepcion.muestra_folio)
         recepcion.muestra_nombre = request.form['mues_nombre']
         recepcion.muestra_apellido_paterno = request.form['mues_apellido_paterno']
         recepcion.muestra_apellido_materno = request.form['mues_apellido_materno']
@@ -81,4 +84,3 @@ def detalle_muestra(mues_id):
         return redirect(url_for('analistas.index'))
     
     return render_template('analistas/detalle_muestra.html', recepcion=recepcion, analisis_asociados=analisis_asociados, segment='detalle_muestra')
-
