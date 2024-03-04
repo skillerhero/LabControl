@@ -62,8 +62,7 @@
                   <td class="text-center">
                     <div class="btn-group" role="group" aria-label="Acciones">
                         <a href="{{ url_for('home.detalle_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-primary mr-2">Ver detalles</a>
-                        <a href="{{ url_for('resultados.agregar_resultados') }}" class="btn btn-sm btn-info mr-2">Agregar Resultado</a>
-
+                        <a href="{{ url_for('resultados.agregar_resultados', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-info mr-2">Agregar Resultado</a>
                       </div>
                 </td>
                 </tr>

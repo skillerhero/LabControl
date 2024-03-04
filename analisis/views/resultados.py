@@ -1,55 +1,48 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, Blueprint, session, g
 from analisis import db
-from flask import render_template,Blueprint, session
-from analisis.models.resultado import Resultado
 from datetime import datetime 
 from analisis.models.muestra import Muestra
 from analisis.models.analisis import Analisis
-resultados=Blueprint('resultados',__name__,url_prefix='/resultados')
+from analisis.models.resultado import Resultado
+
+resultados = Blueprint('resultados', __name__, url_prefix='/resultados')
 
 @resultados.route('/')
 def index():
     resultados = Resultado.query.all()
     return render_template('resultados/index.html', resultados=resultados, segment='resultados')
 
-@resultados.route('/agregar_resultados', methods=['GET', 'POST'])
-def agregar_resultados():
-    muestras = Muestra.query.all()
+@resultados.route('/agregar_resultados/<int:mues_id>', methods=['GET', 'POST'])
+def agregar_resultados(mues_id):
+    # Obtener el objeto Muestra asociado al mues_id
+    muestra = Muestra.query.get_or_404(mues_id)
     
-    # Obtener los identificadores de los análisis asociados almacenados en la sesión
-    analisis_asociados_ids = session.get('analisis_asociados', [])
+    # Obtener el área del usuario actual
+    user_area_id = g.user.user_area_id_fk
     
-    # Consultar los análisis asociados a los identificadores
-    lista_de_analisis = Analisis.query.filter(Analisis.ana_id.in_(analisis_asociados_ids)).all()
-    
-    if request.method == 'POST':
-        resul_fecha = datetime.now()  
-        resul_componente = request.form.get('resul_componente')
-        resul_unidad = request.form.get('resul_unidad')
-        resul_resultado = request.form.get('resul_resultado') 
-        resul_rango = request.form.get('resul_rango')
-        resul_fuera_de_rango = request.form.get('resul_fuera_de_rango', '').lower() == 'true'
-        resul_ana_id = request.form.get('resul_ana_id')
-        resul_mues_id = request.form.get('resul_mues_id')
-        nuevo_resultado = Resultado(resul_fecha=resul_fecha, resul_componente=resul_componente, 
-                            resul_unidad=resul_unidad, resul_resultado=resul_resultado,
-                            resul_rango=resul_rango, resul_fuera_de_rango=resul_fuera_de_rango,
-                            resul_ana_id=resul_ana_id, resul_mues_id=resul_mues_id)
+    # Obtener los análisis asociados a la muestra y al área del usuario
+    analisis_asociados = []
+    if user_area_id is not None:
+        analisis_asociados = Analisis.query.join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
+                                            .filter(Resultado.resul_mues_id_fk == mues_id) \
+                                            .filter(Analisis.ana_area_id_fk == user_area_id) \
+                                            .all()
+    else:
+        analisis_asociados = []
 
-        
-        db.session.add(nuevo_resultado)
-        db.session.commit()
-        print('Resultado agregado con éxito')
-        return redirect(url_for('resultados.index'))
+    # Almacenar los análisis asociados en la sesión
+    session['analisis_asociados'] = [analisis.ana_id for analisis in analisis_asociados]
     
-    return render_template('resultados/agregar_resultados.html', muestras=muestras, lista_de_analisis=lista_de_analisis, segment='agregarresultados')
+    # Resto del código para manejar el formulario POST
+    
+    return render_template('resultados/agregar_resultados.html', muestra=muestra, lista_de_analisis=analisis_asociados, segment='agregarresultados')
 
 
 @resultados.route('/editar_resultados/<int:resul_id>', methods=['GET', 'POST'])
 def editar_resultados(resul_id):
     resultado = Resultado.query.get_or_404(resul_id)
-    muestras=Muestra.query.all()
-    lista_de_analisis=Analisis.query.all()
+    muestras = Muestra.query.all()
+    lista_de_analisis = Analisis.query.all()
     if request.method == 'POST':
         resultado.resul_fecha = datetime.now()  
         resultado.resul_componente = request.form['resul_componente']
@@ -61,8 +54,8 @@ def editar_resultados(resul_id):
         resultado.resul_mues_id = request.form.get('resul_mues_id')
         db.session.commit()
         return redirect(url_for('resultados.index'))
-    print("Muestras editar resultados: ", muestras)
-    return render_template('resultados/editar_resultados.html', resultado=resultado,muestras=muestras,lista_de_analisis=lista_de_analisis, segment='editarresult')
+    
+    return render_template('resultados/editar_resultados.html', resultado=resultado, muestras=muestras, lista_de_analisis=lista_de_analisis, segment='editarresult')
 
 @resultados.route('/eliminar_resultados/<int:resul_id>')
 def eliminar_resultados(resul_id):
@@ -87,6 +80,6 @@ def detalle_resultados(resul_id):
         resultado.resul_ana_id = request.form.get('resul_ana_id')
         resultado.resul_mues_id = request.form.get('resul_mues_id')
         return redirect(url_for('resultados.index'))
-    muestras=Muestra.query.all()
-    lista_de_analisis=Analisis.query.all()
-    return render_template('resultados/detalle_resultados.html', resultado=resultado, segment='detalle_resultados',muestras=muestras,lista_de_analisis=lista_de_analisis)
+    muestras = Muestra.query.all()
+    lista_de_analisis = Analisis.query.all()
+    return render_template('resultados/detalle_resultados.html', resultado=resultado, segment='detalle_resultados', muestras=muestras, lista_de_analisis=lista_de_analisis)
