@@ -4,6 +4,7 @@ from analisis.models.muestra import Muestra
 from analisis.models.descuento import Descuento
 from analisis.models.analisis import Analisis
 from analisis import db
+from flask import g
 home=Blueprint('home',__name__,url_prefix='/home')
 
 def get_user(id):

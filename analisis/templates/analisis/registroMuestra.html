@@ -140,7 +140,7 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="hora_recolecion">Horas de recolección</label>
-                    <input type="time" id="hora_recoleccion" name="hora_recoleccion" class="form-control" placeholder="Hora de recoleccion">
+                    <input type="time" id="hora_recoleccion" name="hora_recoleccion" class="form-control" placeholder="Hora de recoleccion" readonly>
                   </div>
                 </div>
               </div>
@@ -229,6 +229,15 @@ $(document).ready(function() {
     }
     $('#edad').val(edad);
   });
+
+  // Obtener la hora actual en formato HH:MM
+  var now = new Date();
+  var hours = ('0' + now.getHours()).slice(-2);
+  var minutes = ('0' + now.getMinutes()).slice(-2);
+  var currentTime = hours + ':' + minutes;
+
+  // Establecer la hora actual en el campo hora_recoleccion y hacerlo de solo lectura
+  $('#hora_recoleccion').val(currentTime).prop('readonly', true);
 
   // Validación personalizada para el campo de teléfono
   $('#registroMuestraForm').submit(function(event) {

@@ -25,10 +25,9 @@ def agregar_resultados():
         resul_fuera_de_rango = request.form.get('resul_fuera_de_rango', '').lower() == 'true'
         resul_ana_id = request.form.get('resul_ana_id')
         resul_mues_id = request.form.get('resul_mues_id')
-        nuevo_resultado = Resultado(resul_fecha=resul_fecha, resul_componente=resul_componente, 
+        nuevo_resultado = Resultado(resul_ana_id_fk=resul_ana_id, resul_mues_id_fk=resul_mues_id, resul_fecha=resul_fecha, resul_componente=resul_componente, 
                             resul_unidad=resul_unidad, resul_resultado=resul_resultado,
-                            resul_rango=resul_rango, resul_fuera_de_rango=resul_fuera_de_rango,
-                            resul_ana_id=resul_ana_id, resul_mues_id=resul_mues_id)
+                            resul_rango=resul_rango, resul_fuera_de_rango=resul_fuera_de_rango, resul_sta='F')
 
         
         db.session.add(nuevo_resultado)
