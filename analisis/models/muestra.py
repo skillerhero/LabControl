@@ -3,7 +3,7 @@ import datetime
 class Muestra(db.Model):
     __tablename__='muestras'
     mues_id =db.Column(db.Integer,primary_key=True)
-    mues_sta=db.Column(db.String(1),default='A')
+    mues_sta=db.Column(db.String(1),default='O')
     mues_alta_fec=db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
     mues_folio=db.Column(db.String(20))
     mues_nombre=db.Column(db.String(80))
@@ -44,3 +44,4 @@ class Muestra(db.Model):
 
     def __repr__(self) -> str:
         return f'mues_id:{self.mues_id}, mues_folio:{self.mues_folio}'
+    

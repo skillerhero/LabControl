@@ -52,12 +52,14 @@
                     <span class="name mb-0 text-sm">{{muestra.mues_nombre}} {{muestra.mues_apellido_paterno}} {{muestra.mues_apellido_materno}}</span>
                   </td>
                   <td class="text-center">
-                    {% if muestra.mues_sta == 'A' %}
-                    <span class="name mb-0 text-sm">Activa</span>
+                    {% if muestra.mues_sta == 'O' %}
+                        <span class="name mb-0 text-sm">Open</span>
+                    {% elif muestra.mues_sta == 'P' %}
+                        <span class="name mb-0 text-sm">Process</span>
                     {% else %}
-                    <span class="name mb-0 text-sm">Terminada</span>
+                        <span class="name mb-0 text-sm">Finish</span>
                     {% endif %}
-                  </td>
+                </td>
                   
                   <td class="text-center">
                     <div class="btn-group" role="group" aria-label="Acciones">

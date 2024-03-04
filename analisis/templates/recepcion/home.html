@@ -61,12 +61,14 @@
                         <span class="name mb-0 text-sm">{{ muestra.mues_nombre }} {{ muestra.muestra_apellido_paterno }} {{ muestra.mues_apellido_materno }}</span>
                     </td>
                     <td class="text-center">
-                        {% if muestra.mues_sta == 'A' %}
-                            <span class="name mb-0 text-sm">Activa</span>
-                        {% else %}
-                            <span class="name mb-0 text-sm">Terminada</span>
-                        {% endif %}
-                    </td>
+                      {% if muestra.mues_sta == 'O' %}
+                          <span class="name mb-0 text-sm">Open</span>
+                      {% elif muestra.mues_sta == 'P' %}
+                          <span class="name mb-0 text-sm">Process</span>
+                      {% else %}
+                          <span class="name mb-0 text-sm">Finish</span>
+                      {% endif %}
+                  </td>
                     <td class="text-center">
                         <div class="btn-group" role="group" aria-label="Acciones">
                           <a href="{{ url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-info mr-2">Detalles</a>

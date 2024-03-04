@@ -9,9 +9,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link pr-3" href="/recepcion">
-            <i class="fas fa-home text-white"></i> 
-          </a>
+          {% if g.user.user_area_id_fk == 6 or g.user.user_area_id_fk == 7 %}
+            <a class="nav-link pr-3" href="/recepcion">
+              <i class="fas fa-home text-white"></i> 
+            </a>
+          {% else %}
+            <a class="nav-link pr-3" href="/home">
+              <i class="fas fa-home text-white"></i> 
+            </a>
+          {% endif %}
         </li>
         <li class="nav-item">
           <a class="nav-link pr-3" href="{{ url_for('auth.logout') }}">

@@ -55,13 +55,13 @@ def registrarMuestra():
         db.session.flush()
         db.session.refresh(muestra)
         for ana in analisis:
-            resultado_analisis = Resultado(resul_ana_id_fk=ana, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta=None)
+            resultado_analisis = Resultado(resul_ana_id_fk=ana, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
             db.session.add(resultado_analisis)
         
         for grupo_id in grupos:
             analisis_grupo = GruposAnalisisRel.query.filter_by(gana_grupo_id_fk=grupo_id).all()
             for relacion in analisis_grupo:
-                resultado_analisis = Resultado(resul_ana_id_fk=relacion.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta=None)
+                resultado_analisis = Resultado(resul_ana_id_fk=relacion.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
                 db.session.add(resultado_analisis)
 
         db.session.commit()
@@ -92,6 +92,7 @@ def detalle_muestra(mues_id):
         recepcion.muestra_medicamentos = request.form['mues_medicamentos']
         recepcion.muestra_rubrica = request.form['mues_rubrica']
         db.session.commit()
+        
         return redirect(url_for('recepcion.home'))
     return render_template('recepcion/detalle_muestra.html', recepcion=recepcion, segment='detalle_muestra')
 
