@@ -44,6 +44,7 @@ def agregar_resultados():
     
     return render_template('resultados/agregar_resultados.html', muestras=muestras, lista_de_analisis=lista_de_analisis, segment='agregarresultados')
 
+
 @resultados.route('/editar_resultados/<int:resul_id>', methods=['GET', 'POST'])
 def editar_resultados(resul_id):
     resultado = Resultado.query.get_or_404(resul_id)
