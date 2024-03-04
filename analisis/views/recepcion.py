@@ -7,6 +7,7 @@ from analisis.models.descuento import Descuento
 from analisis.models.analisis import Analisis
 from analisis.models.grupos import Grupo
 from analisis.models.muestra_analisis_rel import MuestraAnalisisRel
+from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from werkzeug.security import check_password_hash,generate_password_hash
 from analisis import db
 from analisis.views.auth import login_required
