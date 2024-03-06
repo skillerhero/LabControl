@@ -67,8 +67,8 @@
       <div class="modal-body">
         <!-- Lista de Notificaciones -->
         <ul class="list-group">
-          {% for notification in notifications %}
-          <li class="list-group-item">{{ notification.message }}</li>
+          {% for result in results %}
+          <li class="list-group-item">{{ result.resul_id }}</li>
           {% endfor %}
         </ul>
       </div>
@@ -77,3 +77,26 @@
 </div>
 
 
+{% block javascripts %}
+<script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function(){
+    console.log('hola');
+    $('#notificationModal').on('show.bs.modal', function(e){
+        $.ajax({
+            url: '{{ url_for("auth.get_user_results_ajax") }}',
+            type: 'GET',
+            success: function(data){
+                $('#notificationModal .modal-body').html(data);
+            },
+            error: function(xhr, status, error){
+                console.error(error);
+            }
+        });
+    });
+  });
+  </script>
+{% endblock javascripts %}

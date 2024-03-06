@@ -2,8 +2,11 @@ import functools
 from flask import render_template,Blueprint,flash,g,redirect,request,session,url_for
 from analisis.models.user import User
 from analisis.models.area import Area
+from analisis.models.resultado import Resultado
+from analisis.models.analisis import Analisis
 from werkzeug.security import check_password_hash,generate_password_hash
 from analisis import db
+
 auth=Blueprint('auth',__name__,url_prefix='/auth')
 
 #registra usuario
@@ -102,3 +105,14 @@ def login_required(view):
     return wrapped_view
 
 
+
+def get_user_results():
+    results = Resultado.query.join(Analisis, Resultado.resul_ana_id_fk == Analisis.ana_id)\
+                              .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk).all()
+    return results
+
+@auth.route('/get_user_results_ajax',methods=['GET','POST'])
+def get_user_results_ajax():
+    user_results = get_user_results()
+    html_content = render_template('notification_modal_ajax.html', results=user_results)
+    return html_content

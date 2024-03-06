@@ -1,6 +1,5 @@
 import functools
-from flask import render_template, Blueprint, flash, g, redirect, request, session, url_for
-from werkzeug.exceptions import abort
+from flask import render_template, Blueprint, redirect, request, url_for
 from analisis.models.user import User
 from analisis.models.muestra import Muestra
 from analisis.models.descuento import Descuento
@@ -8,7 +7,6 @@ from analisis.models.analisis import Analisis
 from analisis.models.grupos import Grupo
 from analisis.models.resultado import Resultado
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
-from werkzeug.security import check_password_hash, generate_password_hash
 from analisis import db
 from analisis.views.auth import login_required
 
