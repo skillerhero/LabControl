@@ -9,6 +9,8 @@ from analisis.models.resultado import Resultado
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from analisis import db
 from analisis.views.auth import login_required
+from flask import make_response
+from weasyprint import HTML
 
 recepcion = Blueprint('recepcion', __name__, url_prefix='/recepcion')
 
@@ -74,25 +76,28 @@ def registrarMuestra():
 def detalle_muestra(mues_id):
     recepcion = Muestra.query.get_or_404(mues_id)
     if request.method == 'POST':
-        recepcion.muestra_folio = request.form['mues_folio']
-        recepcion.muestra_nombre = request.form['mues_nombre']
-        recepcion.muestra_apellido_paterno = request.form['mues_apellido_paterno']
-        recepcion.muestra_apellido_materno = request.form['mues_apellido_materno']
-        recepcion.muestra_telefono = request.form['mues_tel']
-        recepcion.muestra_email = request.form['mues_email']
-        recepcion.muestra_calle = request.form['mues_calle']
-        recepcion.muestra_colonia = request.form['mues_colonia']
-        recepcion.muestra_num_ext = request.form['mues_num_ext']
-        recepcion.muestra_num_int = request.form['mues_num_int']
-        recepcion.muestra_horas_ayuno = request.form['mues_horas_ayuno']
-        recepcion.muestra_alimentos = request.form['mues_alimentos']
-        recepcion.muestra_enfermedades = request.form['mues_enfermedades']
-        recepcion.muestra_medicamentos = request.form['mues_medicamentos']
-        recepcion.muestra_rubrica = request.form['mues_rubrica']
-        db.session.commit()
         
         return redirect(url_for('recepcion.home'))
     return render_template('recepcion/detalle_muestra.html', recepcion=recepcion, segment='detalle_muestra')
+
+
+@recepcion.route('/pdf_resultados/<int:mues_id>', methods=['GET', 'POST'])
+def pdf_resultados(mues_id):
+    muestra = Muestra.query.get_or_404(mues_id)
+    resultados = Resultado.query.filter_by(resul_mues_id_fk=mues_id).all()
+
+    # Renderizar el HTML utilizando una plantilla
+    rendered_html = render_template('recepcion/pdf_template.html', muestra=muestra, resultados=resultados)
+
+    # Convertir el HTML a PDF usando WeasyPrint
+    pdf = HTML(string=rendered_html).write_pdf()
+
+    # Devolver el PDF como respuesta a la solicitud
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=resultados.pdf'
+
+    return response
 
 
 @recepcion.route('/editar_muestra/<int:mues_id>', methods=['GET', 'POST'])

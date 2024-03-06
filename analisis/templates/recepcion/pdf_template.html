@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        .muestra-info {
+            margin-bottom: 20px;
+        }
+        .resultado {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resultados de la muestra {{ muestra.mues_id }}</h1>
+    <div class="muestra-info">
+        <p><strong>ID de Muestra:</strong> {{ muestra.mues_id }}</p>
+        <p><strong>Estado:</strong> {{ muestra.mues_sta }}</p>
+    </div>
+    <div class="resultados">
+        <h2>Resultados:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Componente</th>
+                    <th>Unidad</th>
+                    <th>Resultado</th>
+                    <th>Rango</th>
+                    <th>Fuera de Rango</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resultado in resultados %}
+                <tr>
+                    <td>{{ resultado.resul_componente }}</td>
+                    <td>{{ resultado.resul_unidad }}</td>
+                    <td>{{ resultado.resul_resultado }}</td>
+                    <td>{{ resultado.resul_rango }}</td>
+                    <td>{{ resultado.resul_fuera_de_rango }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
