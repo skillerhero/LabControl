@@ -85,14 +85,22 @@ def detalle_muestra(mues_id):
 def pdf_resultados(mues_id):
     muestra = Muestra.query.get_or_404(mues_id)
     resultados = Resultado.query.filter_by(resul_mues_id_fk=mues_id).all()
+    for resultado in resultados:
+        print(resultado.resul_id)
+        print(resultado.resul_ana_id_fk)
+        print(resultado.resul_mues_id_fk)
+        print(resultado.resul_fecha)
+        print(resultado.resul_componente)
+        print(resultado.resul_unidad)
+        print(resultado.resul_resultado)
+        print(resultado.resul_rango)
+        print(resultado.resul_fuera_de_rango)
+        print(resultado.resul_sta)
 
-    # Renderizar el HTML utilizando una plantilla
     rendered_html = render_template('recepcion/pdf_template.html', muestra=muestra, resultados=resultados)
 
-    # Convertir el HTML a PDF usando WeasyPrint
     pdf = HTML(string=rendered_html).write_pdf()
 
-    # Devolver el PDF como respuesta a la solicitud
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=resultados.pdf'

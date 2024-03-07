@@ -1,5 +1,5 @@
 <ul class="list-group">
-    {% for result in results %}
-    <li class="list-group-item">{{ result.resul_id }}</li>
-    {% endfor %}
-  </ul>
+  {% for result in results %}
+  <li class="list-group-item">ID: {{ result[0].resul_id }} análisis: {{ result[1] }}</li>
+  {% endfor %}
+</ul>
