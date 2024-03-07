@@ -14,6 +14,7 @@ from analisis.views.areas import areas
 from analisis.views.analisis import analisis
 from analisis.views.resultados import resultados
 from analisis.views.grupos import grupos
+from analisis.views.regresion import regresion
 
 # Registrar blueprints
 app.register_blueprint(auth)
@@ -23,6 +24,7 @@ app.register_blueprint(areas)
 app.register_blueprint(analisis)
 app.register_blueprint(resultados)
 app.register_blueprint(grupos) 
+app.register_blueprint(regresion) 
 
 with app.app_context():
     db.create_all()
