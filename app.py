@@ -7,7 +7,7 @@ from flask import session
 def index():
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
-    segment = 'index'  # Define el valor de segment
+    segment = 'index'
 
     
     if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:

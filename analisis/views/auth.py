@@ -108,7 +108,9 @@ def login_required(view):
 
 def get_user_results():
     results = Resultado.query.join(Analisis, Resultado.resul_ana_id_fk == Analisis.ana_id)\
-                              .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk).all()
+                            .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk)\
+                            .add_columns(Analisis.ana_nombre)\
+                            .all()
     return results
 
 @auth.route('/get_user_results_ajax',methods=['GET','POST'])
