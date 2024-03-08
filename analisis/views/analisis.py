@@ -7,7 +7,6 @@ from analisis.models.analisis import Analisis
 analisis = Blueprint('analisis', __name__, url_prefix='/analisis')
 
 @analisis.route('/')
-@analisis.route('/')
 def index():
     analisis_por_pagina = 20
     pagina_actual = request.args.get('pagina', 1, type=int)
