@@ -58,7 +58,7 @@
                   <div class="btn-group" role="group" aria-label="Acciones">
                     <!--<a href="{{ url_for('analisis.detalle_analisis', ana_id=ana.ana_id) }}" class="btn btn-sm btn-primary mr-2">Detalle</a>-->
                     <a href="{{ url_for('analisis.editar_analisis', ana_id=ana.ana_id) }}" class="btn btn-sm btn-info mr-2">Modificar</a>
-                    <a href="{{ url_for('analisis.eliminar_analisis', ana_id=ana.ana_id) }}" class="btn btn-sm btn-danger">Eliminar</a>
+                    <a href="{{ url_for('analisis.eliminar_analisis', ana_id=ana.ana_id) }}" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Está seguro que desea eliminar el análisis '{{ ana.ana_nombre }}'?">Eliminar</a>
                   </div>
                 </li>
               {% endfor %}
@@ -88,4 +88,42 @@
       </div>
     </div>
   </div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="delete-message"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <a id="confirm-delete" href="#" class="btn btn-primary">Sí</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
+
+{% block javascripts %}
+<script>
+document.querySelectorAll('.delete-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const confirmMessage = this.getAttribute('data-confirm');
+    document.getElementById('delete-message').textContent = confirmMessage;
+    const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+    const confirmDeleteBtn = document.getElementById('confirm-delete');
+    confirmDeleteBtn.href = this.href;
+    confirmDeleteModal.show();
+  });
+});
+</script>
+{% endblock javascripts %}

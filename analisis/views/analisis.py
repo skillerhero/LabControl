@@ -16,13 +16,15 @@ def index():
 @analisis.route('/agregar_analisis', methods=['GET', 'POST'])
 def agregar_analisis():
     if request.method == 'POST':
-        analisis_nombre = request.form.get('ana_nombre')
-        analisis_costo = request.form.get('ana_costo')
-        analisis_sta = request.form.get('ana_sta')
-        nuevo_analisis = Analisis(analisis_nombre=analisis_nombre, analisis_costo=analisis_costo, analisis_sta=analisis_sta)
+        ana_nombre = request.form.get('ana_nombre')
+        ana_costo = request.form.get('ana_costo')
+        ana_sta = request.form.get('ana_sta')
+        ana_area_id_fk = request.form.get('ana_area_id_fk')  # Agregar esta línea
+
+        nuevo_analisis = Analisis(ana_nombre=ana_nombre, ana_costo=ana_costo, ana_sta=ana_sta, ana_area_id_fk=ana_area_id_fk)  # Pasar ana_area_id_fk
         db.session.add(nuevo_analisis)
         db.session.commit()
-        print('Analisis agregada con exito')
+        print('Analisis agregado con éxito')
         return redirect(url_for('analisis.index'))
     return render_template('analisis/agregar_analisis.html', segment='agregar_analisis')
 

@@ -7,10 +7,11 @@ class Analisis(db.Model):
     ana_costo=db.Column(db.Numeric(20,2))
     ana_area_id_fk=db.Column(db.Integer)
 
-    def __init__(self,ana_nombre, ana_costo, ana_area_id_fk)->None:
+    def __init__(self,ana_nombre, ana_costo, ana_area_id_fk, ana_sta=ana_sta)->None:
         self.ana_nombre =ana_nombre
         self.ana_costo=ana_costo
-        self.ana_area_id_fk=ana_area_id_fk
+        self.ana_area_id=ana_area_id_fk
+        self.ana_sta = ana_sta
 
     def __repr__(self) -> str:
         return f' Analisis:{self.ana_nombre}'
