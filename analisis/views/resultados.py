@@ -26,6 +26,7 @@ def agregar_resultados(mues_id):
         analisis_asociados = Analisis.query.join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
                                             .filter(Resultado.resul_mues_id_fk == mues_id) \
                                             .filter(Analisis.ana_area_id_fk == user_area_id) \
+                                            .filter(Resultado.resul_sta == "O")\
                                             .all()
     else:
         analisis_asociados = []
@@ -33,7 +34,23 @@ def agregar_resultados(mues_id):
     # Almacenar los análisis asociados en la sesión
     session['analisis_asociados'] = [analisis.ana_id for analisis in analisis_asociados]
     
-    # Resto del código para manejar el formulario POST
+    if request.method == 'POST':
+        selected_analisis_id = request.form['resul_ana_id']
+        print("ID del análisis seleccionado:", selected_analisis_id)
+        resultado = Resultado.query.filter_by(resul_ana_id_fk=selected_analisis_id, resul_mues_id_fk=mues_id, resul_sta='O').first()
+
+        if resultado:
+            resultado.resul_fecha = datetime.now()  
+            resultado.resul_componente = request.form['resul_componente']
+            resultado.resul_unidad = request.form['resul_unidad']
+            resultado.resul_resultado = request.form['resul_resultado']
+            resultado.resul_rango = request.form['resul_rango']
+            resultado.resul_fuera_de_rango = request.form.get('resul_fuera_de_rango', '').lower() == 'true'
+            resultado.resul_sta = "F"
+            db.session.commit()
+            print("Resultado modificado con éxito.")
+        else:
+            print("No se encontró ningún resultado que cumpla con las condiciones.")
     
     return render_template('resultados/agregar_resultados.html', muestra=muestra, lista_de_analisis=analisis_asociados, segment='agregarresultados')
 

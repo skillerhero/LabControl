@@ -48,9 +48,9 @@
             <div class="form-group">
               <label for="resul_ana_id">Análisis:</label>
               <select class="form-control" id="resul_ana_id" name="resul_ana_id">
-                {% for analisis in lista_de_analisis %}
-                <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }}</option>
-                {% endfor %}
+                  {% for analisis in lista_de_analisis %}
+                  <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }}</option>
+                  {% endfor %}
               </select>
             </div>
             <div class="form-group">
@@ -70,3 +70,13 @@
 </div>
 {% endblock content %}
 
+
+<script>
+  var select = document.getElementById("resul_ana_id");
+  function obtenerAnalisisId() {
+      var analisisId = select.value;
+      console.log("ID del análisis seleccionado:", analisisId);
+  }
+  select.addEventListener("input", obtenerAnalisisId);
+  obtenerAnalisisId();
+</script>
