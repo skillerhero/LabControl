@@ -1,5 +1,5 @@
 # Importaciones necesarias
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from analisis import db
 from flask import render_template, Blueprint
 from analisis.models.area import Area
@@ -18,16 +18,23 @@ def index():
     areas_paginadas = Area.query.slice(inicio, fin).all()
     return render_template('areas/index.html', areas=areas_paginadas, segment='index', total_paginas=total_paginas, pagina_actual=pagina_actual)
 
+#Agregar área
 @areas.route('/agregar_area', methods=['GET', 'POST'])
 def agregar_area():
     if request.method == 'POST':
         area_nombre = request.form.get('area_nombre')
         area_sta = request.form.get('area_sta')
-        nueva_area = Area(area_nombre=area_nombre, area_sta=area_sta)
-        db.session.add(nueva_area)
-        db.session.commit()
-        print('Área agregada con éxito')
-        return redirect(url_for('areas.index'))
+
+        # Verificar si el área ya existe en la base de datos
+        area_existente = Area.query.filter_by(area_nombre=area_nombre).first()
+        if area_existente:
+            flash('El área ingresada ya existe.', 'danger')
+        else:
+            nueva_area = Area(area_nombre=area_nombre, area_sta=area_sta)
+            db.session.add(nueva_area)
+            db.session.commit()
+            flash('Área agregada exitosamente.', 'success')
+
     return render_template('areas/agregar_area.html', segment='agregar_area')
 
 @areas.route('/editar_area/<int:area_id>', methods=['GET', 'POST'])
