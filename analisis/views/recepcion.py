@@ -9,7 +9,7 @@ from analisis.models.resultado import Resultado
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from analisis import db
 from analisis.views.auth import login_required
-from flask import make_response
+from flask import make_response, flash
 from weasyprint import HTML
 
 recepcion = Blueprint('recepcion', __name__, url_prefix='/recepcion')
@@ -29,6 +29,11 @@ def home():
 
 @recepcion.route("/create", methods=['GET', 'POST'])
 def registrarMuestra():
+    muestras = Muestra.query.all()
+    descuentos = Descuento.query.all()
+    lista_analisis = Analisis.query.all()
+    lista_grupos = Grupo.query.all()
+    form_data = request.form if request.method == 'POST' else None
     if request.method == 'POST':
         mues_folio = request.form.get('folio')
         mues_nombre = request.form.get('nombre')
@@ -71,16 +76,13 @@ def registrarMuestra():
                     # Si no está asociado, crear una nueva instancia de Resultado y asociarla a la muestra
                     resultado_analisis = Resultado(resul_ana_id_fk=relacion.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
                     db.session.add(resultado_analisis)
-
-        # Guardar los cambios en la base de datos
+                else:
+                    flash('Uno o más análisis ya están asociados con un grupo.', 'error')
+                    print('grupos: ')
+                    print(grupos)
+                    return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM", form=form_data)
         db.session.commit()
-
-    # Obtener los datos necesarios para mostrar en el formulario
-    muestras = Muestra.query.all()
-    descuentos = Descuento.query.all()
-    analisis = Analisis.query.all()
-    grupos = Grupo.query.all()
-    return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=analisis, grupos=grupos, segment="registrarM")
+    return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM",form=form_data)
 
 @recepcion.route('/detalle_muestra/<int:mues_id>', methods=['GET', 'POST'])
 def detalle_muestra(mues_id):

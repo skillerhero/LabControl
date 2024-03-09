@@ -3,6 +3,17 @@
 {% block title %} Profile {% endblock title %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endwith %}
 
 <div class="header pb-6 d-flex align-items-center" >
 </div>
@@ -26,7 +37,7 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="folio">Folio</label>
-                    <input type="text" id="folio" name="folio" class="form-control" placeholder="Folio" required>
+                    <input type="text" id="folio" name="folio" class="form-control" placeholder="Folio" required  value="{{ form.folio }}">
                     <div class="invalid-feedback">Por favor ingresa un folio válido.</div>
                   </div>
                 </div>
@@ -35,7 +46,7 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="Nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+">
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+"  value="{{ form.nombre }}">
                     <div class="invalid-feedback">Por favor ingresa un nombre válido (solo letras).</div>
                   </div>
                 </div>
@@ -44,14 +55,14 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="apellido_paterno">Apellido Paterno</label>
-                    <input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" placeholder="Apellido Paterno" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+">
+                    <input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" placeholder="Apellido Paterno" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+"  value="{{ form.apellido_paterno }}">
                         <div class="invalid-feedback">Por favor ingresa un apellido paterno válido (solo letras).</div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="apellido_materno">Apellido Materno</label>
-                    <input type="text" id="apellido_materno" name="apellido_materno" class="form-control" placeholder="Apellido Materno" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+">
+                    <input type="text" id="apellido_materno" name="apellido_materno" class="form-control" placeholder="Apellido Materno" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+"  value="{{ form.apellido_materno }}">
                         <div class="invalid-feedback">Por favor ingresa un apellido materno válido (solo letras).</div>
                   </div>
                 </div>
@@ -61,15 +72,14 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" readonly>
-
+                    <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" readonly value="{{ form.edad }}">
                         <div class="invalid-feedback">Por favor ingresa una edad válida (solo números).</div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="nacimeinto_fec">Fecha de Nacimiento</label>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Fecha de Nacimiento" required>
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Fecha de Nacimiento" required value="{{ form.fecha_nacimiento }}">
                         <div class="invalid-feedback">Por favor ingresa una fecha de nacimiento válida.</div>
                   </div>
                 </div>
@@ -78,21 +88,21 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="calle">Calle</label>
-                    <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle" required>
+                    <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle" required value="{{ form.calle }}">
                     <div class="invalid-feedback">Por favor ingresa una calle válida.</div>
                   </div>
                 </div>
                 <div class="col-lg-2">
                   <div class="form-group">
                     <label class="form-control-label" for="num_ext">Número Exterior</label>
-                    <input type="text" id="num_ext" name="num_ext" class="form-control" placeholder="# Exterior" required>
+                    <input type="text" id="num_ext" name="num_ext" class="form-control" placeholder="# Exterior" required value="{{ form.num_ext }}">
                     <div class="invalid-feedback">Por favor ingresa un número exterior válido.</div>
                   </div>
                 </div>
                 <div class="col-lg-2">
                   <div class="form-group">
                     <label class="form-control-label" for="num_int">Número Interior</label>
-                    <input type="text" id="num_int" name="num_int" class="form-control" placeholder="# Interior">
+                    <input type="text" id="num_int" name="num_int" class="form-control" placeholder="# Interior" value="{{ form.num_int }}">
                   </div>
                 </div>
                 </div>
@@ -101,21 +111,21 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="colonia">Colonia</label>
-                    <input type="text" id="colonia" name="colonia" class="form-control" placeholder="Colonia" required>
+                    <input type="text" id="colonia" name="colonia" class="form-control" placeholder="Colonia" required value="{{ form.colonia }}">
                         <div class="invalid-feedback">Por favor ingresa una colonia válida.</div>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="tel">Teléfono</label>
-                    <input type="tel" id="tel" name="tel" class="form-control" placeholder="Teléfono" required pattern="[0-9]{10}">
+                    <input type="tel" id="tel" name="tel" class="form-control" placeholder="Teléfono" required pattern="[0-9]{10}" value="{{ form.tel }}">
                         <div class="invalid-feedback">Por favor ingresa un número de teléfono válido.</div>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="email">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="{{ form.email }}">
                         <div class="invalid-feedback">Por favor ingresa un correo electrónico válido.</div>
                   </div>
                 </div>
@@ -124,7 +134,7 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label for="descuento">Descuento</label>
-                    <select class="form-control" id="descuento" name="descuento">
+                    <select class="form-control" id="descuento" name="descuento" value="{{ form.descuento }}">
                       {% for descuento in descuentos%}
                         <option value="{{descuento.des_id}}"> {{descuento.des_nombre}} - {{descuento.des_descuento}}%</option>
                       {%endfor%}
@@ -134,13 +144,13 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="horas_ayuno">Horas de ayuno</label>
-                    <input type="number" id="horas_ayuno" name="horas_ayuno" class="form-control" placeholder="Horas de ayuno">
+                    <input type="number" id="horas_ayuno" name="horas_ayuno" class="form-control" placeholder="Horas de ayuno" value="{{ form.horas_ayuno }}">
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="hora_recolecion">Horas de recolección</label>
-                    <input type="time" id="hora_recoleccion" name="hora_recoleccion" class="form-control" placeholder="Hora de recoleccion" readonly>
+                    <input type="time" id="hora_recoleccion" name="hora_recoleccion" class="form-control" placeholder="Hora de recoleccion" readonly value="{{ form.hora_recoleccion }}">
                   </div>
                 </div>
               </div>
@@ -150,19 +160,19 @@
             <div class="pl-lg-4 mr-4">
               <div class="form-group">
                 <label class="form-control-label">Alimentos consumidos durante la última comida</label>
-                <textarea rows="3" class="form-control" name="alimentos" id="alimentos" placeholder="Alimentos consumidos durante la última comida"></textarea>
+                <textarea rows="3" class="form-control" name="alimentos" id="alimentos" placeholder="Alimentos consumidos durante la última comida">{{ form.alimentos }}</textarea>
               </div>
               <div class="form-group">
                 <label class="form-control-label">Enfermedades</label>
-                <textarea rows="3" class="form-control" name="enfermedades" id="enfermedades" placeholder="Enfermedades"></textarea>
+                <textarea rows="3" class="form-control" name="enfermedades" id="enfermedades" placeholder="Enfermedades">{{ form.enfermedades }}</textarea>
               </div>
               <div class="form-group">
                 <label class="form-control-label">Medicamentos</label>
-                <textarea rows="3" class="form-control" name="medicamentos" id="medicamentos" placeholder="Medicamentos"></textarea>
+                <textarea rows="3" class="form-control" name="medicamentos" id="medicamentos" placeholder="Medicamentos">{{ form.medicamentos }}</textarea>
               </div>              
               <div class="form-group">
                 <label class="form-control-label" for="rubrica">Rúbrica</label>
-                <input type="text" id="rubrica" name="rubrica" class="form-control" placeholder="Rúbrica" value="">
+                <input type="text" id="rubrica" name="rubrica" class="form-control" placeholder="Rúbrica" value="{{ form.rubrica }}">
               </div>
             </div>
 
@@ -171,7 +181,7 @@
                 <div class="col-lg-12">
                   <div class="form-group mr-4" id="paraquejale2">
                     <label class="form-control-label" for="grupo_analisis">Grupos de Análisis</label>
-                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="grupo_analisis[]" id="grupo_analisis" tabindex="-1" aria-hidden="true" required>
+                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="grupo_analisis[]" id="grupo_analisis" tabindex="-1" aria-hidden="true" required value="{{ form.grupo_analisis }}">
                       {% for grupo in grupos %}
                       <option value="{{ grupo.grupo_id }}">{{ grupo.grupo_nombre }}    -   ${{ grupo.grupo_costo }}</option>
                       {% endfor %}
@@ -184,7 +194,7 @@
                 <div class="col-lg-12">
                   <div class="form-group mr-4" id="paraquejale">
                     <label class="form-control-label" for="analisis">Análisis</label>
-                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true">
+                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true" value="{{ form.analisis }}">
                       {% for analisis_item in analisis %}
                       <option value="{{ analisis_item.ana_id }}">{{ analisis_item.ana_nombre }} - ${{ analisis_item.ana_costo }}</option>
                       {% endfor %}

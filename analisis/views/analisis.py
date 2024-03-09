@@ -19,7 +19,7 @@ def agregar_analisis():
         ana_nombre = request.form.get('ana_nombre')
         ana_costo = request.form.get('ana_costo')
         ana_sta = request.form.get('ana_sta')
-        ana_area_id_fk = request.form.get('ana_area_id_fk')  # Agregar esta línea
+        ana_area_id_fk = request.form.get('ana_area_id_fk')
 
         nuevo_analisis = Analisis(ana_nombre=ana_nombre, ana_costo=ana_costo, ana_sta=ana_sta, ana_area_id_fk=ana_area_id_fk)  # Pasar ana_area_id_fk
         db.session.add(nuevo_analisis)
@@ -43,10 +43,6 @@ def editar_analisis(ana_id):
 def detalle_analisis(ana_id):
     analisis = Analisis.query.get_or_404(ana_id)
     if request.method == 'POST':
-        analisis.analisis_nombre = request.form['ana_nombre']
-        analisis.analisis_costo = request.form['ana_costo']
-        analisis.analisis_sta = request.form['ana_sta']
-        db.session.commit()
         return redirect(url_for('analisis.index'))
     return render_template('analisis/detalle_analisis.html', analisis=analisis, segment='detalle_analisis')
 
