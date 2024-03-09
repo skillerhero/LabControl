@@ -54,18 +54,28 @@ def registrarMuestra():
         db.session.add(muestra)
         db.session.flush()
         db.session.refresh(muestra)
+        # Recorrer los análisis seleccionados y verificar si ya están asociados a la muestra
         for ana in analisis:
-            resultado_analisis = Resultado(resul_ana_id_fk=ana, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
-            db.session.add(resultado_analisis)
-        
+            # Verificar si el análisis ya está asociado a la muestra
+            if not Resultado.query.filter_by(resul_ana_id_fk=ana, resul_mues_id_fk=muestra.mues_id).first():
+                # Si no está asociado, crear una nueva instancia de Resultado y asociarla a la muestra
+                resultado_analisis = Resultado(resul_ana_id_fk=ana, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
+                db.session.add(resultado_analisis)
+
+        # Recorrer los grupos seleccionados y agregar los análisis asociados a cada grupo
         for grupo_id in grupos:
             analisis_grupo = GruposAnalisisRel.query.filter_by(gana_grupo_id_fk=grupo_id).all()
             for relacion in analisis_grupo:
-                resultado_analisis = Resultado(resul_ana_id_fk=relacion.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
-                db.session.add(resultado_analisis)
+                # Verificar si el análisis ya está asociado a la muestra
+                if not Resultado.query.filter_by(resul_ana_id_fk=relacion.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id).first():
+                    # Si no está asociado, crear una nueva instancia de Resultado y asociarla a la muestra
+                    resultado_analisis = Resultado(resul_ana_id_fk=relacion.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
+                    db.session.add(resultado_analisis)
 
+        # Guardar los cambios en la base de datos
         db.session.commit()
 
+    # Obtener los datos necesarios para mostrar en el formulario
     muestras = Muestra.query.all()
     descuentos = Descuento.query.all()
     analisis = Analisis.query.all()

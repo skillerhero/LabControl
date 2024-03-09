@@ -184,7 +184,7 @@
                 <div class="col-lg-12">
                   <div class="form-group mr-4" id="paraquejale">
                     <label class="form-control-label" for="analisis">Análisis</label>
-                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true" required>
+                    <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple" name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true">
                       {% for analisis_item in analisis %}
                       <option value="{{ analisis_item.ana_id }}">{{ analisis_item.ana_nombre }} - ${{ analisis_item.ana_costo }}</option>
                       {% endfor %}
@@ -211,8 +211,8 @@
 </div>
 {% endblock content %}
 
-
 {% block javascripts %}
+<!-- Agrega aquí el script de JavaScript -->
 <script>
 $(document).ready(function() {
   $('#analisis').select2({dropdownParent: $('#paraquejale')});
@@ -245,6 +245,38 @@ $(document).ready(function() {
     if (telefono.length !== 10 || isNaN(telefono)) {
       event.preventDefault(); // Evita que el formulario se envíe si la validación falla
       $('#tel').addClass('is-invalid'); // Marca el campo como inválido
+    }
+  });
+
+  // Validación personalizada para verificar que al menos uno de los campos 'grupo_analisis' o 'analisis' tenga opciones seleccionadas
+  $('#registroMuestraForm').submit(function(event) {
+    var gruposSeleccionados = $('#grupo_analisis').val();
+    var analisisSeleccionados = $('#analisis').val();
+
+    if (!gruposSeleccionados && !analisisSeleccionados) {
+      event.preventDefault(); // Evita que el formulario se envíe si la validación falla
+      alert("Debes seleccionar al menos un grupo de análisis o un análisis.");
+    }
+  });
+
+  // Agregar y quitar el atributo required de los select dependiendo de la selección del usuario
+  $('#analisis').change(function() {
+    if ($(this).val() !== null && $(this).val().length > 0) {
+      // Si se selecciona al menos un análisis, quitamos el atributo required del campo grupo_analisis
+      $('#grupo_analisis').removeAttr('required');
+    } else {
+      // Si no se selecciona ningún análisis, agregamos el atributo required al campo grupo_analisis
+      $('#grupo_analisis').attr('required', 'required');
+    }
+  });
+
+  $('#grupo_analisis').change(function() {
+    if ($(this).val() !== null && $(this).val().length > 0) {
+      // Si se selecciona al menos un grupo, quitamos el atributo required del campo analisis
+      $('#analisis').removeAttr('required');
+    } else {
+      // Si no se selecciona ningún grupo, agregamos el atributo required al campo analisis
+      $('#analisis').attr('required', 'required');
     }
   });
 });

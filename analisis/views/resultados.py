@@ -37,6 +37,8 @@ def agregar_resultados(mues_id):
     if request.method == 'POST':
         selected_analisis_id = request.form['resul_ana_id']
         print("ID del análisis seleccionado:", selected_analisis_id)
+        
+        # Procesar el formulario y actualizar el resultado como ya lo tienes
         resultado = Resultado.query.filter_by(resul_ana_id_fk=selected_analisis_id, resul_mues_id_fk=mues_id, resul_sta='O').first()
 
         if resultado:
@@ -49,8 +51,25 @@ def agregar_resultados(mues_id):
             resultado.resul_sta = "F"
             db.session.commit()
             print("Resultado modificado con éxito.")
+            
+        # Obtener todos los resultados asociados a la muestra
+        resultados_muestra = Resultado.query.filter_by(resul_mues_id_fk=mues_id).all()
+        
+        # Verificar si todos los resultados de la muestra tienen resul_sta == "F"
+        todos_f = all(resultado.resul_sta == "F" for resultado in resultados_muestra)
+        
+        if todos_f:
+            # Si todos los resultados tienen resul_sta == "F", actualiza el estado de la muestra
+            muestra = Muestra.query.get(mues_id)
+            if muestra:
+                muestra.mues_sta = "F"
+                db.session.commit()
+                print("Estado de muestra actualizado a 'F'.")
         else:
             print("No se encontró ningún resultado que cumpla con las condiciones.")
+
+
+
     
     return render_template('resultados/agregar_resultados.html', muestra=muestra, lista_de_analisis=analisis_asociados, segment='agregarresultados')
 
