@@ -13,9 +13,9 @@
         </div>
         <div class="card-body">
           {% if msg %}
-            <div class="alert alert-danger">{{ msg }}</div>
+            <div id="alert-msg" class="alert {{ msg_class }}">{{ msg }}</div>
           {% endif %}
-          <form method="post">
+          <form id="register-form" method="post">
             <div class="form-group">
               <label for="username">Usuario</label>
               <input class="form-control" placeholder="Usuario" type="text" name="username" id="username" required>
@@ -42,5 +42,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Función para mostrar el mensaje durante 6 segundos y luego ocultarlo
+  function showHideAlert() {
+    var alertMsg = document.getElementById('alert-msg');
+    if (alertMsg) {
+      setTimeout(function() {
+        alertMsg.style.display = 'none';
+      }, 6000);
+    }
+  }
+
+  // Ejecutar la función al cargar la página
+  document.addEventListener('DOMContentLoaded', function() {
+    showHideAlert();
+  });
+
+  // Ejecutar la función después de enviar el formulario
+  document.getElementById('register-form').addEventListener('submit', function() {
+    showHideAlert();
+  });
+</script>
 
 {% endblock %}
