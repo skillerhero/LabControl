@@ -1,14 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados</title>
-</head>
-<body>
-    <h1>Resultados de la Predicción</h1>
-    <p>Predicción para el Material A: {{ prediccion_a }}</p>
-    <p>Predicción para el Material B: {{ prediccion_b }}</p>
-    <p>Predicción para el Material C: {{ prediccion_c }}</p>
-</body>
-</html>
+{% extends 'layouts/base.html' %}
+
+{% block title %} Resultados de Predicción {% endblock title %}
+
+{% block content %}
+<div class="header bg-gradient-primary pb-6 pt-5">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h1 class="text-white">Resultados de Predicción</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">Resultados Detallados</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body" style="background-color: rgb(0,112,184);">
+                  <h5 class="text-white">Material A</h5>
+                  <h2 class="text-white">{{ prediccion_a }}</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body" style="background-color: rgb(0,112,184);">
+                  <h5 class="text-white">Material B</h5>
+                  <h2 class="text-white">{{ prediccion_b }}</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body" style="background-color: rgb(0,112,184);">
+                  <h5 class="text-white">Material C</h5>
+                  <h2 class="text-white">{{ prediccion_c }}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
