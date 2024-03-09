@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,26 +7,58 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 20px; /* Márgenes externos */
+            padding: 0;
         }
-        h1 {
+        .header {
+            color: #000000;
             text-align: center;
-        }
-        .muestra-info {
             margin-bottom: 20px;
         }
-        .resultado {
-            margin-bottom: 40px;
+        .separator {
+            border-bottom: 2px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .muestra-info {
+            background-color: rgb(134, 147, 223);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-left: 2%;
+            padding-right: 3%;
+        }
+        .resultados table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .resultados th, .resultados td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        .resultados th {
+            background-color: #5e72e4;
+            color: #fff;
         }
     </style>
 </head>
 <body>
-    <h1>Resultados de la muestra {{ muestra.mues_id }}</h1>
+    <div class="header">
+        <h1>Laboratorio de Análisis Clínicos y Bacteriológicos CUCEI</h1>
+        <div class="separator"></div>
+        <h2>Hoja de Resultados</h2>
+    </div>
+    
     <div class="muestra-info">
-        <p><strong>ID de Muestra:</strong> {{ muestra.mues_id }}</p>
+        <p><strong>Muestra:</strong> {{ muestra.mues_folio }}</p>
         <p><strong>Estado:</strong> {{ muestra.mues_sta }}</p>
     </div>
     <div class="resultados">
-        <h2>Resultados:</h2>
         <table>
             <thead>
                 <tr>
