@@ -11,31 +11,40 @@ from analisis import db
 auth=Blueprint('auth',__name__,url_prefix='/auth')
 
 #registra usuario
-@auth.route('/register',methods=['GET','POST'])
+@auth.route('/register', methods=['GET', 'POST'])
 def register():
-    areas=Area.query.order_by('area_nombre').all()
-    if request.method=='POST':
-        username=request.form.get('username')
-        password=request.form.get('password')
-        area=request.form.get('area')
-        user=User(username,generate_password_hash(password),area)
-        error=""
+    areas = Area.query.order_by('area_nombre').all()
+    msg = None
+    msg_class = ""
+
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        area = request.form.get('area')
+
         if not username:
-            error+="Se requiere nombre de usuario"
+            msg = "Se requiere nombre de usuario."
+            msg_class = "alert-danger"
         elif not password:
-            error+="Se requiere password"
+            msg = "Se requiere contraseña."
+            msg_class = "alert-danger"
         elif not area:
-            error+="Se requiere area"
-        user_name=User.query.filter_by(user_username=username).first()
-        if user_name==None:
-            db.session.add(user)
-            db.session.commit()
+            msg = "Se requiere área."
+            msg_class = "alert-danger"
         else:
-            error+=f"El usuario {username} ya existe"
-        if error=='':
-            flash("Usuario creado")
-        flash(error)
-    return render_template('auth/register.html',areas=areas)
+            user_name = User.query.filter_by(user_username=username).first()
+            if user_name is None:
+                user = User(username, generate_password_hash(password), area)
+                db.session.add(user)
+                db.session.commit()
+                msg = "Usuario creado exitosamente."
+                msg_class = "alert-success"
+            else:
+                msg = f"El usuario {username} ya existe."
+                msg_class = "alert-danger"
+
+    return render_template('auth/register.html', areas=areas, msg=msg, msg_class=msg_class)
+
 
 @auth.route('/login',methods=['GET','POST'])
 def login():
