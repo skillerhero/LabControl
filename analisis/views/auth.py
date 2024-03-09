@@ -45,41 +45,36 @@ def register():
 
     return render_template('auth/register.html', areas=areas, msg=msg, msg_class=msg_class)
 
-
+#Iniciar sesion
 @auth.route('/login',methods=['GET','POST'])
 def login():
-    print("inicio")
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
-        print("username: ", username)
-        print("password: ", password)
-
         error = ""
         user = User.query.filter_by(user_username=username).first()
-        
-        print("user: ", user)
-        print("area: ", user.user_area_id_fk)
-        if user is None:
-            error += "nombre de usuario incorrecto"
-        elif not check_password_hash(user.user_password, password):
-            error += "contraseña incorrecta"
-        if error != '':
-            print(error)
-            flash(error)
-        else:
-            session.clear()
-            session['user_id'] = user.user_id
-            session['user_area_id_fk'] = user.user_area_id_fk
-            print("No hay errores, redirigiendo...")
 
-            if user.user_area_id_fk == 6 or user.user_area_id_fk == 7:
-                return redirect(url_for("home.indexRecepcion")) 
-            else:
-                return redirect(url_for("home.index"))
-    print("fin")
-    return render_template('auth/login.html')
+        if user is None:
+            error += "Nombre de usuario incorrecto."
+        elif not check_password_hash(user.user_password, password):
+            error += "Contraseña incorrecta."
+
+        if error != '':
+            flash(error)
+            return render_template('auth/login.html', msg=error)  # Pasar el mensaje de error a la plantilla HTML
+
+        session.clear()
+        session['user_id'] = user.user_id
+        session['user_area_id_fk'] = user.user_area_id_fk
+
+        if user.user_area_id_fk == 6 or user.user_area_id_fk == 7:
+            return redirect(url_for("home.indexRecepcion")) 
+        else:
+            return redirect(url_for("home.index"))
+
+    return render_template('auth/login.html', msg=None)  # Pasar el mensaje como None si no hay error
+
 
 @auth.before_app_request
 def load_logged_in_user():

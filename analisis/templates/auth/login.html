@@ -22,13 +22,13 @@
               {% endif %}
             </div>
             <div class="card-body px-lg-5 py-lg-5">
-              <form role="form" action="{{ url_for('auth.login') }}" method="POST">
+              <form role="form" action="{{ url_for('auth.login') }}" method="POST" id="login-form">
                 <div class="form-group mb-3">
                   <div class="input-group input-group-merge input-group-alternative">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Email" type="text" name="username">
+                    <input class="form-control" placeholder="Email" type="text" name="username" id="username" required>
                   </div>
                 </div>
                 <div class="form-group">
@@ -36,7 +36,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Password" type="password" name="password">
+                    <input class="form-control" placeholder="Password" type="password" name="password" id="password" required>
                   </div>
                 </div>
                 <div class="custom-control custom-control-alternative custom-checkbox">
@@ -65,4 +65,22 @@
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var usernameInput = document.getElementById('username');
+      var passwordInput = document.getElementById('password');
+      var loginButton = document.getElementById('login-button');
+  
+      loginButton.addEventListener('click', function(event) {
+          // Verificar si los campos están vacíos
+          if (!usernameInput.value || !passwordInput.value) {
+              event.preventDefault(); // Evitar enviar el formulario
+              alert('Por favor, completa todos los campos.');
+          }
+      });
+  });
+  </script>
+  
+
 {% block javascripts %}{% endblock javascripts %}
