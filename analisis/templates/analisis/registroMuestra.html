@@ -126,7 +126,7 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="tel">Teléfono</label>
-                    <input type="tel" id="tel" name="tel" class="form-control" placeholder="Teléfono" required pattern="[0-9]{10}" value="{{ form.tel }}">
+                    <input type="tel" id="tel" name="tel" class="form-control" placeholder="Teléfono" required pattern="[0-9]{10}" value="{{ form.tel }}" maxlength="10">
                         <div class="invalid-feedback">Por favor ingresa un número de teléfono válido.</div>
                   </div>
                 </div>
@@ -240,37 +240,12 @@
 </div>
 {% endblock content %}
 
+
 {% block javascripts %}
 <script>
 $(document).ready(function() {
   $('#analisis').select2({dropdownParent: $('#paraquejale')});
   $('#grupo_analisis').select2({dropdownParent: $('#paraquejale2')});
-
-  // Verificar la fecha de nacimiento y calcular la edad al cambiar
-  $('#fecha_nacimiento').change(function() {
-    var fechaNacimiento = new Date($(this).val());
-    var hoy = new Date();
-    
-    // Calcular la edad
-    var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-    var mes = hoy.getMonth() - fechaNacimiento.getMonth();
-    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
-        edad--;
-    }
-  
-    $('#edad_hidden').val(edad);
-    $('#edad').val(edad);
-    
-    var fechaActual = hoy.toISOString().split('T')[0];
-    $(this).attr('max', fechaActual);
-
-    // Mostrar alerta si la edad no está en el rango deseado
-    if (edad < 0 || edad > 118) {
-      $('#edad_alert').removeClass('d-none');
-    } else {
-      $('#edad_alert').addClass('d-none');
-    }
-  });
 
   // Obtener la hora actual en formato HH:MM
   var now = new Date();
@@ -278,19 +253,16 @@ $(document).ready(function() {
   var minutes = ('0' + now.getMinutes()).slice(-2);
   var currentTime = hours + ':' + minutes;
 
-  // Establecer la hora actual en el campo hora_recoleccion y hacerlo de solo lectura
   $('#hora_recoleccion').val(currentTime).prop('readonly', true);
 
-  // Validación personalizada para el campo de teléfono
   $('#registroMuestraForm').submit(function(event) {
     var telefono = $('#tel').val();
     if (telefono.length !== 10 || isNaN(telefono)) {
-      event.preventDefault(); // Evita que el formulario se envíe si la validación falla
-      $('#tel').addClass('is-invalid'); // Marca el campo como inválido
+      event.preventDefault();
+      $('#tel').addClass('is-invalid');
     }
   });
 
-  // Validación personalizada para verificar que al menos uno de los campos 'grupo_analisis' o 'analisis' tenga opciones seleccionadas
   $('#registroMuestraForm').submit(function(event) {
     var gruposSeleccionados = $('#grupo_analisis').val();
     var analisisSeleccionados = $('#analisis').val();
@@ -301,28 +273,24 @@ $(document).ready(function() {
     }
   });
 
-  // Agregar y quitar el atributo required de los select dependiendo de la selección del usuario
+  // Nos deja seleccionar grupos o analsisi pero nunca ninguno
   $('#analisis').change(function() {
     if ($(this).val() !== null && $(this).val().length > 0) {
-      // Si se selecciona al menos un análisis, quitamos el atributo required del campo grupo_analisis
       $('#grupo_analisis').removeAttr('required');
     } else {
-      // Si no se selecciona ningún análisis, agregamos el atributo required al campo grupo_analisis
       $('#grupo_analisis').attr('required', 'required');
     }
   });
 
   $('#grupo_analisis').change(function() {
     if ($(this).val() !== null && $(this).val().length > 0) {
-      // Si se selecciona al menos un grupo, quitamos el atributo required del campo analisis
       $('#analisis').removeAttr('required');
     } else {
-      // Si no se selecciona ningún grupo, agregamos el atributo required al campo analisis
       $('#analisis').attr('required', 'required');
     }
   });
 
-  // Función para deshabilitar los campos de texto cuando se selecciona 'Ninguno' y establecer su valor como 'Ninguno'
+  // Deshabilitamos text con Ninguno y calculamos la edad
   function toggleTextfield(elementId, checkboxId) {
     $('#' + checkboxId).change(function() {
       if ($(this).prop('checked')) {
@@ -333,12 +301,35 @@ $(document).ready(function() {
     });
   }
 
-  // Llamar a la función para cada checkbox
   toggleTextfield('alimentos', 'ninguno_alimentos');
   toggleTextfield('enfermedades', 'ninguno_enfermedades');
   toggleTextfield('medicamentos', 'ninguno_medicamentos');
 
-  // Enviar 'Ninguno' como valor si se selecciona el checkbox correspondiente antes de enviar el formulario
+  // Calcular la edad al perder el foco en la fecha de nacimiento
+  $('#fecha_nacimiento').blur(function() {
+    var fechaNacimiento = new Date($(this).val());
+    var hoy = new Date();
+    
+    // Calcular la edad
+    var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    var mes = hoy.getMonth() - fechaNacimiento.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+      edad--;
+    }
+  
+    // Mostrar la edad en su input correspondiente
+    $('#edad').val(edad);
+    $('#edad_hidden').val(edad);
+
+    // Mostrar alerta si la edad no está en el rango deseado
+    if (edad < 0 || edad > 118) {
+      $('#edad_alert').removeClass('d-none');
+    } else {
+      $('#edad_alert').addClass('d-none');
+    }
+  });
+
+  // Aquí verificamos que se pase el valor a la base de datos
   $('#registroMuestraForm').submit(function() {
     if ($('#ninguno_alimentos').prop('checked')) {
       $('#alimentos').val('Ninguno');
