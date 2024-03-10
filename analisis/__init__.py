@@ -4,7 +4,7 @@ from flask_socketio import SocketIO
 
 app = Flask(__name__)
 socketio = SocketIO(app)
-
+app.secret_key = 'J^8G#2L$k6hP3@F!d*DbT'
 app.config.from_object('config.DevelopmentConfig')
 db = SQLAlchemy(app)
 

@@ -1,4 +1,3 @@
-import functools
 import random, string
 from flask import render_template, Blueprint, redirect, request, url_for
 from analisis.models.user import User
@@ -10,6 +9,7 @@ from analisis.models.resultado import Resultado
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from analisis import db
 from analisis.views.auth import login_required
+from analisis.views.home import home
 from flask import make_response, flash, session
 from weasyprint import HTML
 
@@ -95,9 +95,9 @@ def registrarMuestra():
         db.session.commit()
         flash('Muestra creada correctamente')
         if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
-            return redirect(url_for("home.indexRecepcion")) 
+            return redirect(url_for('home.index')) 
         else:
-            return redirect(url_for("home.index"))
+            return redirect(url_for("recepcion.home"))
     return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM",form=form_data)
 
 
@@ -114,17 +114,6 @@ def detalle_muestra(mues_id):
 def pdf_resultados(mues_id):
     muestra = Muestra.query.get_or_404(mues_id)
     resultados = Resultado.query.filter_by(resul_mues_id_fk=mues_id).all()
-    for resultado in resultados:
-        print(resultado.resul_id)
-        print(resultado.resul_ana_id_fk)
-        print(resultado.resul_mues_id_fk)
-        print(resultado.resul_fecha)
-        print(resultado.resul_componente)
-        print(resultado.resul_unidad)
-        print(resultado.resul_resultado)
-        print(resultado.resul_rango)
-        print(resultado.resul_fuera_de_rango)
-        print(resultado.resul_sta)
 
     rendered_html = render_template('recepcion/pdf_template.html', muestra=muestra, resultados=resultados)
 
