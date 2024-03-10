@@ -167,22 +167,33 @@
             <!-- Address -->
             <div class="pl-lg-4 mr-4">
               <div class="form-group">
-                <label class="form-control-label">Alimentos consumidos durante la última comida</label>
+                <label class="form-control-label">Alimentos consumidos durante la última comida</label><br>
+
+                <input type="checkbox" id="ninguno_alimentos">
+                <label for="ninguno_alimentos" style="font-size: 0.3rem;">Ninguno</label>
+
                 <textarea rows="3" class="form-control" name="alimentos" id="alimentos" placeholder="Alimentos consumidos durante la última comida">{{ form.alimentos }}</textarea>
+                <input type="hidden" id="alimentos_hidden" name="alimentos_hidden" value="{{ form.alimentos }}">
               </div>
               <div class="form-group">
-                <label class="form-control-label">Enfermedades</label>
+                <label class="form-control-label">Enfermedades</label><br>
+
+                <input type="checkbox" id="ninguno_enfermedades">
+                <label for="ninguno_enfermedades" style="font-size: 0.3rem;">Ninguno</label>
+
                 <textarea rows="3" class="form-control" name="enfermedades" id="enfermedades" placeholder="Enfermedades">{{ form.enfermedades }}</textarea>
+                <input type="hidden" id="enfermedades_hidden" name="enfermedades_hidden" value="{{ form.enfermedades }}">
               </div>
               <div class="form-group">
-                <label class="form-control-label">Medicamentos</label>
+                <label class="form-control-label">Medicamentos</label><br>
+
+                <input type="checkbox" id="ninguno_medicamentos">
+                <label for="ninguno_medicamentos" style="font-size: 0.3rem;">Ninguno</label>
+
                 <textarea rows="3" class="form-control" name="medicamentos" id="medicamentos" placeholder="Medicamentos">{{ form.medicamentos }}</textarea>
-              </div>              
-              <div class="form-group">
-                <label class="form-control-label" for="rubrica">Rúbrica</label>
-                <input type="text" id="rubrica" name="rubrica" class="form-control" placeholder="Rúbrica" value="{{ form.rubrica }}">
+                <input type="hidden" id="medicamentos_hidden" name="medicamentos_hidden" value="{{ form.medicamentos }}">
               </div>
-            </div>
+             </div>
 
             <div class="pl-lg-4">
               <div class="row">
@@ -230,7 +241,6 @@
 {% endblock content %}
 
 {% block javascripts %}
-
 <script>
 $(document).ready(function() {
   $('#analisis').select2({dropdownParent: $('#paraquejale')});
@@ -311,7 +321,38 @@ $(document).ready(function() {
       $('#analisis').attr('required', 'required');
     }
   });
+
+  // Función para deshabilitar los campos de texto cuando se selecciona 'Ninguno' y establecer su valor como 'Ninguno'
+  function toggleTextfield(elementId, checkboxId) {
+    $('#' + checkboxId).change(function() {
+      if ($(this).prop('checked')) {
+        $('#' + elementId).attr('disabled', 'disabled').val('Ninguno');
+      } else {
+        $('#' + elementId).removeAttr('disabled').val('');
+      }
+    });
+  }
+
+  // Llamar a la función para cada checkbox
+  toggleTextfield('alimentos', 'ninguno_alimentos');
+  toggleTextfield('enfermedades', 'ninguno_enfermedades');
+  toggleTextfield('medicamentos', 'ninguno_medicamentos');
+
+  // Enviar 'Ninguno' como valor si se selecciona el checkbox correspondiente antes de enviar el formulario
+  $('#registroMuestraForm').submit(function() {
+    if ($('#ninguno_alimentos').prop('checked')) {
+      $('#alimentos').val('Ninguno');
+      $('#alimentos_hidden').val('Ninguno');
+    }
+    if ($('#ninguno_enfermedades').prop('checked')) {
+      $('#enfermedades').val('Ninguna');
+      $('#enfermedades_hidden').val('Ninguna');
+    }
+    if ($('#ninguno_medicamentos').prop('checked')) {
+      $('#medicamentos').val('Ninguno');
+      $('#medicamentos_hidden').val('Ninguno');
+    }
+  });
 });
 </script>
-
 {% endblock javascripts %}
