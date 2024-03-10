@@ -1,7 +1,5 @@
 from analisis import app, socketio
-from flask import redirect, url_for
-from flask import session
-
+from flask import redirect, url_for,session
 @app.route('/')
 def index():
     if 'user_id' not in session:
