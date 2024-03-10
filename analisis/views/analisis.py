@@ -1,5 +1,5 @@
 # Importaciones necesarias
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,flash
 from analisis import db
 from flask import render_template, Blueprint
 from analisis.models.analisis import Analisis
@@ -21,15 +21,18 @@ def agregar_analisis():
         ana_costo = request.form.get('ana_costo')
         ana_area_id_fk = request.form.get('ana_area_id_fk')
         ana_sta = request.form.get('ana_sta')
-        print("ID del area seleccionada:", ana_area_id_fk)
 
-        nuevo_analisis = Analisis(ana_nombre=ana_nombre, ana_costo=ana_costo, ana_area_id_fk=ana_area_id_fk, ana_sta=ana_sta)
-        print('nuevo analisis:')
-        print(nuevo_analisis)
-        db.session.add(nuevo_analisis)
-        db.session.commit()
-        print('Analisis agregado con éxito')
-        return redirect(url_for('analisis.index'))
+        # Verificar si el análisis ya existe
+        analisis_existente = Analisis.query.filter_by(ana_nombre=ana_nombre).first()
+        if analisis_existente:
+            flash(f'El análisis "{ana_nombre}" ya existe.', 'danger')
+        else:
+            nuevo_analisis = Analisis(ana_nombre=ana_nombre, ana_costo=ana_costo, ana_area_id_fk=ana_area_id_fk, ana_sta=ana_sta)
+            db.session.add(nuevo_analisis)
+            db.session.commit()
+            flash('Análisis creado exitosamente.', 'success')
+            return redirect(url_for('analisis.agregar_analisis'))
+
     areas = Area.query.all()
     return render_template('analisis/agregar_analisis.html', segment='agregar_analisis', areas=areas)
 

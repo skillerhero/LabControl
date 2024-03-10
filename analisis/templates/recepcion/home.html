@@ -23,10 +23,11 @@
               <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>
             </div>
           {% else %}
-            <div class="col-lg-6 col-6"> <!-- Botones de agregar usuario -->
+            <div class="col-lg-6 col-6"> <!-- Botones de admin para agregar users, areas, analisis y grupos -->
               <a href="{{url_for('auth.register')}}" class="btn btn-sm btn-neutral mr-2">Agregar Usuario</a>
               <a href="{{url_for('areas.index')}}" class="btn btn-sm btn-neutral">Áreas</a>
               <a href="{{url_for('analisis.index')}}" class="btn btn-sm btn-neutral">Análisis</a>
+              <a href="{{url_for('grupos.index')}}" class="btn btn-sm btn-neutral">Grupos</a>
             </div>
             <div class="col-lg-6 col-6 text-right"> <!-- Botón de nueva muestra -->
               <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>

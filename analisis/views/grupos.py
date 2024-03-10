@@ -28,7 +28,7 @@ def agregar():
         db.session.commit()
         print('Grupo agregado con éxito')
         return redirect(url_for('grupos.index'))
-    return render_template('grupos/agregar.html', segment='agregar')
+    return render_template('grupos/agregar_grupos.html', segment='agregar')
 
 @grupos.route('/editar/<int:grupo_id>', methods=['GET', 'POST'])
 def editar(grupo_id):
