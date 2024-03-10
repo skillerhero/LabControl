@@ -10,7 +10,7 @@ from analisis.models.resultado import Resultado
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from analisis import db
 from analisis.views.auth import login_required
-from flask import make_response, flash
+from flask import make_response, flash, session
 from weasyprint import HTML
 
 recepcion = Blueprint('recepcion', __name__, url_prefix='/recepcion')
@@ -93,7 +93,11 @@ def registrarMuestra():
                     flash('Uno o más análisis ya están asociados con un grupo.', 'error')
                     return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM", form=form_data)
         db.session.commit()
-
+        flash('Muestra creada correctamente')
+        if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
+            return redirect(url_for("home.indexRecepcion")) 
+        else:
+            return redirect(url_for("home.index"))
     return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM",form=form_data)
 
 
@@ -102,7 +106,6 @@ def registrarMuestra():
 def detalle_muestra(mues_id):
     recepcion = Muestra.query.get_or_404(mues_id)
     if request.method == 'POST':
-        
         return redirect(url_for('recepcion.home'))
     return render_template('recepcion/detalle_muestra.html', recepcion=recepcion, segment='detalle_muestra')
 
