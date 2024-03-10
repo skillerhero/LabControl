@@ -19,31 +19,43 @@
   <!-- Page content -->
   <div class="container-fluid mt--6">
     <div class="row justify-content-center">
-      <div class="col-lg-6" >
+      <div class="col-lg-6">
         <div class="card">
           <!-- Card body -->
           <div class="card-body">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div id="alert-container" class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+                  <script>
+                    // Remover el mensaje después de 6 segundos
+                    setTimeout(function() {
+                      document.getElementById('alert-container').remove();
+                    }, 6000);
+                  </script>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             <form action="{{ url_for('analisis.agregar_analisis') }}" method="POST">
               <div class="form-group">
                 <label for="ana_nombre">Nombre del Análisis:</label>
-                <input type="text" class="form-control" id="ana_nombre" name="ana_nombre">
+                <input type="text" class="form-control" id="ana_nombre" name="ana_nombre" required>
               </div>
               <div class="form-group">
                 <label for="ana_costo">Costo del Análisis:</label>
-                <input type="text" class="form-control" id="ana_costo" name="ana_costo">
+                <input type="text" class="form-control" id="ana_costo" name="ana_costo" required>
               </div>
               <div class="form-group">
                 <label for="ana_area_id_fk">Seleccionar área del análisis:</label>
-                <select class="form-control" id="ana_area_id_fk" name="ana_area_id_fk">
+                <select class="form-control" id="ana_area_id_fk" name="ana_area_id_fk" required>
                   {% for area in areas %}
                     <option value="{{ area.area_id }}">{{ area.area_nombre }}</option>
                   {% endfor %}
-                </select>                
+                </select>
               </div>
-              
               <div class="form-group">
                 <label for="ana_sta">Status del Análisis:</label>
-                <select class="form-control" id="ana_sta" name="ana_sta">
+                <select class="form-control" id="ana_sta" name="ana_sta" required>
                   <option value="A">Activo</option>
                   <option value="O">Offline</option>
                 </select>
@@ -56,3 +68,33 @@
     </div>
   </div>
 {% endblock content %}
+
+
+<!-- Script para mostrar las alertas -->
+<script>
+  // Mostrar alerta de éxito
+  function showAlertSuccess() {
+    document.getElementById("alert-success").style.display = "block";
+    setTimeout(function(){
+      document.getElementById("alert-success").style.display = "none";
+    }, 6000); // Desaparece después de 6 segundos
+  }
+
+  // Mostrar alerta de error
+  function showAlertDanger(nombreAnalisis) {
+    document.getElementById("alert-danger").style.display = "block";
+    document.getElementById("nombre-analisis").innerText = nombreAnalisis;
+    setTimeout(function(){
+      document.getElementById("alert-danger").style.display = "none";
+    }, 6000); // Desaparece después de 6 segundos
+  }
+
+  // Verificar si se envió un mensaje de éxito o error
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('success')) {
+    showAlertSuccess();
+  } else if (urlParams.has('error')) {
+    var nombreAnalisis = urlParams.get('error');
+    showAlertDanger(nombreAnalisis);
+  }
+</script>
