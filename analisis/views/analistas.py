@@ -18,11 +18,18 @@ def get_user(id):
 def getMuestras():
     muestras = []
     if g.user.user_area_id_fk is not None:
-        muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
-                                .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
-                                .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk) \
-                                .filter(Resultado.resul_sta == 'O')\
-                                .all()
+        if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
+            muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
+                        .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
+                        .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk) \
+                        .filter(Resultado.resul_sta == 'O')\
+                        .all()
+        else:
+            muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
+                .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
+                .filter(Resultado.resul_sta == 'F')\
+                .all()
+
     else:
         muestras = Muestra.query.all()
 

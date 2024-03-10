@@ -102,6 +102,8 @@
       url: '{{ url_for("auth.get_user_results_ajax") }}',
       type: 'GET',
       success: function(data){
+        console.log('data: ');
+        console.log(data);
         updateNotifications(data);
       },
       error: function(xhr, status, error){
