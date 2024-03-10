@@ -121,13 +121,11 @@ def get_user_results():
                            .all()
     return resultados
 
-@socketio.on('results_added')
-@socketio.on('results_removed')
 @socketio.on('get_user_results')
 def handle_get_user_results():
     user_results = get_user_results()
     html_content = render_template('notification_modal_ajax.html', results=user_results)
-    emit('notification_update', html_content, broadcast=True)
+    emit('notification_update', {'html_content': html_content}, broadcast=True)
 
 @auth.route('/get_user_results_ajax',methods=['GET','POST'])
 def get_user_results_ajax():

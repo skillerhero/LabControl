@@ -63,7 +63,7 @@ def agregar_resultados(mues_id):
             muestra = Muestra.query.get(mues_id)
             if muestra:
                 muestra.mues_sta = "F"
-                socketio.emit('notification_update', {'message': 'Muestra agregada'}, broadcast=True)
+                socketio.emit('notification_update')
                 db.session.commit()
         else:
             print("No se encontró ningún resultado que cumpla con las condiciones.")

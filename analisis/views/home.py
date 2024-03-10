@@ -10,7 +10,6 @@ from flask import g
 home = Blueprint('home', __name__, url_prefix='/home')
 
 def get_user(id):
-    print('id: ', id)
     user = User.query.get_or_404(id)
     return user
 
@@ -18,7 +17,6 @@ def get_user(id):
 def index():
     user_id = g.user.user_id
     user_area_id = g.user.user_area_id_fk
-    print(user_area_id)
     muestras = []
     if user_area_id is not None:
         muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
@@ -31,9 +29,6 @@ def index():
     descuentos = Descuento.query.all()
     analisis = Analisis.query.all()
     db.session.commit()
-
-    print("muestras index: ", muestras)
-    
     return render_template('analistas/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, segment='index')
 
 @home.route("/recepcion")
