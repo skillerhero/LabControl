@@ -45,6 +45,7 @@ def index():
         muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
                                 .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
                                 .filter(Analisis.ana_area_id_fk == user_area_id) \
+                                .filter(Resultado.resul_sta == 'O')\
                                 .all()
     else:
         muestras = Muestra.query.all()
