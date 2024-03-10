@@ -24,7 +24,7 @@ class Muestra(db.Model):
     mues_edad = db.Column(db.Integer)
     mues_fec_nac = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
 
-    def __init__(self,mues_folio, mues_nombre, mues_apellido_paterno, mues_apellido_materno, mues_calle, mues_num_ext, mues_num_int, mues_colonia, mues_tel, mues_email, mues_horas_ayuno, mues_alimentos, mues_enfermedades, mues_medicamentos, mues_rubrica,mues_des_id_fk)->None:
+    def __init__(self,mues_folio, mues_nombre, mues_apellido_paterno, mues_apellido_materno, mues_calle, mues_num_ext, mues_num_int, mues_colonia, mues_tel, mues_email, mues_horas_ayuno, mues_alimentos, mues_enfermedades, mues_medicamentos, mues_rubrica,mues_des_id_fk, mues_edad, mues_fec_nac)->None:
         self.mues_folio=mues_folio
         self.mues_nombre=mues_nombre
         self.mues_apellido_paterno=mues_apellido_paterno
@@ -41,6 +41,8 @@ class Muestra(db.Model):
         self.mues_medicamentos=mues_medicamentos
         self.mues_rubrica=mues_rubrica
         self.mues_des_id_fk=mues_des_id_fk
+        self.mues_edad=mues_edad
+        self.mues_fec_nac = mues_fec_nac
 
     def __repr__(self) -> str:
         return f'mues_id:{self.mues_id}, mues_folio:{self.mues_folio}'
