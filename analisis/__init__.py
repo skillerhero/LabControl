@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 # Importar las rutas
 from analisis.views.auth import auth
 from analisis.views.recepcion import recepcion
-from analisis.views.home import home
+from analisis.views.analistas import home
 from analisis.views.areas import areas
 from analisis.views.analisis import analisis
 from analisis.views.resultados import resultados
