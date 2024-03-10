@@ -95,9 +95,9 @@ def registrarMuestra():
         db.session.commit()
         flash('Muestra creada correctamente')
         if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
-            return redirect(url_for('home.index')) 
-        else:
             return redirect(url_for("recepcion.home"))
+        else:
+            return redirect(url_for('home.index')) 
     return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM",form=form_data)
 
 

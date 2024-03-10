@@ -4,7 +4,7 @@ from datetime import datetime
 from analisis.models.muestra import Muestra
 from analisis.models.analisis import Analisis
 from analisis.models.resultado import Resultado
-
+from analisis import socketio
 resultados = Blueprint('resultados', __name__, url_prefix='/resultados')
 
 @resultados.route('/')
@@ -63,14 +63,10 @@ def agregar_resultados(mues_id):
             muestra = Muestra.query.get(mues_id)
             if muestra:
                 muestra.mues_sta = "F"
+                socketio.emit('notification_update', {'message': 'Muestra agregada'}, broadcast=True)
                 db.session.commit()
-                print("Estado de muestra actualizado a 'F'.")
         else:
             print("No se encontró ningún resultado que cumpla con las condiciones.")
-
-
-
-    
     return render_template('resultados/agregar_resultados.html', muestra=muestra, lista_de_analisis=analisis_asociados, segment='agregarresultados')
 
 
