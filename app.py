@@ -1,7 +1,6 @@
-from analisis import app
+from analisis import app, socketio
 from flask import redirect, url_for
 from flask import session
-
 
 @app.route('/')
 def index():
@@ -16,4 +15,5 @@ def index():
         return redirect(url_for("home.index"))
 
 if __name__ == '__main__':
+    socketio.run(app)
     app.run()

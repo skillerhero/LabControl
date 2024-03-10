@@ -7,7 +7,8 @@ from analisis.models.analisis import Analisis
 from analisis.models.muestra import Muestra
 from werkzeug.security import check_password_hash,generate_password_hash
 from analisis import db
-
+from flask_socketio import emit
+from analisis import socketio
 auth=Blueprint('auth',__name__,url_prefix='/auth')
 
 #registra usuario
@@ -112,15 +113,21 @@ def login_required(view):
 
 
 def get_user_results():
-    # Consulta para resultados relacionados con análisis y muestras
     resultados = db.session.query(Analisis.ana_nombre, Muestra.mues_nombre)\
                            .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id)\
                            .join(Muestra, Resultado.resul_mues_id_fk == Muestra.mues_id)\
                            .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk)\
                            .add_columns(Muestra.mues_apellido_paterno, Muestra.mues_folio, Muestra.mues_alta_fec)\
                            .all()
-    print(resultados)
     return resultados
+
+@socketio.on('results_added')
+@socketio.on('results_removed')
+@socketio.on('get_user_results')
+def handle_get_user_results():
+    user_results = get_user_results()
+    html_content = render_template('notification_modal_ajax.html', results=user_results)
+    emit('notification_update', html_content, broadcast=True)
 
 @auth.route('/get_user_results_ajax',methods=['GET','POST'])
 def get_user_results_ajax():

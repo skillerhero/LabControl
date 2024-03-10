@@ -1,7 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 app.config.from_object('config.DevelopmentConfig')
 db = SQLAlchemy(app)
@@ -25,6 +27,7 @@ app.register_blueprint(analisis)
 app.register_blueprint(resultados)
 app.register_blueprint(grupos) 
 app.register_blueprint(regresion) 
+
 
 with app.app_context():
     db.create_all()

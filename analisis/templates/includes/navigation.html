@@ -78,25 +78,42 @@
 
 
 {% block javascripts %}
-<script
-  src="https://code.jquery.com/jquery-3.7.1.js"
-  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-  crossorigin="anonymous"></script>
+<script type="module">
+  import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
+
+  const socket = io();
+
+    // Escucha eventos de actualización de notificaciones desde el servidor
+  socket.on('notification_update', function(data){
+    console.log('notification_update event received: ', data);
+    updateNotifications(data);
+  });
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script>
   $(document).ready(function(){
-    console.log('hola');
+
+    // Función para manejar la actualización de notificaciones
+    function updateNotifications(data) {
+      $('#notificationModal .modal-body').html(data);
+    }
+
+    // Maneja el evento de mostrar el modal
     $('#notificationModal').on('show.bs.modal', function(e){
-        $.ajax({
-            url: '{{ url_for("auth.get_user_results_ajax") }}',
-            type: 'GET',
-            success: function(data){
-                $('#notificationModal .modal-body').html(data);
-            },
-            error: function(xhr, status, error){
-                console.error(error);
-            }
-        });
+      // Envía una solicitud al servidor Flask para obtener los resultados
+      $.ajax({
+        url: '{{ url_for("auth.get_user_results_ajax") }}',
+        type: 'GET',
+        success: function(data){
+          updateNotifications(data);
+        },
+        error: function(xhr, status, error){
+          console.error(error);
+        }
+      });
     });
+
+  
   });
-  </script>
+</script>
 {% endblock javascripts %}
