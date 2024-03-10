@@ -8,6 +8,7 @@ from analisis.models.muestra import Muestra
 from werkzeug.security import check_password_hash,generate_password_hash
 from analisis import db
 from flask_socketio import emit
+from flask import jsonify
 from analisis import socketio
 auth=Blueprint('auth',__name__,url_prefix='/auth')
 
@@ -131,4 +132,4 @@ def handle_get_user_results():
 def get_user_results_ajax():
     user_results = get_user_results()
     html_content = render_template('notification_modal_ajax.html', results=user_results)
-    return html_content
+    return jsonify({'html_content': html_content, 'count': len(user_results)})

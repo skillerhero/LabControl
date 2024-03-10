@@ -125,7 +125,6 @@ def pdf_resultados(mues_id):
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=resultados.pdf'
-
     return response
 
 
@@ -148,6 +147,7 @@ def editar_muestra(mues_id):
         recepcion.muestra_medicamentos = request.form['mues_medicamentos']
         recepcion.muestra_rubrica = request.form['mues_rubrica']
         db.session.commit()
+        socketio.emit('notification_update')
         return redirect(url_for('recepcion.home'))
     return render_template('recepcion/editar_muestra.html', recepcion=recepcion, segment='editar_muestra')
 
@@ -158,5 +158,6 @@ def eliminar_muestra(mues_id):
     recepcion = Muestra.query.get_or_404(mues_id)
     db.session.delete(recepcion)
     db.session.commit()
+    socketio.emit('notification_update')
     print('muestra eliminado con éxito')
     return redirect(url_for('recepcion.home'))

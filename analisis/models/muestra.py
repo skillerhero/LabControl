@@ -46,4 +46,14 @@ class Muestra(db.Model):
 
     def __repr__(self) -> str:
         return f'mues_id:{self.mues_id}, mues_folio:{self.mues_folio}'
+    def to_dict(self):
+        return {
+            'mues_alta_fec': self.mues_alta_fec,
+            'mues_folio': self.mues_folio,
+            'mues_nombre': self.mues_nombre,
+            'mues_apellido_paterno': self.mues_apellido_paterno,
+            'mues_apellido_materno': self.mues_apellido_materno,
+            'mues_sta': self.mues_sta,
+            'mues_id': self.mues_id
+        }
     

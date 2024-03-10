@@ -6,12 +6,34 @@ from analisis.models.analisis import Analisis
 from analisis.models.resultado import Resultado
 from analisis import db
 from flask import g
+from flask import jsonify
 
 home = Blueprint('home', __name__, url_prefix='/home')
 
 def get_user(id):
     user = User.query.get_or_404(id)
     return user
+
+@home.route("/getMuestras")
+def getMuestras():
+    muestras = []
+    if g.user.user_area_id_fk is not None:
+        muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
+                                .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
+                                .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk) \
+                                .all()
+    else:
+        muestras = Muestra.query.all()
+
+    muestras_dict = []
+    for muestra in muestras:
+        muestra_dict = muestra.to_dict()
+        muestra_dict['url_detalle'] = url_for('home.detalle_muestra', mues_id=muestra.mues_id)
+        muestra_dict['url_resultados'] = url_for('resultados.agregar_resultados', mues_id=muestra.mues_id)
+        muestras_dict.append(muestra_dict)
+
+    return jsonify(muestras_dict)
+
 
 @home.route("/")
 def index():
