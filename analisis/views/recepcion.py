@@ -9,6 +9,7 @@ from analisis.models.resultado import Resultado
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from analisis.views.auth import get_user_results_ajax
 from analisis import db
+from flask import g
 from analisis.views.auth import login_required
 from analisis.views.analistas import home
 from flask import make_response, flash, session
@@ -108,9 +109,23 @@ def registrarMuestra():
 @recepcion.route('/detalle_muestra/<int:mues_id>', methods=['GET', 'POST'])
 def detalle_muestra(mues_id):
     recepcion = Muestra.query.get_or_404(mues_id)
+    user_area_id = g.user.user_area_id_fk
+    
+    # Obtener los análisis asociados a la muestra y al área del usuario
+    analisis_asociados = []
+    if user_area_id is not None:
+        analisis_asociados = Analisis.query.join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
+                                            .filter(Resultado.resul_mues_id_fk == mues_id) \
+                                            .all()
+    else:
+        analisis_asociados = []
+
+    # Almacenar los análisis asociados en la sesión
+    session['analisis_asociados'] = [analisis.ana_id for analisis in analisis_asociados]
+
     if request.method == 'POST':
-        return redirect(url_for('recepcion.home'))
-    return render_template('recepcion/detalle_muestra.html', recepcion=recepcion, segment='detalle_muestra')
+        return redirect(url_for('analistas.index'))
+    return render_template('recepcion/detalle_muestra.html', recepcion=recepcion, analisis_asociados=analisis_asociados, segment='detalle_muestra')
 
 
 @recepcion.route('/pdf_resultados/<int:mues_id>', methods=['GET', 'POST'])

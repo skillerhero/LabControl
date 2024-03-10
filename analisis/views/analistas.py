@@ -91,22 +91,6 @@ def detalle_muestra(mues_id):
     session['analisis_asociados'] = [analisis.ana_id for analisis in analisis_asociados]
 
     if request.method == 'POST':
-        recepcion.muestra_folio = request.form['mues_folio']
-        recepcion.muestra_nombre = request.form['mues_nombre']
-        recepcion.muestra_apellido_paterno = request.form['mues_apellido_paterno']
-        recepcion.muestra_apellido_materno = request.form['mues_apellido_materno']
-        recepcion.muestra_telefono = request.form['mues_tel']
-        recepcion.muestra_email = request.form['mues_email']
-        recepcion.muestra_calle = request.form['mues_calle']
-        recepcion.muestra_colonia = request.form['mues_colonia']
-        recepcion.muestra_num_ext = request.form['mues_num_ext']
-        recepcion.muestra_num_int = request.form['mues_num_int']
-        recepcion.muestra_horas_ayuno = request.form['mues_horas_ayuno']
-        recepcion.muestra_alimentos = request.form['mues_alimentos']
-        recepcion.muestra_enfermedades = request.form['mues_enfermedades']
-        recepcion.muestra_medicamentos = request.form['mues_medicamentos']
-        recepcion.muestra_rubrica = request.form['mues_rubrica']
-        db.session.commit()
         return redirect(url_for('analistas.index'))
     
     return render_template('analistas/detalle_muestra.html', recepcion=recepcion, analisis_asociados=analisis_asociados, segment='detalle_muestra')
