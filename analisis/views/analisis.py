@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from analisis import db
 from flask import render_template, Blueprint
 from analisis.models.analisis import Analisis
+from analisis.models.area import Area
 
 analisis = Blueprint('analisis', __name__, url_prefix='/analisis')
 
@@ -18,15 +19,19 @@ def agregar_analisis():
     if request.method == 'POST':
         ana_nombre = request.form.get('ana_nombre')
         ana_costo = request.form.get('ana_costo')
-        ana_sta = request.form.get('ana_sta')
         ana_area_id_fk = request.form.get('ana_area_id_fk')
+        ana_sta = request.form.get('ana_sta')
+        print("ID del area seleccionada:", ana_area_id_fk)
 
-        nuevo_analisis = Analisis(ana_nombre=ana_nombre, ana_costo=ana_costo, ana_sta=ana_sta, ana_area_id_fk=ana_area_id_fk)  # Pasar ana_area_id_fk
+        nuevo_analisis = Analisis(ana_nombre, ana_costo, ana_area_id_fk, ana_sta=ana_sta)
         db.session.add(nuevo_analisis)
         db.session.commit()
         print('Analisis agregado con éxito')
         return redirect(url_for('analisis.index'))
-    return render_template('analisis/agregar_analisis.html', segment='agregar_analisis')
+    areas = Area.query.all()
+    return render_template('analisis/agregar_analisis.html', segment='agregar_analisis', areas=areas)
+
+
 
 @analisis.route('/editar_analisis/<int:ana_id>', methods=['GET', 'POST'])
 def editar_analisis(ana_id):

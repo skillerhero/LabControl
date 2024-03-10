@@ -33,6 +33,15 @@
                 <input type="text" class="form-control" id="ana_costo" name="ana_costo">
               </div>
               <div class="form-group">
+                <label for="ana_area_id_fk">Seleccionar área del análisis:</label>
+                <select class="form-control" id="ana_area_id_fk" name="ana_area_id_fk">
+                  {% for area in areas %}
+                    <option value="{{ area.area_id }}">{{ area.area_nombre }}</option>
+                  {% endfor %}
+                </select>                
+              </div>
+              
+              <div class="form-group">
                 <label for="ana_sta">Status del Análisis:</label>
                 <select class="form-control" id="ana_sta" name="ana_sta">
                   <option value="A">Activo</option>
