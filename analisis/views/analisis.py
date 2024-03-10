@@ -23,7 +23,9 @@ def agregar_analisis():
         ana_sta = request.form.get('ana_sta')
         print("ID del area seleccionada:", ana_area_id_fk)
 
-        nuevo_analisis = Analisis(ana_nombre, ana_costo, ana_area_id_fk, ana_sta=ana_sta)
+        nuevo_analisis = Analisis(ana_nombre=ana_nombre, ana_costo=ana_costo, ana_area_id_fk=ana_area_id_fk, ana_sta=ana_sta)
+        print('nuevo analisis:')
+        print(nuevo_analisis)
         db.session.add(nuevo_analisis)
         db.session.commit()
         print('Analisis agregado con éxito')

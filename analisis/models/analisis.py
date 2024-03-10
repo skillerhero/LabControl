@@ -10,7 +10,7 @@ class Analisis(db.Model):
     def __init__(self,ana_nombre, ana_costo, ana_area_id_fk, ana_sta=ana_sta)->None:
         self.ana_nombre =ana_nombre
         self.ana_costo=ana_costo
-        self.ana_area_id=ana_area_id_fk
+        self.ana_area_id_fk=ana_area_id_fk
         self.ana_sta = ana_sta
 
     def __repr__(self) -> str:
