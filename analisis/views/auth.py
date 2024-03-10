@@ -121,7 +121,6 @@ def get_user_results():
             .filter(Muestra.mues_sta == 'F')\
             .group_by(Muestra.mues_nombre)\
             .all()
-
     else:
         resultados = db.session.query(Analisis.ana_nombre, Muestra.mues_nombre)\
             .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id)\

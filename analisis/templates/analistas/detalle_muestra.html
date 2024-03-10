@@ -42,7 +42,7 @@
           <h2 class="mb-4"><span class="section-title">Datos clínicos</span></h2>
           <div class="row">
             <div class="col-md-6">
-              <p><strong>Horas de ayuno:</strong> {{ recepcion.mues_horas_ayuno }}</p>            
+              <p><strong>Horas de ayuno:</strong> {{ recepcion.mues_horas_ayuno }}</p>
               <p><strong>Alimentos consumidos durante la última comida:</strong> {{ recepcion.mues_alimentos }}</p>
             </div>
             <div class="col-md-6">
@@ -57,18 +57,19 @@
           <h2 class="mb-4"><span class="section-title">Análisis Asociados</span></h2>
           <ul>
             {% for analisis in analisis_asociados %}
-              <li>{{ analisis.ana_nombre }}</li>
+            <li>{{ analisis.ana_nombre }}</li>
             {% endfor %}
           </ul>
 
           <div class="row">
             <div class="col-lg-12">
               {% if recepcion.mues_sta == 'F' %}
-                <a href="{{ url_for('recepcion.pdf_resultados', mues_id=recepcion.mues_id) }}" class="btn btn-primary float-right" style="margin-top: 0%;">Imprimir PDF</a>
+              <a href="{{ url_for('recepcion.pdf_resultados', mues_id=recepcion.mues_id) }}"
+                class="btn btn-primary float-right" style="margin-top: 0%;">Imprimir PDF</a>
               {% endif %}
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>
