@@ -114,19 +114,23 @@ def login_required(view):
 
 
 def get_user_results():
-    resultados = db.session.query(Analisis.ana_nombre, Muestra.mues_nombre)\
-                           .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id)\
-                           .join(Muestra, Resultado.resul_mues_id_fk == Muestra.mues_id)\
-                           .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk)\
-                           .add_columns(Muestra.mues_apellido_paterno, Muestra.mues_folio, Muestra.mues_alta_fec)\
-                           .all()
+    if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
+        resultados = db.session.query(Analisis.ana_nombre, Muestra.mues_nombre)\
+                        .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id)\
+                        .join(Muestra, Resultado.resul_mues_id_fk == Muestra.mues_id)\
+                        .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk)\
+                        .filter(Resultado.resul_sta == 'F')\
+                        .add_columns(Muestra.mues_apellido_paterno, Muestra.mues_folio, Muestra.mues_alta_fec)\
+                        .all()
+    else:
+        resultados = db.session.query(Analisis.ana_nombre, Muestra.mues_nombre)\
+                        .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id)\
+                        .join(Muestra, Resultado.resul_mues_id_fk == Muestra.mues_id)\
+                        .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk)\
+                        .filter(Resultado.resul_sta == 'O')\
+                        .add_columns(Muestra.mues_apellido_paterno, Muestra.mues_folio, Muestra.mues_alta_fec)\
+                        .all()
     return resultados
-
-@socketio.on('get_user_results')
-def handle_get_user_results():
-    user_results = get_user_results()
-    html_content = render_template('notification_modal_ajax.html', results=user_results)
-    emit('notification_update', {'html_content': html_content}, broadcast=True)
 
 @auth.route('/get_user_results_ajax',methods=['GET','POST'])
 def get_user_results_ajax():

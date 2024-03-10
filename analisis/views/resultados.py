@@ -50,6 +50,7 @@ def agregar_resultados(mues_id):
             resultado.resul_fuera_de_rango = request.form.get('resul_fuera_de_rango', '').lower() == 'true'
             resultado.resul_sta = "F"
             db.session.commit()
+            socketio.emit('notification_update')
             print("Resultado modificado con éxito.")
             
         # Obtener todos los resultados asociados a la muestra
@@ -63,10 +64,11 @@ def agregar_resultados(mues_id):
             muestra = Muestra.query.get(mues_id)
             if muestra:
                 muestra.mues_sta = "F"
-                socketio.emit('notification_update')
                 db.session.commit()
+                socketio.emit('notification_update')
         else:
             print("No se encontró ningún resultado que cumpla con las condiciones.")
+        return redirect(url_for('resultados.agregar_resultados', mues_id=mues_id))
     return render_template('resultados/agregar_resultados.html', muestra=muestra, lista_de_analisis=analisis_asociados, segment='agregarresultados')
 
 
@@ -85,6 +87,7 @@ def editar_resultados(resul_id):
         resultado.resul_ana_id = request.form.get('resul_ana_id')
         resultado.resul_mues_id = request.form.get('resul_mues_id')
         db.session.commit()
+        socketio.emit('notification_update')
         return redirect(url_for('resultados.index'))
     
     return render_template('resultados/editar_resultados.html', resultado=resultado, muestras=muestras, lista_de_analisis=lista_de_analisis, segment='editarresult')
@@ -95,6 +98,7 @@ def eliminar_resultados(resul_id):
     resultado = Resultado.query.get_or_404(resul_id)
     db.session.delete(resultado)
     db.session.commit()
+    socketio.emit('notification_update')
     print('resultado eliminado con éxito')
     return redirect(url_for('resultados.index'))
 
