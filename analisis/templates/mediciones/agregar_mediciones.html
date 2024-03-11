@@ -1,0 +1,54 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Agregar Grupo {% endblock title %}
+
+{% block content %}
+  <!-- Header -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h1 class="text-white">Agregar medición</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+      <div class="col-lg-6" >
+        <div class="card">
+          <!-- Card body -->
+          <div class="card-body">
+            <form action="{{ url_for('mediciones.agregar') }}" method="POST">
+                <div class="form-group">
+                    <label for="mediciones_analisis_ana_id_fk">Seleccionar el análisis:</label>
+                    <select class="form-control" id="mediciones_analisis_ana_id_fk" name="mediciones_analisis_ana_id_fk" required>
+                      {% for analisis in lista_analisis %}
+                        <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+              <div class="form-group">
+                <label for="grupo_nombre">Componente:</label>
+                <input type="text" class="form-control" id="mediciones_analisis_componente" name="mediciones_analisis_componente">
+              </div>
+              <div class="form-group">
+                <label for="grupo_costo">Unidad:</label>
+                <input type="text" class="form-control" id="mediciones_analisis_unidad" name="mediciones_analisis_unidad">
+              </div>
+              <div class="form-group">
+                <label for="grupo_costo">Rango:</label>
+                <input type="text" class="form-control" id="mediciones_analisis_rango" name="mediciones_analisis_rango">
+              </div>
+              <button type="submit" class="btn btn-primary">Agregar medición</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

@@ -17,6 +17,7 @@ from analisis.views.analisis import analisis
 from analisis.views.resultados import resultados
 from analisis.views.grupos import grupos
 from analisis.views.regresion import regresion
+from analisis.views.mediciones import mediciones
 
 # Registrar blueprints
 app.register_blueprint(auth)
@@ -27,7 +28,7 @@ app.register_blueprint(analisis)
 app.register_blueprint(resultados)
 app.register_blueprint(grupos) 
 app.register_blueprint(regresion) 
-
+app.register_blueprint(mediciones) 
 
 with app.app_context():
     db.create_all()

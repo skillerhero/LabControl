@@ -4,13 +4,11 @@ import datetime
 class Resultado(db.Model):
     __tablename__ = 'resultados'
     resul_id = db.Column(db.Integer, primary_key=True)
+    resul_medicion_analisis_id_fk = db.Column(db.Integer)
     resul_ana_id_fk = db.Column(db.Integer)
     resul_mues_id_fk = db.Column(db.Integer)
     resul_fecha = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
-    resul_componente = db.Column(db.String(50))
-    resul_unidad = db.Column(db.String(50))
     resul_resultado = db.Column(db.String(50))
-    resul_rango = db.Column(db.String(50))
     resul_fuera_de_rango = db.Column(db.Boolean)
     resul_sta = db.Column(db.String(50))
 
