@@ -10,7 +10,9 @@ __pycache__/*
 __pycache__
 analisis/__pycache__/*
 analisis/models/__pycache__/*
+analisis/models/__pycache__/
 analisis/views/__pycache__/*
+analisis/views/__pycache__/
 # Ignora archivos de base de datos
 db.sqlite3
 

@@ -7,9 +7,9 @@ from analisis.models.analisis import Analisis
 from analisis.models.grupos import Grupo
 from analisis.models.resultado import Resultado
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
+from analisis.models.mediciones_analisis import MedicionesAnalisis
 from analisis import db
 from flask import g
-from analisis.views.analistas import home
 from flask import make_response, flash, session
 from weasyprint import HTML
 from analisis import socketio
@@ -32,7 +32,6 @@ def home():
 
 @recepcion.route("/create", methods=['GET', 'POST'])
 def registrarMuestra():
-    muestras = Muestra.query.all()
     descuentos = Descuento.query.all()
     lista_analisis = Analisis.query.all()
     lista_grupos = Grupo.query.all()
@@ -44,7 +43,7 @@ def registrarMuestra():
             if not Muestra.query.filter_by(mues_folio=folio_generado).first():
                 break
         print(folio_generado)
-        return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM", form=form_data, folio_generado=folio_generado)
+        return render_template('analisis/registroMuestra.html', descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM", form=form_data, folio_generado=folio_generado)
 
     if request.method == 'POST':
         mues_folio = request.form.get('folio_hidden')
@@ -76,23 +75,26 @@ def registrarMuestra():
         db.session.flush()
         db.session.refresh(muestra)
 
+
+
         for ana in analisis:
+            lista_mediciones = MedicionesAnalisis.query.filter_by(mediciones_analisis_ana_id_fk = ana).all()
             if not Resultado.query.filter_by(resul_ana_id_fk=ana, resul_mues_id_fk=muestra.mues_id).first():
-                # Si no está asociado, crear una nueva instancia de Resultado y asociarla a la muestra
-                resultado_analisis = Resultado(resul_ana_id_fk=ana, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
-                db.session.add(resultado_analisis)
+                for medicion in lista_mediciones:
+                    resultado_analisis = Resultado(resul_ana_id_fk=ana,resul_medicion_analisis_id_fk=medicion.mediciones_analisis_id, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_resultado=None, resul_fuera_de_rango=None, resul_sta="O")
+                    db.session.add(resultado_analisis)
 
         for grupo_id in grupos:
             analisis_grupo = GruposAnalisisRel.query.filter_by(gana_grupo_id_fk=grupo_id).all()
-            for relacion in analisis_grupo:
-                # Verificar si el análisis ya está asociado a la muestra
-                if not Resultado.query.filter_by(resul_ana_id_fk=relacion.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id).first():
-                    # Si no está asociado, crear una nueva instancia de Resultado y asociarla a la muestra
-                    resultado_analisis = Resultado(resul_ana_id_fk=relacion.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_componente=None, resul_unidad=None, resul_resultado=None, resul_rango=None, resul_fuera_de_rango=None, resul_sta="O")
-                    db.session.add(resultado_analisis)
+            for ana in analisis_grupo:
+                lista_mediciones = MedicionesAnalisis.query.filter_by(mediciones_analisis_ana_id_fk = ana.gana_ana_id_fk).all()
+                if not Resultado.query.filter_by(resul_ana_id_fk=ana.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id).first():
+                    for medicion in lista_mediciones:
+                        resultado_analisis = Resultado(resul_ana_id_fk=ana.gana_ana_id_fk, resul_medicion_analisis_id_fk=medicion.mediciones_analisis_id,resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_resultado=None, resul_fuera_de_rango=None, resul_sta="O")
+                        db.session.add(resultado_analisis)
                 else:
                     flash('Uno o más análisis ya están asociados con un grupo.', 'error')
-                    return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM", form=form_data)
+                    return render_template('analisis/registroMuestra.html', descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM", form=form_data)
         db.session.commit()
         flash('Muestra creada correctamente')
         socketio.emit('notification_update')
@@ -100,7 +102,7 @@ def registrarMuestra():
             return redirect(url_for("recepcion.home"))
         else:
             return redirect(url_for('home.index')) 
-    return render_template('analisis/registroMuestra.html', muestras=muestras, descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM",form=form_data)
+    return render_template('analisis/registroMuestra.html', descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM",form=form_data)
 
 
 

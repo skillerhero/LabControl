@@ -4,7 +4,9 @@ from datetime import datetime
 from analisis.models.muestra import Muestra
 from analisis.models.analisis import Analisis
 from analisis.models.resultado import Resultado
+from analisis.models.mediciones_analisis import MedicionesAnalisis
 from analisis import socketio
+import json
 resultados = Blueprint('resultados', __name__, url_prefix='/resultados')
 
 @resultados.route('/')
@@ -21,38 +23,37 @@ def agregar_resultados(mues_id):
     user_area_id = g.user.user_area_id_fk
     
     # Obtener los análisis asociados a la muestra y al área del usuario
-    analisis_asociados = []
+    lista_de_analisis = []
     if user_area_id is not None:
-        analisis_asociados = Analisis.query.join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
-                                            .filter(Resultado.resul_mues_id_fk == mues_id) \
-                                            .filter(Analisis.ana_area_id_fk == user_area_id) \
-                                            .filter(Resultado.resul_sta == "O")\
-                                            .all()
+        lista_de_analisis = Analisis.query.join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
+            .filter(Resultado.resul_mues_id_fk == mues_id) \
+            .filter(Analisis.ana_area_id_fk == user_area_id) \
+            .filter(Resultado.resul_sta == "O")\
+            .all()
     else:
-        analisis_asociados = []
+        lista_de_analisis = []
 
     # Almacenar los análisis asociados en la sesión
-    session['analisis_asociados'] = [analisis.ana_id for analisis in analisis_asociados]
+    session['analisis_asociados'] = [analisis.ana_id for analisis in lista_de_analisis]
     
     if request.method == 'POST':
         selected_analisis_id = request.form['resul_ana_id']
-        print("ID del análisis seleccionado:", selected_analisis_id)
-        
-        # Procesar el formulario y actualizar el resultado como ya lo tienes
-        resultado = Resultado.query.filter_by(resul_ana_id_fk=selected_analisis_id, resul_mues_id_fk=mues_id, resul_sta='O').first()
+        mediciones = MedicionesAnalisis.query.filter_by(mediciones_analisis_ana_id_fk=selected_analisis_id).all()
+        for medicion in mediciones:
+            resultado = Resultado.query.filter_by(resul_ana_id_fk=selected_analisis_id, resul_mues_id_fk=mues_id, resul_sta='O').first()
+            if resultado:
+                resultado.resul_fecha = datetime.now()  
+                resultado.resul_resultado = request.form[f'resul_resultado_{medicion.mediciones_analisis_id}']
+                resultado.resul_fuera_de_rango = request.form.get(f'resul_fuera_de_rango_{medicion.mediciones_analisis_id}', '').lower() == 'true'
+                resultado.resul_sta = "F"
 
-        if resultado:
-            resultado.resul_fecha = datetime.now()  
-            resultado.resul_componente = request.form['resul_componente']
-            resultado.resul_unidad = request.form['resul_unidad']
-            resultado.resul_resultado = request.form['resul_resultado']
-            resultado.resul_rango = request.form['resul_rango']
-            resultado.resul_fuera_de_rango = request.form.get('resul_fuera_de_rango', '').lower() == 'true'
-            resultado.resul_sta = "F"
-            db.session.commit()
-            socketio.emit('notification_update')
-            print("Resultado modificado con éxito.")
-            
+                print('resultado: ')
+                print(resultado)
+                db.session.commit()
+                socketio.emit('notification_update')
+                print("Resultado modificado con éxito.")
+
+        #-----------------------------------------------------------------------------------------------------------------------------------------------------------
         # Obtener todos los resultados asociados a la muestra
         resultados_muestra = Resultado.query.filter_by(resul_mues_id_fk=mues_id).all()
         
@@ -70,7 +71,13 @@ def agregar_resultados(mues_id):
         else:
             print("No se encontró ningún resultado que cumpla con las condiciones.")
         return redirect(url_for('resultados.agregar_resultados', mues_id=mues_id))
-    return render_template('resultados/agregar_resultados.html', muestra=muestra, lista_de_analisis=analisis_asociados, segment='agregarresultados')
+    mediciones_por_analisis = {}
+    for analisis in lista_de_analisis:
+        mediciones_por_analisis[analisis.ana_id] = MedicionesAnalisis.query.filter_by(mediciones_analisis_ana_id_fk=analisis.ana_id).all()
+
+
+
+    return render_template('resultados/agregar_resultados.html', mediciones_por_analisis=json.dumps({k: [i.serialize for i in v] for k, v in mediciones_por_analisis.items()}), muestra=muestra, lista_de_analisis=lista_de_analisis,segment='agregarresultados')
 
 
 @resultados.route('/editar_resultados/<int:resul_id>', methods=['GET', 'POST'])

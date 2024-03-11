@@ -12,14 +12,23 @@ class Resultado(db.Model):
     resul_fuera_de_rango = db.Column(db.Boolean)
     resul_sta = db.Column(db.String(50))
 
-    def __init__(self, resul_ana_id_fk,resul_mues_id_fk,resul_fecha, resul_componente, resul_unidad, resul_resultado, resul_rango, resul_fuera_de_rango,resul_sta):
+    def __init__(self, resul_medicion_analisis_id_fk, resul_ana_id_fk,resul_mues_id_fk,
+                 resul_fecha, resul_resultado, resul_fuera_de_rango,resul_sta):
         super(Resultado, self).__init__()
-        self.resul_fecha = resul_fecha
-        self.resul_componente = resul_componente
-        self.resul_unidad = resul_unidad
-        self.resul_resultado = resul_resultado
-        self.resul_rango = resul_rango
-        self.resul_fuera_de_rango = resul_fuera_de_rango
+        self.resul_medicion_analisis_id_fk = resul_medicion_analisis_id_fk
         self.resul_ana_id_fk = resul_ana_id_fk
         self.resul_mues_id_fk = resul_mues_id_fk
+        self.resul_fecha = resul_fecha
+        self.resul_resultado = resul_resultado
+        self.resul_fuera_de_rango = resul_fuera_de_rango
         self.resul_sta = resul_sta
+
+    def __repr__(self):
+        return f"Resultado(resul_id={self.resul_id}, " \
+        f"resul_medicion_analisis_id_fk={self.resul_medicion_analisis_id_fk}, " \
+        f"resul_ana_id_fk={self.resul_ana_id_fk}, " \
+        f"resul_mues_id_fk={self.resul_mues_id_fk}, " \
+        f"resul_fecha={self.resul_fecha}, " \
+        f"resul_resultado={self.resul_resultado}, " \
+        f"resul_fuera_de_rango={self.resul_fuera_de_rango}, " \
+        f"resul_sta={self.resul_sta})"

@@ -24,43 +24,28 @@
         <!-- Card body -->
         <div class="card-body">
           <form action="{{ url_for('resultados.agregar_resultados', mues_id=muestra.mues_id) }}" method="POST">
+            <div class="form-group">
 
-            <div class="form-group">
-              <label for="resul_componente">Componente:</label>
-              <input type="text" class="form-control" id="resul_componente" name="resul_componente">
-            </div>
-            <div class="form-group">
-              <label for="resul_unidad">Unidad:</label>
-              <input type="text" class="form-control" id="resul_unidad" name="resul_unidad">
-            </div>
-            <div class="form-group">
-              <label for="resul_resultado">Resultado:</label>
-              <input type="text" class="form-control" id="resul_resultado" name="resul_resultado">
-            </div>
-            <div class="form-group">
-              <label for="resul_rango">Rango:</label>
-              <input type="text" class="form-control" id="resul_rango" name="resul_rango">
-            </div>
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="resul_fuera_de_rango" name="resul_fuera_de_rango" value="true">
-              <label class="form-check-label" for="resul_fuera_de_rango">Fuera de rango</label>
+              <div id="mediciones_info">
+                <!-- Aquí se mostrará la información de mediciones_analisis -->
+              </div>
             </div>
             <div class="form-group">
               <label for="resul_ana_id">Análisis:</label>
               <select class="form-control" id="resul_ana_id" name="resul_ana_id">
-                  {% for analisis in lista_de_analisis %}
-                  <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }}</option>
-                  {% endfor %}
+                {% for analisis in lista_de_analisis %}
+                <option value="{{ analisis.ana_id }}">{{ analisis.ana_nombre }}</option>
+                {% endfor %}
               </select>
             </div>
+
             <div class="form-group">
               <label for="resul_mues_id">Muestra:</label>
               <select class="form-control" id="resul_mues_id" name="resul_mues_id" disabled>
-                  <option value="{{ muestra.mues_id }}" selected>{{ muestra.mues_folio }}</option>
+                <option value="{{ muestra.mues_id }}" selected>{{ muestra.mues_folio }}</option>
               </select>
-          </div>
-          
-          
+            </div>
+
             <button type="submit" class="btn btn-primary">Agregar Resultado</button>
           </form>
         </div>
@@ -70,13 +55,38 @@
 </div>
 {% endblock content %}
 
-
+{% block javascripts %}
 <script>
-  var select = document.getElementById("resul_ana_id");
-  function obtenerAnalisisId() {
-      var analisisId = select.value;
-      console.log("ID del análisis seleccionado:", analisisId);
+  var selectAnalisis = document.getElementById('resul_ana_id');
+  function generarHtml() {
+    var analisisId = selectAnalisis.value;
+    var medicionesPorAnalisis = JSON.parse('{{ mediciones_por_analisis | safe }}');
+    var mediciones = medicionesPorAnalisis[analisisId];
+    var divMedicionesInfo = document.getElementById('mediciones_info');
+
+    divMedicionesInfo.innerHTML = '';
+    for (var i = 0; i < mediciones.length; i++) {
+      var medicion = mediciones[i];
+      divMedicionesInfo.innerHTML += `
+      <div class="form-group">
+        <label for="resul_resultado_${medicion.mediciones_analisis_id}">${medicion.mediciones_analisis_componente}:</label>
+        <input type="text" class="form-control" id="resul_resultado_${medicion.mediciones_analisis_id}" name="resul_resultado_${medicion.mediciones_analisis_id}">
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="resul_fuera_de_rango_${medicion.mediciones_analisis_id}" name="resul_fuera_de_rango_${medicion.mediciones_analisis_id}" value="true">
+        <label class="form-check-label" for="resul_fuera_de_rango_${medicion.mediciones_analisis_id}">Fuera de rango</label>
+      </div>
+    `;
+    }
   }
-  select.addEventListener("input", obtenerAnalisisId);
-  obtenerAnalisisId();
+
+  selectAnalisis.addEventListener('change', function () {
+    generarHtml();
+  });
+
+  $( document ).ready(function() {
+    generarHtml();
+  });
 </script>
+
+{% endblock javascripts %}

@@ -15,3 +15,13 @@ class MedicionesAnalisis(db.Model):
 
     def __repr__(self) -> str:
         return f'Medicion:{self.mediciones_analisis_id}'
+    
+    @property
+    def serialize(self):
+        return {
+            'mediciones_analisis_id': self.mediciones_analisis_id,
+            'mediciones_analisis_ana_id_fk': self.mediciones_analisis_ana_id_fk,
+            'mediciones_analisis_componente': self.mediciones_analisis_componente,
+            'mediciones_analisis_unidad': self.mediciones_analisis_unidad,
+            'mediciones_analisis_rango': self.mediciones_analisis_rango
+        }
