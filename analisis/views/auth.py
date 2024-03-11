@@ -7,9 +7,7 @@ from analisis.models.analisis import Analisis
 from analisis.models.muestra import Muestra
 from werkzeug.security import check_password_hash,generate_password_hash
 from analisis import db
-from flask_socketio import emit
 from flask import jsonify
-from analisis import socketio
 auth=Blueprint('auth',__name__,url_prefix='/auth')
 
 #registra usuario

@@ -14,4 +14,4 @@ class Descuento(db.Model):
         self.des_descuento=des_descuento
 
     def __repr__(self) -> str:
-        return f'User:{self.des_nombre}'
+        return f'Descuento:{self.des_nombre}'

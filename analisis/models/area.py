@@ -11,4 +11,4 @@ class Area(db.Model):
         self.area_sta = area_sta
 
     def __repr__(self) -> str:
-        return f'User:{self.area_nombre}'
+        return f'Area:{self.area_nombre}'

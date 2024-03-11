@@ -1,5 +1,4 @@
 from analisis import db
-import datetime
 class GruposAnalisisRel(db.Model):
     __tablename__='grupos_analisis_rel'
     gana_grupo_id_fk =db.Column(db.Integer,primary_key=True)

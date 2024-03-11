@@ -1,5 +1,4 @@
 from analisis import db
-
 class Grupo(db.Model):
     __tablename__ = 'grupos'
 

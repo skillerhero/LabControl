@@ -1,4 +1,3 @@
-# Importaciones necesarias
 from flask import render_template, request, redirect, url_for, flash
 from analisis import db
 from flask import render_template, Blueprint

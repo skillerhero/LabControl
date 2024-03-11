@@ -5,8 +5,7 @@ from analisis.models.descuento import Descuento
 from analisis.models.analisis import Analisis
 from analisis.models.resultado import Resultado
 from analisis import db
-from flask import g
-from flask import jsonify
+from flask import g, jsonify
 
 home = Blueprint('home', __name__, url_prefix='/home')
 

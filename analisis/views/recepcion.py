@@ -7,10 +7,8 @@ from analisis.models.analisis import Analisis
 from analisis.models.grupos import Grupo
 from analisis.models.resultado import Resultado
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
-from analisis.views.auth import get_user_results_ajax
 from analisis import db
 from flask import g
-from analisis.views.auth import login_required
 from analisis.views.analistas import home
 from flask import make_response, flash, session
 from weasyprint import HTML
