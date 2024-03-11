@@ -4,103 +4,109 @@
 
 {% block content %}
 {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div class="alert alert-danger" role="alert">
-      <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
+{% if messages %}
+<div class="alert alert-danger" role="alert">
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
 {% endwith %}
-  <div class="header bg-primary pb-6">
-    <div class="container-fluid">
-      <div class="header-body">
-        <div class="row align-items-center py-4">
-          {% if g.area_nombre == 'Recepción' %}
-            <div class="col-lg-12 text-right"> <!-- Botón de nueva muestra -->
-              <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>
-            </div>
-          {% else %}
-            <div class="col-lg-6 col-6"> <!-- Botones de admin para agregar users, areas, analisis y grupos -->
-              <a href="{{url_for('auth.register')}}" class="btn btn-sm btn-neutral mr-2">Agregar Usuario</a>
-              <a href="{{url_for('areas.index')}}" class="btn btn-sm btn-neutral">Áreas</a>
-              <a href="{{url_for('analisis.index')}}" class="btn btn-sm btn-neutral">Análisis</a>
-              <a href="{{url_for('grupos.index')}}" class="btn btn-sm btn-neutral">Grupos</a>
-            </div>
-            <div class="col-lg-6 col-6 text-right"> <!-- Botón de nueva muestra -->
-              <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>
-            </div>
-          {% endif %}
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        {% if g.area_nombre == 'Recepción' %}
+        <div class="col-lg-12 text-right"> <!-- Botón de nueva muestra -->
+          <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>
+        </div>
+        {% else %}
+        <div class="col-lg-6 col-6"> <!-- Botones de admin para agregar users, areas, analisis y grupos -->
+          <a href="{{url_for('auth.register')}}" class="btn btn-sm btn-neutral mr-2">Agregar Usuario</a>
+          <a href="{{url_for('areas.index')}}" class="btn btn-sm btn-neutral">Áreas</a>
+          <a href="{{url_for('analisis.index')}}" class="btn btn-sm btn-neutral">Análisis</a>
+          <a href="{{url_for('grupos.index')}}" class="btn btn-sm btn-neutral">Grupos</a>
+        </div>
+        <div class="col-lg-6 col-6 text-right"> <!-- Botón de nueva muestra -->
+          <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <h3 class="mb-0">Muestras Recibidas Recepción</h3>
+        </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light text-center">
+              <tr>
+                <th scope="col" class="sort" data-sort="name">Recepción</th>
+                <th scope="col" class="sort" data-sort="budget">Folio</th>
+                <th scope="col" class="sort" data-sort="status">Nombre</th>
+                <th scope="col">Estatus</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              {%for muestra in muestras%}
+              <tr scope="row">
+                <td scope="col" class="text-center">
+                  <span class="name mb-0 text-sm">{{ muestra.mues_alta_fec }}</span>
+                </td>
+                <td scope="col" class="text-center">
+                  <span class="name mb-0 text-sm">{{ muestra.mues_folio }}</span>
+                </td>
+                <td scope="col" class="text-center">
+                  <span class="name mb-0 text-sm">{{ muestra.mues_nombre }} {{ muestra.mues_apellido_paterno }} {{
+                    muestra.mues_apellido_materno }}</span>
+                </td>
+                <td class="text-center">
+                  {% if muestra.mues_sta == 'O' %}
+                  <span class="name mb-0 text-sm">Open</span>
+                  {% else %}
+                  <span class="name mb-0 text-sm">Finish</span>
+                  {% endif %}
+                </td>
+                <td class="text-center">
+                  <div class="btn-group" role="group" aria-label="Acciones">
+                    <a href="{{ url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id) }}"
+                      class="btn btn-sm btn-info mr-2">Detalles</a>
+                    <a href="{{ url_for('recepcion.editar_muestra', mues_id=muestra.mues_id) }}"
+                      class="btn btn-sm btn-primary mr-2">Modificar</a>
+                    <a href="{{ url_for('recepcion.eliminar_muestra', mues_id=muestra.mues_id) }}"
+                      class="btn btn-sm btn-danger delete-btn"
+                      data-confirm="¿Estás seguro que deseas eliminar esta muestra?">Eliminar</a>
+                  </div>
+                </td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Page content -->
-  <div class="container-fluid mt--6">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <!-- Card header -->
-          <div class="card-header border-0">
-            <h3 class="mb-0">Muestras Recibidas Recepción</h3>
-          </div>
-          <!-- Light table -->
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light text-center">
-                <tr>
-                  <th scope="col" class="sort" data-sort="name">Recepción</th>
-                  <th scope="col" class="sort" data-sort="budget">Folio</th>
-                  <th scope="col" class="sort" data-sort="status">Nombre</th>
-                  <th scope="col">Estatus</th>
-                  <th scope="col">Acciones</th>
-                </tr>
-              </thead>
-              <tbody class="list">
-                {%for muestra in muestras%}
-                  <tr scope="row">                  
-                    <td scope="col" class="text-center">
-                        <span class="name mb-0 text-sm">{{ muestra.mues_alta_fec }}</span>
-                    </td>
-                    <td scope="col" class="text-center">
-                        <span class="name mb-0 text-sm">{{ muestra.mues_folio }}</span>
-                    </td>
-                    <td scope="col" class="text-center">                   
-                        <span class="name mb-0 text-sm">{{ muestra.mues_nombre }} {{ muestra.mues_apellido_paterno }} {{ muestra.mues_apellido_materno }}</span>
-                    </td>
-                    <td class="text-center">
-                      {% if muestra.mues_sta == 'O' %}
-                          <span class="name mb-0 text-sm">Open</span>
-                      {% else %}
-                          <span class="name mb-0 text-sm">Finish</span>
-                      {% endif %}
-                  </td>
-                    <td class="text-center">
-                        <div class="btn-group" role="group" aria-label="Acciones">
-                          <a href="{{ url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-info mr-2">Detalles</a>
-                          <a href="{{ url_for('recepcion.editar_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-primary mr-2">Modificar</a>
-                          <a href="{{ url_for('recepcion.eliminar_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Estás seguro que deseas eliminar esta muestra?">Eliminar</a>
-                        </div>
-                    </td>
-                </tr>
-                {%endfor%}                
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+  {% include "includes/footer.html" %}
 
-    {% include "includes/footer.html" %}
-
-  </div>
+</div>
 
 
 <!-- Modal de confirmación -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -123,7 +129,8 @@
 {% endblock content %}
 
 {% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
 <script type="module">
   import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
 
@@ -135,36 +142,44 @@
     $.ajax({
       url: '{{ url_for("home.getMuestras") }}',
       type: 'GET',
-      success: function(data){
-            console.log('data: ');
-            console.log(data);
-            var tableContent = '';
-            $.each(data, function(i, muestra) {
-                tableContent += '<tr scope="row">';
-                tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_alta_fec + '</span></td>';
-                tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_folio + '</span></td>';
-                tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_nombre + ' ' + muestra.mues_apellido_paterno + ' ' + muestra.mues_apellido_materno + '</span></td>';
-                tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + (muestra.mues_sta == 'O' ? 'Open' : 'Finish') + '</span></td>';
-                tableContent += '<td class="text-center"><div class="btn-group" role="group" aria-label="Acciones"><a href="' + muestra.url_detalle + '" class="btn btn-sm btn-primary mr-2">Ver detalles</a><a href="' + muestra.url_resultados + '" class="btn btn-sm btn-info mr-2">Agregar Resultado</a></div></td>';
-                tableContent += '</tr>';
-            });
-            $('.table .list').html(tableContent);
-        },
-      error: function(xhr, status, error){
+      success: function (data) {
+        console.log('data: ');
+        console.log(data);
+        var tableContent = '';
+        $.each(data, function (i, muestra) {
+          var formattedDate = new Date(muestra.mues_alta_fec).toLocaleString('es-MX', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          });
+          tableContent += '<tr scope="row">';
+          tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + formattedDate + '</span></td>';
+          tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_folio + '</span></td>';
+          tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_nombre + ' ' + muestra.mues_apellido_paterno + ' ' + muestra.mues_apellido_materno + '</span></td>';
+          tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + (muestra.mues_sta == 'O' ? 'Open' : 'Finish') + '</span></td>';
+          tableContent += '<td class="text-center"><div class="btn-group" role="group" aria-label="Acciones"><a href="' + muestra.url_detalle + '" class="btn btn-sm btn-info mr-2">Detalles</a><a href="' + muestra.url_editar + '" class="btn btn-sm btn-primary mr-2">Modificar</a><a href="' + muestra.eliminar_muestra + '" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Estás seguro que deseas eliminar esta muestra?">Eliminar</a></div></td>';
+          tableContent += '</tr>';
+        });
+        $('.table .list').html(tableContent);
+      },
+      error: function (xhr, status, error) {
         console.error(error);
       }
     });
   }
   document.querySelectorAll('.delete-btn').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    e.preventDefault();
-    const confirmMessage = this.getAttribute('data-confirm');
-    document.getElementById('delete-message').textContent = confirmMessage;
-    const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-    const confirmDeleteBtn = document.getElementById('confirm-delete');
-    confirmDeleteBtn.href = this.href;
-    confirmDeleteModal.show();
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const confirmMessage = this.getAttribute('data-confirm');
+      document.getElementById('delete-message').textContent = confirmMessage;
+      const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+      const confirmDeleteBtn = document.getElementById('confirm-delete');
+      confirmDeleteBtn.href = this.href;
+      confirmDeleteModal.show();
+    });
   });
-});
 </script>
 {% endblock javascripts %}

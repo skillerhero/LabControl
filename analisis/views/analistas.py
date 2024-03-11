@@ -21,24 +21,28 @@ def getMuestras():
         if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
             muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
                 .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
-                .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk) \
-                .filter(Resultado.resul_sta == 'O')\
                 .all()
         else:
             muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
                 .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
-                .filter(Resultado.resul_sta == 'F')\
+                .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk) \
+                .filter(Resultado.resul_sta == 'O')\
                 .all()
+            
     else:
         muestras = Muestra.query.all()
 
     muestras_dict = []
+    print('muestras: ')
+    print(muestras)
     for muestra in muestras:
         muestra_dict = muestra.to_dict()
-        muestra_dict['url_detalle'] = url_for('home.detalle_muestra', mues_id=muestra.mues_id)
-        muestra_dict['url_resultados'] = url_for('resultados.agregar_resultados', mues_id=muestra.mues_id)
+        muestra_dict['url_detalle'] = url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id)
+        muestra_dict['url_editar'] = url_for('recepcion.editar_muestra', mues_id=muestra.mues_id)
+        muestra_dict['url_eliminar'] = url_for('recepcion.eliminar_muestra', mues_id=muestra.mues_id)
         muestras_dict.append(muestra_dict)
-
+    print('muestra_dict: ')
+    print(muestras_dict)
     return jsonify(muestras_dict)
 
 
