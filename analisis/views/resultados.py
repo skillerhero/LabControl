@@ -58,7 +58,8 @@ def agregar_resultados(mues_id):
         
         # Verificar si todos los resultados de la muestra tienen resul_sta == "F"
         todos_f = all(resultado.resul_sta == "F" for resultado in resultados_muestra)
-        
+        print('todos_f :')
+        print(todos_f)
         if todos_f:
             # Si todos los resultados tienen resul_sta == "F", actualiza el estado de la muestra
             muestra = Muestra.query.get(mues_id)
