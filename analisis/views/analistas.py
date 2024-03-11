@@ -20,16 +20,15 @@ def getMuestras():
     if g.user.user_area_id_fk is not None:
         if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
             muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
-                        .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
-                        .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk) \
-                        .filter(Resultado.resul_sta == 'O')\
-                        .all()
+                .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
+                .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk) \
+                .filter(Resultado.resul_sta == 'O')\
+                .all()
         else:
             muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
                 .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
                 .filter(Resultado.resul_sta == 'F')\
                 .all()
-
     else:
         muestras = Muestra.query.all()
 
@@ -50,10 +49,10 @@ def index():
     muestras = []
     if user_area_id is not None:
         muestras = Muestra.query.join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id) \
-                                .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
-                                .filter(Analisis.ana_area_id_fk == user_area_id) \
-                                .filter(Resultado.resul_sta == 'O')\
-                                .all()
+            .join(Analisis, Analisis.ana_id == Resultado.resul_ana_id_fk) \
+            .filter(Analisis.ana_area_id_fk == user_area_id) \
+            .filter(Resultado.resul_sta == 'O')\
+            .all()
     else:
         muestras = Muestra.query.all()
     
@@ -81,9 +80,9 @@ def detalle_muestra(mues_id):
     analisis_asociados = []
     if user_area_id is not None:
         analisis_asociados = Analisis.query.join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
-                                            .filter(Resultado.resul_mues_id_fk == mues_id) \
-                                            .filter(Analisis.ana_area_id_fk == user_area_id) \
-                                            .all()
+            .filter(Resultado.resul_mues_id_fk == mues_id) \
+            .filter(Analisis.ana_area_id_fk == user_area_id) \
+            .all()
     else:
         analisis_asociados = []
 

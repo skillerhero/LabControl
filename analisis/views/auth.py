@@ -111,8 +111,6 @@ def login_required(view):
         return view(**kwargs)
     return wrapped_view
 
-
-
 def get_user_results():
     if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
         resultados = db.session.query(Muestra.mues_folio, Muestra.mues_fec_nac,Muestra.mues_nombre + ' ' + Muestra.mues_apellido_paterno + ' ' + Muestra.mues_apellido_materno)\
