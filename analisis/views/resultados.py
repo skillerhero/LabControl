@@ -48,6 +48,7 @@ def agregar_resultados(mues_id):
                 resultado.resul_sta = "F"
                 db.session.commit()
                 socketio.emit('notification_update')
+                socketio.emit('refresh')
                 print("Resultado modificado con éxito.")
 
         #-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,6 +66,7 @@ def agregar_resultados(mues_id):
                 muestra.mues_sta = "F"
                 db.session.commit()
                 socketio.emit('notification_update')
+                socketio.emit('refresh')
                 resultados = Resultado.query.all()
                 return redirect(url_for('resultados.index', resultados=resultados))
         else:
@@ -77,7 +79,7 @@ def agregar_resultados(mues_id):
     return render_template('resultados/agregar_resultados.html', mediciones_por_analisis=json.dumps({k: [i.serialize for i in v] for k, v in mediciones_por_analisis.items()}), muestra=muestra, lista_de_analisis=lista_de_analisis,segment='agregarresultados')
 
 
-@resultados.route('/editar_resultados/<int:resul_id>', methods=['GET', 'POST'])
+""" @resultados.route('/editar_resultados/<int:resul_id>', methods=['GET', 'POST'])
 def editar_resultados(resul_id):
     resultado = Resultado.query.get_or_404(resul_id)
     muestras = Muestra.query.all()
@@ -96,18 +98,19 @@ def editar_resultados(resul_id):
         return redirect(url_for('resultados.index'))
     
     return render_template('resultados/editar_resultados.html', resultado=resultado, muestras=muestras, lista_de_analisis=lista_de_analisis, segment='editarresult')
-
-@resultados.route('/eliminar_resultados/<int:resul_id>')
+ """
+""" @resultados.route('/eliminar_resultados/<int:resul_id>')
 def eliminar_resultados(resul_id):
     print('resultados a eliminar: ',resul_id)
     resultado = Resultado.query.get_or_404(resul_id)
     db.session.delete(resultado)
     db.session.commit()
     socketio.emit('notification_update')
+    socketio.emit('refresh')
     print('resultado eliminado con éxito')
     return redirect(url_for('resultados.index'))
-
-
+ """
+""" 
 @resultados.route('/detalle_resultados/<int:resul_id>', methods=['GET', 'POST'])
 def detalle_resultados(resul_id):
     resultado = Resultado.query.get_or_404(resul_id)
@@ -124,3 +127,4 @@ def detalle_resultados(resul_id):
     muestras = Muestra.query.all()
     lista_de_analisis = Analisis.query.all()
     return render_template('resultados/detalle_resultados.html', resultado=resultado, segment='detalle_resultados', muestras=muestras, lista_de_analisis=lista_de_analisis)
+ """

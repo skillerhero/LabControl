@@ -81,13 +81,9 @@
                 </td>
                 <td class="text-center">
                   <div class="btn-group" role="group" aria-label="Acciones">
-                    <a href="{{ url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id) }}"
-                      class="btn btn-sm btn-info mr-2">Detalles</a>
-                    <a href="{{ url_for('recepcion.editar_muestra', mues_id=muestra.mues_id) }}"
-                      class="btn btn-sm btn-primary mr-2">Modificar</a>
-                    <a href="{{ url_for('recepcion.eliminar_muestra', mues_id=muestra.mues_id) }}"
-                      class="btn btn-sm btn-danger delete-btn"
-                      data-confirm="¿Estás seguro que deseas eliminar esta muestra?">Eliminar</a>
+                    <a href="{{ url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-info mr-2">Detalles</a>
+                    <a href="{{ url_for('recepcion.editar_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-primary mr-2">Modificar</a>
+                    <a href="{{ url_for('recepcion.eliminar_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Estás seguro que deseas eliminar esta muestra?">Eliminar</a>
                   </div>
                 </td>
               </tr>
@@ -105,8 +101,7 @@
 
 
 <!-- Modal de confirmación -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -129,8 +124,7 @@
 {% endblock content %}
 
 {% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script type="module">
   import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
 
@@ -143,8 +137,6 @@
       url: '{{ url_for("home.getMuestras") }}',
       type: 'GET',
       success: function (data) {
-        console.log('data: ');
-        console.log(data);
         var tableContent = '';
         $.each(data, function (i, muestra) {
           var formattedDate = new Date(muestra.mues_alta_fec).toLocaleString('es-MX', {

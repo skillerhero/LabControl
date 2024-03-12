@@ -132,6 +132,7 @@ def detalle_muestra(mues_id):
         .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
         .join(Area, Area.area_id == Analisis.ana_area_id_fk) \
         .filter(Resultado.resul_mues_id_fk == mues_id) \
+        .group_by(Resultado.resul_ana_id_fk) \
         .with_entities(Analisis, Resultado, Area) \
         .all()
     else:
@@ -183,6 +184,7 @@ def editar_muestra(mues_id):
         db.session.commit()
         flash('Muestra editada con éxito', 'success')  # Mensaje de éxito
         socketio.emit('notification_update')
+        socketio.emit('refresh')
         return redirect(url_for('recepcion.editar muestra', mues_id=mues_id))
     return render_template('recepcion/editar_muestra.html', recepcion=recepcion, segment='editar_muestra')
 
@@ -195,5 +197,6 @@ def eliminar_muestra(mues_id):
     db.session.delete(recepcion)
     db.session.commit()
     socketio.emit('notification_update')
+    socketio.emit('refresh')
     print('muestra eliminado con éxito')
     return redirect(url_for('recepcion.home'))

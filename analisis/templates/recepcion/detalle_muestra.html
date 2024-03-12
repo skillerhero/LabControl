@@ -74,3 +74,18 @@
   </div>
 </div>
 {% endblock content %}
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script type="module">
+  import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
+
+  const socket = io();
+
+  socket.on('refresh', refresh);
+
+  function refresh() {
+    location.reload();
+  }
+</script>
+{% endblock javascripts %}
