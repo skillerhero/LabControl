@@ -41,12 +41,21 @@ def agregar():
 def editar(grupo_id):
     grupo = Grupo.query.get_or_404(grupo_id)
     if request.method == 'POST':
-        grupo.grupo_nombre = request.form.get('grupo_nombre')
+        nuevo_nombre = request.form.get('grupo_nombre')
+        
+        # Verificar si el nuevo nombre ya existe en otro grupo
+        if nuevo_nombre != grupo.grupo_nombre:
+            grupo_existente = Grupo.query.filter_by(grupo_nombre=nuevo_nombre).first()
+            if grupo_existente:
+                flash(f'El grupo "{nuevo_nombre}" ya existe.', 'danger')
+                return redirect(url_for('grupos.editar', grupo_id=grupo_id))
+
+        grupo.grupo_nombre = nuevo_nombre
         grupo.grupo_costo = request.form.get('grupo_costo')
         grupo.grupo_sta = request.form.get('grupo_sta')
         db.session.commit()
-        print('Grupo editado con éxito')
-        return redirect(url_for('grupos.index'))
+        flash('Grupo editado con éxito.', 'success')
+        return redirect(url_for('grupos.editar', grupo_id=grupo_id))
     return render_template('grupos/editar_grupos.html', grupo=grupo, segment='editar')
 
 @grupos.route('/eliminar/<int:grupo_id>')

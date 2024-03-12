@@ -23,22 +23,35 @@
         <div class="card">
           <!-- Card body -->
           <div class="card-body">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+                  <script>
+                    // Remover el mensaje después de 6 segundos
+                    setTimeout(function() {
+                      document.querySelector('.alert').remove();
+                    }, 6000);
+                  </script>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             <form action="{{ url_for('grupos.editar', grupo_id=grupo.grupo_id) }}" method="POST">
               <div class="form-group">
                 <label for="grupo_nombre">Nombre del Grupo:</label>
-                <input type="text" class="form-control" id="grupo_nombre" name="grupo_nombre" value="{{ grupo.grupo_nombre }}">
+                <input type="text" class="form-control" id="grupo_nombre" name="grupo_nombre" value="{{ grupo.grupo_nombre }}" required>
               </div>
 
               <div class="form-group">
                 <label for="grupo_costo">Costo del Grupo:</label>
-                <input type="text" class="form-control" id="grupo_costo" name="grupo_costo" value="{{ grupo.grupo_costo }}">
+                <input type="text" class="form-control" id="grupo_costo" name="grupo_costo" value="{{ grupo.grupo_costo }}" required>
               </div>
 
               <div class="form-group">
                 <label for="grupo_sta">Estatus del Grupo:</label>
-                <select class="form-control" id="grupo_sta" name="grupo_sta">
-                  <option value="A">Activo</option>
-                  <option value="O">Offline</option>
+                <select class="form-control" id="grupo_sta" name="grupo_sta" required>
+                  <option value="A" {% if grupo.grupo_sta == 'A' %} selected {% endif %}>Activo</option>
+                  <option value="O" {% if grupo.grupo_sta == 'O' %} selected {% endif %}>Offline</option>
                 </select>
               </div>
               
