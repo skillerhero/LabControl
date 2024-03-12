@@ -56,7 +56,7 @@
           <h2 class="mb-4"><span class="section-title">Análisis Asociados</span></h2>
           <ul>
             {% for analisis in analisis_asociados %}
-            <li>{{ analisis.ana_nombre }}</li>
+            <li>{{ analisis[0].ana_nombre }} | Área: {{ analisis[2].area_nombre }} | Status: {{ "Capturado" if analisis[1].resul_sta == "F" else "Sin capturar" }}</li>
             {% endfor %}
           </ul>
 

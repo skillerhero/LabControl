@@ -72,11 +72,11 @@
             <tbody>
                 {% for resultado in resultados %}
                 <tr>
-                    <td>{{ resultado.resul_componente }}</td>
-                    <td>{{ resultado.resul_unidad }}</td>
-                    <td>{{ resultado.resul_resultado }}</td>
-                    <td>{{ resultado.resul_rango }}</td>
-                    <td>{{ resultado.resul_fuera_de_rango }}</td>
+                    <td>{{ resultado[1].mediciones_analisis_componente }}</td>
+                    <td>{{ resultado[1].mediciones_analisis_unidad }}</td>
+                    <td>{{ resultado[0].resul_resultado }}</td>
+                    <td>{{ resultado[1].mediciones_analisis_rango }}</td>
+                    <td>{{ resultado[0].resul_fuera_de_rango }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

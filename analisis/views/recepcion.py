@@ -6,11 +6,11 @@ from analisis.models.descuento import Descuento
 from analisis.models.analisis import Analisis
 from analisis.models.grupos import Grupo
 from analisis.models.resultado import Resultado
+from analisis.models.area import Area
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from analisis.models.mediciones_analisis import MedicionesAnalisis
 from analisis import db
-from flask import g
-from flask import make_response, flash, session
+from flask import make_response, flash, session, g
 from weasyprint import HTML
 from analisis import socketio
 
@@ -128,14 +128,17 @@ def detalle_muestra(mues_id):
     # Obtener los análisis asociados a la muestra y al área del usuario
     analisis_asociados = []
     if user_area_id is not None:
-        analisis_asociados = Analisis.query.join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
-                                            .filter(Resultado.resul_mues_id_fk == mues_id) \
-                                            .all()
+        analisis_asociados = Analisis.query \
+        .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
+        .join(Area, Area.area_id == Analisis.ana_area_id_fk) \
+        .filter(Resultado.resul_mues_id_fk == mues_id) \
+        .with_entities(Analisis, Resultado, Area) \
+        .all()
     else:
         analisis_asociados = []
 
     # Almacenar los análisis asociados en la sesión
-    session['analisis_asociados'] = [analisis.ana_id for analisis in analisis_asociados]
+    session['analisis_asociados'] = [analisis[0].ana_id for analisis in analisis_asociados]
 
     if request.method == 'POST':
         return redirect(url_for('analistas.index'))
@@ -145,8 +148,10 @@ def detalle_muestra(mues_id):
 @recepcion.route('/pdf_resultados/<int:mues_id>', methods=['GET', 'POST'])
 def pdf_resultados(mues_id):
     muestra = Muestra.query.get_or_404(mues_id)
-    resultados = Resultado.query.filter_by(resul_mues_id_fk=mues_id).all()
-
+    resultados = db.session.query(Resultado, MedicionesAnalisis) \
+    .join(MedicionesAnalisis, MedicionesAnalisis.mediciones_analisis_ana_id_fk == Resultado.resul_ana_id_fk) \
+    .filter(Resultado.resul_mues_id_fk == mues_id)\
+    .group_by(Resultado.resul_resultado).all()
     rendered_html = render_template('recepcion/pdf_template.html', muestra=muestra, resultados=resultados)
 
     pdf = HTML(string=rendered_html).write_pdf()

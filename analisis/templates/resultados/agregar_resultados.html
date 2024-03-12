@@ -25,7 +25,6 @@
         <div class="card-body">
           <form action="{{ url_for('resultados.agregar_resultados', mues_id=muestra.mues_id) }}" method="POST">
             <div class="form-group">
-
               <div id="mediciones_info">
                 <!-- Aquí se mostrará la información de mediciones_analisis -->
               </div>
@@ -70,11 +69,24 @@
       divMedicionesInfo.innerHTML += `
       <div class="form-group">
         <label for="resul_resultado_${medicion.mediciones_analisis_id}">${medicion.mediciones_analisis_componente}:</label>
-        <input type="text" class="form-control" id="resul_resultado_${medicion.mediciones_analisis_id}" name="resul_resultado_${medicion.mediciones_analisis_id}">
+        <div class="row">
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="resul_resultado_${medicion.mediciones_analisis_id}" name="resul_resultado_${medicion.mediciones_analisis_id}">
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="resul_fuera_de_rango_${medicion.mediciones_analisis_id}" name="resul_fuera_de_rango_${medicion.mediciones_analisis_id}" value="true">
+              <label class="form-check-label" for="resul_fuera_de_rango_${medicion.mediciones_analisis_id}">Fuera de rango</label>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="resul_fuera_de_rango_${medicion.mediciones_analisis_id}" name="resul_fuera_de_rango_${medicion.mediciones_analisis_id}" value="true">
-        <label class="form-check-label" for="resul_fuera_de_rango_${medicion.mediciones_analisis_id}">Fuera de rango</label>
+
+      <div class="form-group">
+        <label for="mediciones_analisis_${medicion.mediciones_analisis_id}">Unidad: ${medicion.mediciones_analisis_unidad}</label>
+      </div>
+      <div class="form-group">
+        <label for="mediciones_analisis_${medicion.mediciones_analisis_id}">Rango: ${medicion.mediciones_analisis_rango}</label>
       </div>
     `;
     }
@@ -84,7 +96,7 @@
     generarHtml();
   });
 
-  $( document ).ready(function() {
+  $(document).ready(function () {
     generarHtml();
   });
 </script>

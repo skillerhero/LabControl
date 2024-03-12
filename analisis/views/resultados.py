@@ -46,9 +46,6 @@ def agregar_resultados(mues_id):
                 resultado.resul_resultado = request.form[f'resul_resultado_{medicion.mediciones_analisis_id}']
                 resultado.resul_fuera_de_rango = request.form.get(f'resul_fuera_de_rango_{medicion.mediciones_analisis_id}', '').lower() == 'true'
                 resultado.resul_sta = "F"
-
-                print('resultado: ')
-                print(resultado)
                 db.session.commit()
                 socketio.emit('notification_update')
                 print("Resultado modificado con éxito.")
@@ -68,14 +65,14 @@ def agregar_resultados(mues_id):
                 muestra.mues_sta = "F"
                 db.session.commit()
                 socketio.emit('notification_update')
+                resultados = Resultado.query.all()
+                return redirect(url_for('resultados.index', resultados=resultados))
         else:
             print("No se encontró ningún resultado que cumpla con las condiciones.")
         return redirect(url_for('resultados.agregar_resultados', mues_id=mues_id))
     mediciones_por_analisis = {}
     for analisis in lista_de_analisis:
         mediciones_por_analisis[analisis.ana_id] = MedicionesAnalisis.query.filter_by(mediciones_analisis_ana_id_fk=analisis.ana_id).all()
-
-
 
     return render_template('resultados/agregar_resultados.html', mediciones_por_analisis=json.dumps({k: [i.serialize for i in v] for k, v in mediciones_por_analisis.items()}), muestra=muestra, lista_de_analisis=lista_de_analisis,segment='agregarresultados')
 
