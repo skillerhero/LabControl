@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from analisis import db
 from flask import render_template, Blueprint
 from analisis.models.grupos import Grupo
@@ -22,11 +22,19 @@ def agregar():
     if request.method == 'POST':
         grupo_nombre = request.form.get('grupo_nombre')
         grupo_costo = request.form.get('grupo_costo')
-        nuevo_grupo = Grupo(grupo_nombre=grupo_nombre, grupo_costo=grupo_costo)
-        db.session.add(nuevo_grupo)
-        db.session.commit()
-        print('Grupo agregado con éxito')
-        return redirect(url_for('grupos.index'))
+        grupo_sta = request.form.get('grupo_sta')
+
+        # Verificar si el grupo ya existe en la base de datos
+        grupo_existente = Grupo.query.filter_by(grupo_nombre=grupo_nombre).first()
+        if grupo_existente:
+            flash(f'El grupo "{grupo_nombre}" ya existe.', 'danger')
+        else:
+            nuevo_grupo = Grupo(grupo_nombre=grupo_nombre, grupo_costo=grupo_costo, grupo_sta=grupo_sta)
+            db.session.add(nuevo_grupo)
+            db.session.commit()
+            flash('Grupo creado exitosamente.', 'success')
+            return redirect(url_for('grupos.agregar'))
+
     return render_template('grupos/agregar_grupos.html', segment='agregar')
 
 @grupos.route('/editar/<int:grupo_id>', methods=['GET', 'POST'])
@@ -35,10 +43,11 @@ def editar(grupo_id):
     if request.method == 'POST':
         grupo.grupo_nombre = request.form.get('grupo_nombre')
         grupo.grupo_costo = request.form.get('grupo_costo')
+        grupo.grupo_sta = request.form.get('grupo_sta')
         db.session.commit()
         print('Grupo editado con éxito')
         return redirect(url_for('grupos.index'))
-    return render_template('grupos/editar.html', grupo=grupo, segment='editar')
+    return render_template('grupos/editar_grupos.html', grupo=grupo, segment='editar')
 
 @grupos.route('/eliminar/<int:grupo_id>')
 def eliminar(grupo_id):
