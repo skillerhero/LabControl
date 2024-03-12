@@ -23,22 +23,35 @@
         <div class="card">
           <!-- Card body -->
           <div class="card-body">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+                  <script>
+                    // Remover el mensaje después de 6 segundos
+                    setTimeout(function() {
+                      document.querySelector('.alert').remove();
+                    }, 6000);
+                  </script>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             <form action="{{ url_for('analisis.editar_analisis', ana_id=analisis.ana_id) }}" method="POST">
               <div class="form-group">
                 <label for="ana_nombre">Nombre del Análisis:</label>
-                <input type="text" class="form-control" id="ana_nombre" name="ana_nombre" value="{{ analisis.ana_nombre }}">
+                <input type="text" class="form-control" id="ana_nombre" name="ana_nombre" value="{{ analisis.ana_nombre }}" required>
               </div>
 
               <div class="form-group">
                 <label for="ana_costo">Costo del Análisis:</label>
-                <input type="text" class="form-control" id="ana_costo" name="ana_costo" value="{{ analisis.ana_costo }}">
+                <input type="text" class="form-control" id="ana_costo" name="ana_costo" value="{{ analisis.ana_costo }}" required>
               </div>
 
               <div class="form-group">
                 <label for="ana_sta">Status del Análisis:</label>
-                <select class="form-control" id="ana_sta" name="ana_sta">
-                  <option value="A">Activo</option>
-                  <option value="O">Offline</option>
+                <select class="form-control" id="ana_sta" name="ana_sta" required>
+                  <option value="A" {% if analisis.ana_sta == 'A' %} selected {% endif %}>Activo</option>
+                  <option value="O" {% if analisis.ana_sta == 'O' %} selected {% endif %}>Offline</option>
                 </select>
               </div>
               

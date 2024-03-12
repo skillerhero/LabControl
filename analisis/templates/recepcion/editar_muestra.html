@@ -28,70 +28,70 @@
               <h2>Datos del paciente</h2>
               <div class="form-group">
                 <label for="mues_folio">Folio:</label>
-                <input disabled type="text" class="form-control" id="mues_folio" name="mues_folio" value="{{ recepcion.mues_folio }}">
+                <input disabled type="text" class="form-control" id="mues_folio" name="mues_folio" value="{{ recepcion.mues_folio }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_nombre">Nombre:</label>
-                <input type="text" class="form-control" id="mues_nombre" name="mues_nombre" value="{{ recepcion.mues_nombre }}">
+                <input type="text" class="form-control" id="mues_nombre" name="mues_nombre" value="{{ recepcion.mues_nombre }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_apellido_paterno">Apellido paterno:</label>
-                <input type="text" class="form-control" id="mues_apellido_paterno" name="mues_apellido_paterno" value="{{ recepcion.mues_apellido_paterno }}">
+                <input type="text" class="form-control" id="mues_apellido_paterno" name="mues_apellido_paterno" value="{{ recepcion.mues_apellido_paterno }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_apellido_materno">Apellido materno:</label>
-                <input type="text" class="form-control" id="mues_apellido_materno" name="mues_apellido_materno" value="{{ recepcion.mues_apellido_materno }}">
+                <input type="text" class="form-control" id="mues_apellido_materno" name="mues_apellido_materno" value="{{ recepcion.mues_apellido_materno }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_tel">Teléfono:</label>
-                <input type="tel" class="form-control" id="mues_tel" name="mues_tel" value="{{ recepcion.mues_tel }}" autocomplete="off">
+                <input type="tel" class="form-control" id="mues_tel" name="mues_tel" required pattern="[0-9]{10}" value="{{ recepcion.mues_tel }}" autocomplete="off" required>
                 <div class="invalid-feedback">Por favor ingresa un número de teléfono válido.</div>
               </div>
               
               <div class="form-group">
                 <label for="mues_email">Email:</label>
-                <input type="email" class="form-control" id="mues_email" name="mues_email" value="{{ recepcion.mues_email }}">
+                <input type="email" class="form-control" id="mues_email" name="mues_email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="{{ recepcion.mues_email }}" required>
                 <div class="invalid-feedback">Por favor ingresa un correo electrónico válido.</div>
               </div>
 
               <h2>Datos del domicilio</h2>
               <div class="form-group">
                 <label for="mues_calle">Calle:</label>
-                <input type="text" class="form-control" id="mues_calle" name="mues_calle" value="{{ recepcion.mues_calle }}">
+                <input type="text" class="form-control" id="mues_calle" name="mues_calle" value="{{ recepcion.mues_calle }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_colonia">Colonia:</label>
-                <input type="text" class="form-control" id="mues_colonia" name="mues_colonia" value="{{ recepcion.mues_colonia }}">
+                <input type="text" class="form-control" id="mues_colonia" name="mues_colonia" value="{{ recepcion.mues_colonia }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_num_ext">Número exterior:</label>
-                <input type="text" class="form-control" id="mues_num_ext" name="mues_num_ext" value="{{ recepcion.mues_num_ext }}">
+                <input type="text" class="form-control" id="mues_num_ext" name="mues_num_ext" value="{{ recepcion.mues_num_ext }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_num_int">Número interior:</label>
-                <input type="text" class="form-control" id="mues_num_int" name="mues_num_int" value="{{ recepcion.mues_num_int }}">
+                <input type="text" class="form-control" id="mues_num_int" name="mues_num_int" value="{{ recepcion.mues_num_int }}" required>
               </div>
 
               <h2>Datos clínicos</h2>
               <div class="form-group">
                 <label for="mues_horas_ayuno">Horas de ayuno:</label>
-                <input type="number" class="form-control" id="mues_horas_ayuno" name="mues_horas_ayuno" value="{{ recepcion.mues_horas_ayuno }}">
+                <input type="number" class="form-control" id="mues_horas_ayuno" name="mues_horas_ayuno" value="{{ recepcion.mues_horas_ayuno }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_alimentos">Alimentos consumidos durante la última comida:</label>
-                <input type="text" class="form-control" id="mues_alimentos" name="mues_alimentos" value="{{ recepcion.mues_alimentos }}">
+                <input type="text" class="form-control" id="mues_alimentos" name="mues_alimentos" value="{{ recepcion.mues_alimentos }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_enfermedades">Enfermedades:</label>
-                <input type="text" class="form-control" id="mues_enfermedades" name="mues_enfermedades" value="{{ recepcion.mues_enfermedades }}">
+                <input type="text" class="form-control" id="mues_enfermedades" name="mues_enfermedades" value="{{ recepcion.mues_enfermedades }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_medicamentos">Medicamentos:</label>
-                <input type="text" class="form-control" id="mues_medicamentos" name="mues_medicamentos" value="{{ recepcion.mues_medicamentos }}">
+                <input type="text" class="form-control" id="mues_medicamentos" name="mues_medicamentos" value="{{ recepcion.mues_medicamentos }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_rubrica">Rúbrica:</label>
-                <input type="text" class="form-control" id="mues_rubrica" name="mues_rubrica" value="{{ recepcion.mues_rubrica }}">
+                <input type="text" class="form-control" id="mues_rubrica" name="mues_rubrica" value="{{ recepcion.mues_rubrica }}" required>
               </div>
 
               <div class="row">

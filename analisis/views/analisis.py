@@ -37,17 +37,29 @@ def agregar_analisis():
     return render_template('analisis/agregar_analisis.html', segment='agregar_analisis', areas=areas)
 
 
+from flask import redirect, render_template, request, url_for, flash
 
 @analisis.route('/editar_analisis/<int:ana_id>', methods=['GET', 'POST'])
 def editar_analisis(ana_id):
     analisis = Analisis.query.get_or_404(ana_id)
     if request.method == 'POST':
-        analisis.ana_nombre = request.form['ana_nombre']
+        nuevo_nombre = request.form['ana_nombre']
+        
+        # Verificar si el nuevo nombre ya existe en otro análisis
+        if nuevo_nombre != analisis.ana_nombre:
+            analisis_existente = Analisis.query.filter_by(ana_nombre=nuevo_nombre).first()
+            if analisis_existente:
+                flash(f'El análisis "{nuevo_nombre}" ya existe.', 'danger')
+                return redirect(url_for('analisis.editar_analisis', ana_id=ana_id))
+
+        analisis.ana_nombre = nuevo_nombre
         analisis.ana_costo = request.form['ana_costo']
         analisis.ana_sta = request.form['ana_sta']
         db.session.commit()
-        return redirect(url_for('analisis.index'))
+        flash('Análisis editado con éxito.', 'success')
+        return redirect(url_for('analisis.editar_analisis', ana_id=ana_id))
     return render_template('analisis/editar_analisis.html', analisis=analisis, segment='editar_analisis')
+
 
 @analisis.route('/detalle_analisis/<int:ana_id>', methods=['GET', 'POST'])
 def detalle_analisis(ana_id):

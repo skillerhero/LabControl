@@ -162,9 +162,11 @@ def editar_muestra(mues_id):
         recepcion.muestra_medicamentos = request.form['mues_medicamentos']
         recepcion.muestra_rubrica = request.form['mues_rubrica']
         db.session.commit()
+        flash('Muestra editada con éxito', 'success')  # Mensaje de éxito
         socketio.emit('notification_update')
-        return redirect(url_for('recepcion.home'))
+        return redirect(url_for('recepcion.editar muestra', mues_id=mues_id))
     return render_template('recepcion/editar_muestra.html', recepcion=recepcion, segment='editar_muestra')
+
 
 
 @recepcion.route('/eliminar_muestra/<int:mues_id>')

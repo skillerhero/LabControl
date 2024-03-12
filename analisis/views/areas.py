@@ -40,10 +40,20 @@ def agregar_area():
 def editar_area(area_id):
     area = Area.query.get_or_404(area_id)
     if request.method == 'POST':
-        area.area_nombre = request.form['area_nombre']
-        area.area_sta = request.form['area_sta']
+        nuevo_nombre = request.form.get('area_nombre')
+
+        # Verificar si el nuevo nombre ya existe en otra área
+        if nuevo_nombre != area.area_nombre:
+            area_existente = Area.query.filter_by(area_nombre=nuevo_nombre).first()
+            if area_existente:
+                flash(f'El área "{nuevo_nombre}" ya existe.', 'danger')
+                return redirect(url_for('areas.editar_area', area_id=area_id))
+
+        area.area_nombre = nuevo_nombre
+        area.area_sta = request.form.get('area_sta')
         db.session.commit()
-        return redirect(url_for('areas.index'))
+        flash('Área editada exitosamente.', 'success')
+        return redirect(url_for('areas.editar_area', area_id=area_id))
     return render_template('areas/editar_area.html', area=area, segment='editar_area')
 
 @areas.route('/detalle_area/<int:area_id>', methods=['GET', 'POST'])
