@@ -4,19 +4,20 @@
       <!-- Elementos en el lado izquierdo -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link pr-3 text-left" href="{{ session.get('ruta_anterior', '/') }}" role="button" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link pr-3 text-left" href="{{ session.get('ruta_anterior', '/') }}" role="button"
+            aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-arrow-left text-white"></i>
           </a>
         </li>
         <li class="nav-item">
           {% if g.user.user_area_id_fk == 6 or g.user.user_area_id_fk == 7 %}
-            <a class="nav-link pr-3" href="/recepcion">
-              <i class="fas fa-home text-white"></i> 
-            </a>
+          <a class="nav-link pr-3" href="/recepcion">
+            <i class="fas fa-home text-white"></i>
+          </a>
           {% else %}
-            <a class="nav-link pr-3" href="/home">
-              <i class="fas fa-home text-white"></i> 
-            </a>
+          <a class="nav-link pr-3" href="/home">
+            <i class="fas fa-home text-white"></i>
+          </a>
           {% endif %}
         </li>
         <li class="nav-item">
@@ -27,7 +28,8 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a id="notification-icon" class="nav-link pr-3" href="#" role="button" data-toggle="modal" data-target="#notificationModal">
+          <a id="notification-icon" class="nav-link pr-3" href="#" role="button" data-toggle="modal"
+            data-target="#notificationModal">
             <i class="fas fa-bell text-white"></i>
             <span id="notification-count" class="badge badge-light"></span>
           </a>
@@ -55,8 +57,14 @@
 </nav>
 
 <!-- Modal de Notificaciones -->
-<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
-  <style> #notificationModal { top: 0;  margin-top: 2rem; }</style>
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel"
+  aria-hidden="true">
+  <style>
+    #notificationModal {
+      top: 0;
+      margin-top: 2rem;
+    }
+  </style>
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content" style="padding-bottom: 0;">
       <div class="modal-header text-white">
@@ -79,32 +87,38 @@
 
 
 {% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
 <script type="module">
   import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
 
   const socket = io();
-
   // Función para manejar la actualización de notificaciones
   function updateNotifications(data) {
     $('#notificationModal .modal-body').html(data.html_content);
     $('#notification-count').text(data.count);
   }
 
-  // Escucha eventos de actualización de notificaciones desde el servidor
+  function notificacionesLeidas() {
+    console.log('notificacionesLeidas');
+    $('#notification-count').text(0);
+  }
+
   socket.on('notification_update', updateData);
 
   // Maneja el evento de mostrar el modal
-  $('#notificationModal').on('show.bs.modal', updateData);
-
+  const notificationIcon = document.getElementById("notification-icon");
+  notificationIcon.addEventListener("click", function () {
+    notificacionesLeidas();
+  });
   function updateData() {
     $.ajax({
       url: '{{ url_for("auth.get_user_results_ajax") }}',
       type: 'GET',
-      success: function(data){
+      success: function (data) {
         updateNotifications(data);
       },
-      error: function(xhr, status, error){
+      error: function (xhr, status, error) {
         console.error(error);
       }
     });
