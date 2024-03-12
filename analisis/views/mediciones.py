@@ -6,6 +6,14 @@ from analisis.models.mediciones_analisis import MedicionesAnalisis
 from analisis.models.analisis import Analisis
 mediciones = Blueprint('mediciones', __name__, url_prefix='/mediciones')
 
+from flask import render_template, request, redirect, url_for
+from analisis import db
+from flask import render_template, Blueprint
+from math import ceil
+from analisis.models.mediciones_analisis import MedicionesAnalisis
+from analisis.models.analisis import Analisis
+mediciones = Blueprint('mediciones', __name__, url_prefix='/mediciones')
+
 @mediciones.route('/')
 def index():
     mediciones_por_pagina = 10
@@ -15,6 +23,15 @@ def index():
     inicio = (pagina_actual - 1) * mediciones_por_pagina
     fin = inicio + mediciones_por_pagina
     mediciones_paginadas = MedicionesAnalisis.query.slice(inicio, fin).all()
+    
+    # Obtener los nombres de los análisis correspondientes a los IDs de análisis en cada registro de mediciones
+    for medicion in mediciones_paginadas:
+        analisis = Analisis.query.filter_by(ana_id=medicion.mediciones_analisis_ana_id_fk).first()
+        if analisis:
+            medicion.nombre_analisis = analisis.ana_nombre
+        else:
+            medicion.nombre_analisis = "N/A"
+    
     return render_template('mediciones/index.html', mediciones=mediciones_paginadas, segment='index', total_paginas=total_paginas, pagina_actual=pagina_actual)
 
 @mediciones.route('/agregar', methods=['GET', 'POST'])

@@ -24,59 +24,37 @@
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <div class="card">
-        <!-- Card header -->
-        <div class="card-header bg-transparent">
-          <div class="row justify-content-center text-center">
-            <div class="col">
-              <h3 class="mb-0">ID</h3>
-            </div>
-            <div class="col-3 ml-7">
-              <h3 class="mb-0">ID analisis</h3>
-            </div>
-            <div class="col-2 mr-2">
-              <span class="text-muted">Componente</span>
-            </div>
-            <div class="col">
-              <span class="text-muted">Unidad</span>
-            </div>
-            <div class="col">
-              <span class="text-muted">Rango</span>
-            </div>
-            <div class="col">
-              <span class="text-muted">Acción</span>
-            </div>
-          </div>
-        </div>
         <!-- Card body -->
         <div class="card-body">
-          <ul class="list-group">
-            {% for medicion in mediciones %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div style="width: 300px;">
-                <span>{{ medicion.mediciones_analisis_id }}</span>
-              </div>
-              <div style="width: 100px;">
-                <span>{{ medicion.mediciones_analisis_ana_id_fk }}</span>
-              </div>
-              <div style="width: 50px;">
-                <span class>{{ medicion.mediciones_analisis_componente }}</span>
-              </div>
-              <div style="width: 50px;">
-                <span class>{{ medicion.mediciones_analisis_unidad }}</span>
-              </div>
-              <div style="width: 50px;">
-                <span class>{{ medicion.mediciones_analisis_rango }}</span>
-              </div>
-              <div class="btn-group" role="group" aria-label="Acciones">
-                <a href="{{ url_for('mediciones.editar', mediciones_analisis_id=medicion.mediciones_analisis_id) }}"
-                  class="btn btn-sm btn-info mr-2">Modificar</a>
-                <a href="{{ url_for('mediciones.eliminar', mediciones_analisis_id=medicion.mediciones_analisis_id) }}"
-                  class="btn btn-sm btn-danger delete-btn"
-                  data-confirm="¿Está seguro que desea eliminar la medición '{{ medicion.mediciones_analisis_id }}'?">Eliminar</a>
-              </div>
-            </li>
-            {% endfor %}
-          </ul>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center">ID análisis</th>
+                  <th class="text-center">Componente</th>
+                  <th class="text-center">Unidad</th>
+                  <th class="text-center">Rango</th>
+                  <th class="text-center">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for medicion in mediciones %}
+                <tr>
+                  <td class="text-center">{{ medicion.nombre_analisis }}</td>
+                  <td class="text-center">{{ medicion.mediciones_analisis_componente }}</td>
+                  <td class="text-center">{{ medicion.mediciones_analisis_unidad }}</td>
+                  <td class="text-center">{{ medicion.mediciones_analisis_rango }}</td>
+                  <td class="text-center">
+                    <div class="btn-group" role="group" aria-label="Acciones">
+                      <a href="{{ url_for('mediciones.editar', mediciones_analisis_id=medicion.mediciones_analisis_id) }}" class="btn btn-sm btn-info mr-2">Modificar</a>
+                      <a href="{{ url_for('mediciones.eliminar', mediciones_analisis_id=medicion.mediciones_analisis_id) }}" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Está seguro que desea eliminar la medición '{{ medicion.mediciones_analisis_id }}'?">Eliminar</a>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -96,10 +74,8 @@
 </nav>
 {% endif %}
 
-
 <!-- Modal de confirmación -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
