@@ -9,6 +9,7 @@ from werkzeug.security import check_password_hash,generate_password_hash
 from analisis import db
 from flask import jsonify
 auth=Blueprint('auth',__name__,url_prefix='/auth')
+from sqlalchemy import func
 
 #registra usuario
 @auth.route('/register', methods=['GET', 'POST'])
@@ -119,12 +120,13 @@ def get_user_results():
             .all()
     else:
         resultados = db.session.query(Analisis.ana_nombre, Muestra.mues_nombre)\
-            .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id)\
-            .join(Muestra, Resultado.resul_mues_id_fk == Muestra.mues_id)\
-            .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk)\
-            .filter(Resultado.resul_sta == 'O')\
-            .add_columns(Muestra.mues_apellido_paterno, Muestra.mues_folio, Muestra.mues_alta_fec)\
-            .all()
+        .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id)\
+        .join(Muestra, Resultado.resul_mues_id_fk == Muestra.mues_id)\
+        .filter(Analisis.ana_area_id_fk == g.user.user_area_id_fk)\
+        .filter(Resultado.resul_sta == 'O')\
+        .add_columns(Muestra.mues_apellido_paterno, Muestra.mues_folio, Muestra.mues_alta_fec)\
+        .group_by(Resultado.resul_ana_id_fk, Resultado.resul_mues_id_fk)\
+        .all()
     return resultados
 
 @auth.route('/get_user_results_ajax',methods=['GET','POST'])

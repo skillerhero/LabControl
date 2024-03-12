@@ -80,6 +80,12 @@ def registrarMuestra():
         for ana in analisis:
             lista_mediciones = MedicionesAnalisis.query.filter_by(mediciones_analisis_ana_id_fk = ana).all()
             if not Resultado.query.filter_by(resul_ana_id_fk=ana, resul_mues_id_fk=muestra.mues_id).first():
+                print('lista_mediciones: ')
+                print(lista_mediciones)
+                print(lista_mediciones.count)
+                if lista_mediciones.count == 0:
+                    flash('No hay mediciones asociadas a estos analisis.', 'error')
+                    return render_template('analisis/registroMuestra.html', descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM", form=form_data)
                 for medicion in lista_mediciones:
                     resultado_analisis = Resultado(resul_ana_id_fk=ana,resul_medicion_analisis_id_fk=medicion.mediciones_analisis_id, resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_resultado=None, resul_fuera_de_rango=None, resul_sta="O")
                     db.session.add(resultado_analisis)
@@ -88,6 +94,12 @@ def registrarMuestra():
             analisis_grupo = GruposAnalisisRel.query.filter_by(gana_grupo_id_fk=grupo_id).all()
             for ana in analisis_grupo:
                 lista_mediciones = MedicionesAnalisis.query.filter_by(mediciones_analisis_ana_id_fk = ana.gana_ana_id_fk).all()
+                print('lista_mediciones: ')
+                print(lista_mediciones)
+                print(lista_mediciones.count)
+                if lista_mediciones.count == 0:
+                    flash('No hay mediciones asociadas a estos analisis.', 'error')
+                    return render_template('analisis/registroMuestra.html', descuentos=descuentos, analisis=lista_analisis, grupos=lista_grupos, segment="registrarM", form=form_data)
                 if not Resultado.query.filter_by(resul_ana_id_fk=ana.gana_ana_id_fk, resul_mues_id_fk=muestra.mues_id).first():
                     for medicion in lista_mediciones:
                         resultado_analisis = Resultado(resul_ana_id_fk=ana.gana_ana_id_fk, resul_medicion_analisis_id_fk=medicion.mediciones_analisis_id,resul_mues_id_fk=muestra.mues_id, resul_fecha=None, resul_resultado=None, resul_fuera_de_rango=None, resul_sta="O")
