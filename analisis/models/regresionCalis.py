@@ -2,7 +2,7 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 
 
-materiales_a = np.load("materialesA.npy")
+materiales_a = np.load("materialesB.npy")
 
 modelo = LinearRegression()
 
@@ -19,5 +19,5 @@ listInputs=np.asanyarray(listInputs)
 listOutputs=np.asanyarray(listOutputs).ravel()
 modelo.fit(listInputs,listOutputs)
 
-prediccion_a = int(modelo.predict([materiales_a[-3:,dia_semana]])[0])
+print(int(modelo.predict([materiales_a[-3:,dia_semana]])[0]))
 
