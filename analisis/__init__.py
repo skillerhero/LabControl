@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app=app, cors_allowed_origins='*')
 app.secret_key = 'J^8G#2L$k6hP3@F!d*DbT'
 app.config.from_object('config.DevelopmentConfig')
 db = SQLAlchemy(app)
