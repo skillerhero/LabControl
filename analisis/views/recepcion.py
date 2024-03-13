@@ -179,7 +179,8 @@ def editar_muestra(mues_id):
         recepcion.mues_alimentos = request.form['mues_alimentos']
         recepcion.mues_enfermedades = request.form['mues_enfermedades']
         recepcion.mues_medicamentos = request.form['mues_medicamentos']
-        #recepcion.mues_rubrica = request.form['mues_rubrica']
+        recepcion.mues_fec_nac = request.form['mues_fec_nac'] 
+        recepcion.mues_edad = request.form['edad_mues_hidden'] 
         db.session.commit()
         flash('Muestra editada con éxito', 'success')  # Mensaje de éxito
         socketio.emit('notification_update')
@@ -190,7 +191,6 @@ def editar_muestra(mues_id):
         grupos = Grupo.query.all()
         return redirect(url_for('recepcion.home', muestras=muestras, descuentos=descuentos, analisis=analisis, grupos=grupos))
     return render_template('recepcion/editar_muestra.html', recepcion=recepcion, segment='editar_muestra')
-
 
 
 @recepcion.route('/eliminar_muestra/<int:mues_id>')
