@@ -1,6 +1,6 @@
 class Config:
-    DEBUG=False
-    TESTING=False
+    DEBUG=True
+    TESTING=True
 
     # Configuración de la Base de datos
     DB_USER = 'admin'
