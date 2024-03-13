@@ -2,6 +2,8 @@ from flask import render_template, request, redirect, url_for, flash
 from analisis import db
 from flask import render_template, Blueprint
 from analisis.models.grupos import Grupo
+from analisis.models.analisis import Analisis
+from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from math import ceil
 
 grupos = Blueprint('grupos', __name__, url_prefix='/grupos')
@@ -19,6 +21,7 @@ def index():
 
 @grupos.route('/agregar', methods=['GET', 'POST'])
 def agregar():
+    form_data = request.form if request.method == 'POST' else None
     if request.method == 'POST':
         grupo_nombre = request.form.get('grupo_nombre')
         grupo_costo = request.form.get('grupo_costo')
@@ -32,10 +35,16 @@ def agregar():
             nuevo_grupo = Grupo(grupo_nombre=grupo_nombre, grupo_costo=grupo_costo, grupo_sta=grupo_sta)
             db.session.add(nuevo_grupo)
             db.session.commit()
+            grupo = Grupo.query.filter_by(grupo_nombre=grupo_nombre).first()
+            analisis = request.form.getlist('analisis[]')
+            for ana in analisis:
+                nuevo_grupos_analisis_rel = GruposAnalisisRel(gana_grupo_id_fk=grupo.grupo_nombre,gana_ana_id_fk=ana)
+                db.session.add(nuevo_grupo)
+                db.session.commit()
             flash('Grupo creado exitosamente.', 'success')
             return redirect(url_for('grupos.agregar'))
-
-    return render_template('grupos/agregar_grupos.html', segment='agregar')
+    lista_analisis = Analisis.query.all()
+    return render_template('grupos/agregar_grupos.html', segment='agregar', lista_analisis=lista_analisis, form=form_data)
 
 @grupos.route('/editar/<int:grupo_id>', methods=['GET', 'POST'])
 def editar(grupo_id):
