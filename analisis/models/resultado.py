@@ -7,7 +7,7 @@ class Resultado(db.Model):
     resul_medicion_analisis_id_fk = db.Column(db.Integer)
     resul_ana_id_fk = db.Column(db.Integer)
     resul_mues_id_fk = db.Column(db.Integer)
-    resul_fecha = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
+    resul_fecha = db.Column(db.DateTime(timezone=True), server_default=("CURRENT_TIMESTAMP"))
     resul_resultado = db.Column(db.String(50))
     resul_fuera_de_rango = db.Column(db.Boolean)
     resul_sta = db.Column(db.String(50))

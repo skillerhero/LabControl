@@ -4,7 +4,7 @@ class MuestraAnalisisRel(db.Model):
     __tablename__='muestra_analisis_rel'
     muan_mues_id_fk=db.Column(db.Integer,primary_key=True)
     muan_ana_id_fk=db.Column(db.Integer,primary_key=True)
-    muan_alta_fec=db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
+    muan_alta_fec=db.Column(db.DateTime(timezone=True),server_default=("CURRENT_TIMESTAMP"))
     muan_sta=db.Column(db.String(1),default='A')
     muan_resultado=db.Column(db.Float)
 

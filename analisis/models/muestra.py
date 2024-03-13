@@ -4,7 +4,7 @@ class Muestra(db.Model):
     __tablename__='muestras'
     mues_id =db.Column(db.Integer,primary_key=True)
     mues_sta=db.Column(db.String(1),default='O')
-    mues_alta_fec=db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
+    mues_alta_fec=db.Column(db.DateTime(timezone=True), server_default=("CURRENT_TIMESTAMP"))
     mues_folio=db.Column(db.String(20))
     mues_nombre=db.Column(db.String(80))
     mues_apellido_paterno=db.Column(db.String(80))
@@ -23,6 +23,10 @@ class Muestra(db.Model):
     mues_des_id_fk=db.Column(db.Integer)
     mues_edad = db.Column(db.Integer)
     mues_fec_nac = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
+
+    @property
+    def formatted_mues_alta_fec(self):
+        return self.mues_alta_fec.strftime("%d/%m/%Y, %H:%M:%S") if self.mues_alta_fec else None
 
     def __init__(self,mues_folio, mues_nombre, mues_apellido_paterno, mues_apellido_materno, mues_calle, mues_num_ext, mues_num_int, mues_colonia, mues_tel, mues_email, mues_horas_ayuno, mues_alimentos, mues_enfermedades, mues_medicamentos, mues_rubrica,mues_des_id_fk, mues_edad, mues_fec_nac)->None:
         self.mues_folio=mues_folio
