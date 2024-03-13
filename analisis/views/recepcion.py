@@ -26,7 +26,6 @@ def home():
     descuentos = Descuento.query.all()
     analisis = Analisis.query.all()
     grupos = Grupo.query.all()
-    db.session.commit()
     return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, grupos=grupos, segment="home")
 
 
@@ -185,7 +184,11 @@ def editar_muestra(mues_id):
         flash('Muestra editada con éxito', 'success')  # Mensaje de éxito
         socketio.emit('notification_update')
         socketio.emit('refresh')
-        return redirect(url_for('recepcion.editar muestra', mues_id=mues_id))
+        muestras = Muestra.query.all()
+        descuentos = Descuento.query.all()
+        analisis = Analisis.query.all()
+        grupos = Grupo.query.all()
+        return redirect(url_for('recepcion.home', muestras=muestras, descuentos=descuentos, analisis=analisis, grupos=grupos))
     return render_template('recepcion/editar_muestra.html', recepcion=recepcion, segment='editar_muestra')
 
 
