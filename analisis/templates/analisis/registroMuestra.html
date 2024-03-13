@@ -167,33 +167,40 @@
             <!-- Address -->
             <div class="pl-lg-4 mr-4">
               <div class="form-group">
-                <label class="form-control-label">Alimentos consumidos durante la última comida</label><br>
-
-                <input type="checkbox" id="ninguno_alimentos">
-                <label for="ninguno_alimentos" style="font-size: 0.3rem;">Ninguno</label>
-
-                <textarea rows="3" class="form-control" name="alimentos" id="alimentos" placeholder="Alimentos consumidos durante la última comida">{{ form.alimentos }}</textarea>
-                <input type="hidden" id="alimentos_hidden" name="alimentos_hidden" value="{{ form.alimentos }}">
+                  <label class="form-control-label">Alimentos consumidos durante la última comida</label><br>
+          
+                  <div class="custom-control custom-checkbox mb-3">
+                      <input type="checkbox" class="custom-control-input" id="ninguno_alimentos">
+                      <label class="custom-control-label" for="ninguno_alimentos">Ninguno</label>
+                  </div>
+          
+                  <textarea rows="3" class="form-control" name="alimentos" id="alimentos" placeholder="Alimentos consumidos durante la última comida">{{ form.alimentos }}</textarea>
+                  <input type="hidden" id="alimentos_hidden" name="alimentos_hidden" value="{{ form.alimentos }}">
               </div>
               <div class="form-group">
-                <label class="form-control-label">Enfermedades</label><br>
-
-                <input type="checkbox" id="ninguno_enfermedades">
-                <label for="ninguno_enfermedades" style="font-size: 0.3rem;">Ninguno</label>
-
-                <textarea rows="3" class="form-control" name="enfermedades" id="enfermedades" placeholder="Enfermedades">{{ form.enfermedades }}</textarea>
-                <input type="hidden" id="enfermedades_hidden" name="enfermedades_hidden" value="{{ form.enfermedades }}">
+                  <label class="form-control-label">Enfermedades</label><br>
+          
+                  <div class="custom-control custom-checkbox mb-3">
+                      <input type="checkbox" class="custom-control-input" id="ninguno_enfermedades">
+                      <label class="custom-control-label" for="ninguno_enfermedades">Ninguno</label>
+                  </div>
+          
+                  <textarea rows="3" class="form-control" name="enfermedades" id="enfermedades" placeholder="Enfermedades">{{ form.enfermedades }}</textarea>
+                  <input type="hidden" id="enfermedades_hidden" name="enfermedades_hidden" value="{{ form.enfermedades }}">
               </div>
               <div class="form-group">
-                <label class="form-control-label">Medicamentos</label><br>
-
-                <input type="checkbox" id="ninguno_medicamentos">
-                <label for="ninguno_medicamentos" style="font-size: 0.3rem;">Ninguno</label>
-
-                <textarea rows="3" class="form-control" name="medicamentos" id="medicamentos" placeholder="Medicamentos">{{ form.medicamentos }}</textarea>
-                <input type="hidden" id="medicamentos_hidden" name="medicamentos_hidden" value="{{ form.medicamentos }}">
+                  <label class="form-control-label">Medicamentos</label><br>
+          
+                  <div class="custom-control custom-checkbox mb-3">
+                      <input type="checkbox" class="custom-control-input" id="ninguno_medicamentos">
+                      <label class="custom-control-label" for="ninguno_medicamentos">Ninguno</label>
+                  </div>
+          
+                  <textarea rows="3" class="form-control" name="medicamentos" id="medicamentos" placeholder="Medicamentos">{{ form.medicamentos }}</textarea>
+                  <input type="hidden" id="medicamentos_hidden" name="medicamentos_hidden" value="{{ form.medicamentos }}">
               </div>
-             </div>
+          </div>
+          
 
             <div class="pl-lg-4">
               <div class="row">
