@@ -1,5 +1,6 @@
 {% extends 'layouts/base.html' %} {% block title %} Materiales {% endblock title
 %} {% block content %}
+<!-- Header -->
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
     <div class="header-body">
@@ -12,42 +13,22 @@
   </div>
 </div>
 
+<!-- Page content -->
 <div class="container-fluid mt--6">
   <div class="row justify-content-center">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
           <div class="btn-group d-flex justify-content-center" role="group">
-            <button
-              type="button"
-              class="btn btn-white"
-              data-material="A"
-              onclick="showMaterial('A')"
-            >
-              Material A
-            </button>
-            <button
-              type="button"
-              class="btn btn-white"
-              data-material="B"
-              onclick="showMaterial('B')"
-            >
-              Material B
-            </button>
-            <button
-              type="button"
-              class="btn btn-white"
-              data-material="C"
-              onclick="showMaterial('C')"
-            >
-              Material C
-            </button>
+            <button type="button" class="btn btn-white active" data-material="A" onclick="showMaterial('A')">Material A</button>
+            <button type="button" class="btn btn-white" data-material="B" onclick="showMaterial('B')">Material B</button>
+            <button type="button" class="btn btn-white" data-material="C" onclick="showMaterial('C')">Material C</button>
           </div>
 
           <div id="materialA" style="display: block">
             <h1><br />Materiales A</h1>
             <table class="table">
-              {% for fila in lista_a %}
+              {% for fila in materiales['A'][current_page-1] %}
               <tr>
                 {% for valor in fila %}
                 <td>{{ valor }}</td>
@@ -60,7 +41,7 @@
           <div id="materialB" style="display: none">
             <h1><br />Materiales B</h1>
             <table class="table">
-              {% for fila in lista_b %}
+              {% for fila in materiales['B'][current_page-1] %}
               <tr>
                 {% for valor in fila %}
                 <td>{{ valor }}</td>
@@ -73,7 +54,7 @@
           <div id="materialC" style="display: none">
             <h1><br />Materiales C</h1>
             <table class="table">
-              {% for fila in lista_c %}
+              {% for fila in materiales['C'][current_page-1] %}
               <tr>
                 {% for valor in fila %}
                 <td>{{ valor }}</td>
@@ -81,6 +62,21 @@
               </tr>
               {% endfor %}
             </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="card-footer">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                
+                {% for num in range(1, total_pages + 1) %}
+                  <li class="page-item {% if num == current_page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for(request.endpoint, pagina=num) }}">{{ num }}</a>
+                  </li>
+                {% endfor %}
+                
+              </ul>
+            </nav>
           </div>
         </div>
       </div>

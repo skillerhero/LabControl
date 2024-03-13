@@ -63,14 +63,23 @@ def predict():
 @regresion.route('/historico', methods=['GET', 'POST'])
 def historico():
     # Cargar los datos
-    materialesa = np.load("materialesa.npy")
-    materialesb = np.load("materialesb.npy")
-    materialesc = np.load("materialesc.npy")
+    materiales_a = np.load("materialesA.npy")
+    materiales_b = np.load("materialesB.npy")
+    materiales_c = np.load("materialesC.npy")
 
-    # Convertir los datos a listas para poder usarlos en la plantilla
-    lista_a = materialesa.tolist()
-    lista_b = materialesb.tolist()
-    lista_c = materialesc.tolist()
+    # Dividir los datos en grupos de 20 filas
+    materiales_a_paginados = [materiales_a[i:i+20] for i in range(0, len(materiales_a), 20)]
+    materiales_b_paginados = [materiales_b[i:i+20] for i in range(0, len(materiales_b), 20)]
+    materiales_c_paginados = [materiales_c[i:i+20] for i in range(0, len(materiales_c), 20)]
+
+    # Organizar los datos paginados en un diccionario
+    materiales = {'A': materiales_a_paginados, 'B': materiales_b_paginados, 'C': materiales_c_paginados}
+
+    # Obtener el número total de páginas para la paginación
+    total_pages = max([len(materiales[material]) for material in materiales])
+
+    # Obtener el número de página actual
+    current_page = request.args.get('pagina', 1, type=int)
 
     # Pasar los datos a la plantilla
-    return render_template('regresion/historico.html', lista_a=lista_a, lista_b=lista_b, lista_c=lista_c)
+    return render_template('regresion/historico.html', materiales=materiales, total_pages=total_pages, current_page=current_page)
