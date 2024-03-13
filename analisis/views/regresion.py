@@ -11,9 +11,9 @@ def index():
 
 @regresion.route('/predict', methods=['POST'])
 def predict():
-    materiales_a = np.load("materialesA.npy")
-    materiales_b = np.load("materialesB.npy")
-    materiales_c = np.load("materialesC.npy")
+    materiales_a = np.load("historico_caja_guantes.npy")
+    materiales_b = np.load("historico_jeringas.npy")
+    materiales_c = np.load("historico_tubos_recoleccion.npy")
 
     dia_semana = int(request.form['dia_semana']) -1 
 
@@ -63,10 +63,10 @@ def predict():
 @regresion.route('/historico', methods=['GET', 'POST'])
 def historico():
     # Cargar los datos
-    materiales_a = np.load("materialesA.npy")
-    materiales_b = np.load("materialesB.npy")
-    materiales_c = np.load("materialesC.npy")
-
+    materiales_a = np.load("historico_caja_guantes.npy")
+    materiales_b = np.load("historico_jeringas.npy")
+    materiales_c = np.load("historico_tubos_recoleccion.npy")
+    
     # Dividir los datos en grupos de 20 filas
     materiales_a_paginados = [materiales_a[i:i+20] for i in range(0, len(materiales_a), 20)]
     materiales_b_paginados = [materiales_b[i:i+20] for i in range(0, len(materiales_b), 20)]
