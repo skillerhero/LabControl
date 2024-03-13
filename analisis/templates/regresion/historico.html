@@ -1,40 +1,121 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Materiales</title>
-</head>
-<body>
-    <h1>Materiales A</h1>
-    <table>
-        {% for fila in lista_a %}
-            <tr>
-                {% for valor in fila %}
-                    <td>{{ valor }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
+{% extends 'layouts/base.html' %} {% block title %} Materiales {% endblock title
+%} {% block content %}
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h1 class="text-white">Materiales</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <h1>Materiales B</h1>
-    <table>
-        {% for fila in lista_b %}
-            <tr>
-                {% for valor in fila %}
-                    <td>{{ valor }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
+<div class="container-fluid mt--6">
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="btn-group d-flex justify-content-center" role="group">
+            <button
+              type="button"
+              class="btn btn-white"
+              data-material="A"
+              onclick="showMaterial('A')"
+            >
+              Material A
+            </button>
+            <button
+              type="button"
+              class="btn btn-white"
+              data-material="B"
+              onclick="showMaterial('B')"
+            >
+              Material B
+            </button>
+            <button
+              type="button"
+              class="btn btn-white"
+              data-material="C"
+              onclick="showMaterial('C')"
+            >
+              Material C
+            </button>
+          </div>
 
-    <h1>Materiales C</h1>
-    <table>
-        {% for fila in lista_c %}
-            <tr>
+          <div id="materialA" style="display: block">
+            <h1><br />Materiales A</h1>
+            <table class="table">
+              {% for fila in lista_a %}
+              <tr>
                 {% for valor in fila %}
-                    <td>{{ valor }}</td>
+                <td>{{ valor }}</td>
                 {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+
+          <div id="materialB" style="display: none">
+            <h1><br />Materiales B</h1>
+            <table class="table">
+              {% for fila in lista_b %}
+              <tr>
+                {% for valor in fila %}
+                <td>{{ valor }}</td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+
+          <div id="materialC" style="display: none">
+            <h1><br />Materiales C</h1>
+            <table class="table">
+              {% for fila in lista_c %}
+              <tr>
+                {% for valor in fila %}
+                <td>{{ valor }}</td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .btn-white {
+    background-color: #fff;
+    color: #000;
+    margin-right: 10px;
+    border-radius: 0;
+  }
+
+  .btn-white.active {
+    opacity: 0.7;
+  }
+</style>
+
+<script>
+  function showMaterial(material) {
+    document.querySelectorAll(".btn-white").forEach((button) => {
+      button.classList.remove("active"); // Remover la clase activa de todos los botones
+    });
+
+    document
+      .querySelector(`button[data-material="${material}"]`)
+      .classList.add("active"); // Agregar la clase activa al botón seleccionado
+
+    document.getElementById("materialA").style.display = "none";
+    document.getElementById("materialB").style.display = "none";
+    document.getElementById("materialC").style.display = "none";
+
+    document.getElementById("material" + material).style.display = "block";
+  }
+</script>
+{% endblock content %}
