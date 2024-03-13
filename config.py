@@ -15,5 +15,5 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG=True
-    SECRET_KEY='dev'
+    SECRET_KEY='J^8G#2L$k6hP3@F!d*DbT'
     TESTING=True
