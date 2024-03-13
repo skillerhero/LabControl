@@ -67,10 +67,11 @@ def agregar_resultados(mues_id):
                 db.session.commit()
                 socketio.emit('notification_update')
                 socketio.emit('refresh')
-                resultados = Resultado.query.all()
-                return redirect(url_for('resultados.index', resultados=resultados))
+                return redirect(url_for('home.index'))
         else:
             print("No se encontró ningún resultado que cumpla con las condiciones.")
+        if len(lista_de_analisis) == 1:
+            return redirect(url_for('home.index'))
         return redirect(url_for('resultados.agregar_resultados', mues_id=mues_id))
     mediciones_por_analisis = {}
     for analisis in lista_de_analisis:
