@@ -3,11 +3,6 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 regresion = Blueprint('regresion', __name__, url_prefix='/regresion')
-
-materiales_a = np.load("materialesA.npy")
-materiales_b = np.load("materialesB.npy")
-materiales_c = np.load("materialesC.npy")
-
 modelo = LinearRegression()
 
 @regresion.route('/')
@@ -16,6 +11,10 @@ def index():
 
 @regresion.route('/predict', methods=['POST'])
 def predict():
+    materiales_a = np.load("materialesA.npy")
+    materiales_b = np.load("materialesB.npy")
+    materiales_c = np.load("materialesC.npy")
+
     dia_semana = int(request.form['dia_semana'])
 
     listInputs=[]
@@ -32,6 +31,9 @@ def predict():
 
     prediccion_a = int(modelo.predict([materiales_a[-3:,dia_semana]])[0])
 
+
+    listInputs=[]
+    listOutputs=[]
     x = materiales_b[:,dia_semana]
     valoresAnteriores=3
     for i in range(valoresAnteriores,len(x)):
@@ -44,6 +46,8 @@ def predict():
 
     prediccion_b = int(modelo.predict([materiales_b[-3:,dia_semana]])[0])
 
+    listInputs=[]
+    listOutputs=[]
     x = materiales_c[:,dia_semana]
     valoresAnteriores=3
     for i in range(valoresAnteriores,len(x)):
@@ -69,4 +73,4 @@ def historico():
     lista_c = materialesc.tolist()
 
     # Pasar los datos a la plantilla
-    return render_template('historico.html', lista_a=lista_a, lista_b=lista_b, lista_c=lista_c)
+    return render_template('regresion/historico.html', lista_a=lista_a, lista_b=lista_b, lista_c=lista_c)
