@@ -27,6 +27,8 @@
               <p><strong>Nombre:</strong> {{ recepcion.mues_nombre }}</p>
               <p><strong>Apellido Paterno:</strong> {{ recepcion.mues_apellido_paterno }}</p>
               <p><strong>Apellido Materno:</strong> {{ recepcion.mues_apellido_materno }}</p>
+              <p><strong>Fecha de Nacimiento:</strong> <span id="fecha_nacimiento"></span></p>
+              <p><strong>Edad:</strong> {{ recepcion.mues_edad }}</p>
               <p><strong>Teléfono:</strong> {{ recepcion.mues_tel }}</p>
               <p><strong>Email:</strong> {{ recepcion.mues_email }}</p>
             </div>
@@ -110,5 +112,13 @@
   function refresh() {
     location.reload();
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var fechaNacimiento = '{{ recepcion.mues_fec_nac }}';
+    var fecha = new Date(fechaNacimiento);
+    var opciones = { day: 'numeric', month: 'long', year: 'numeric' };
+    var fechaFormateada = fecha.toLocaleDateString('es-ES', opciones);
+    document.getElementById('fecha_nacimiento').textContent = fechaFormateada;
+  });
 </script>
 {% endblock javascripts %}
