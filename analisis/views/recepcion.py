@@ -150,8 +150,7 @@ def pdf_resultados(mues_id):
     muestra = Muestra.query.get_or_404(mues_id)
     resultados = db.session.query(Resultado, MedicionesAnalisis) \
     .join(MedicionesAnalisis, MedicionesAnalisis.mediciones_analisis_ana_id_fk == Resultado.resul_ana_id_fk) \
-    .filter(Resultado.resul_mues_id_fk == mues_id)\
-    .group_by(Resultado.resul_resultado).all()
+    .filter(Resultado.resul_mues_id_fk == mues_id).all()
     rendered_html = render_template('recepcion/pdf_template.html', muestra=muestra, resultados=resultados)
 
     pdf = HTML(string=rendered_html).write_pdf()
