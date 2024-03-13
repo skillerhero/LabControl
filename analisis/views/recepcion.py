@@ -169,7 +169,7 @@ def editar_muestra(mues_id):
         recepcion.mues_nombre = request.form['mues_nombre']
         recepcion.mues_apellido_paterno = request.form['mues_apellido_paterno']
         recepcion.mues_apellido_materno = request.form['mues_apellido_materno']
-        recepcion.mues_telefono = request.form['mues_tel']
+        recepcion.mues_tel = request.form['mues_tel']
         recepcion.mues_email = request.form['mues_email']
         recepcion.mues_calle = request.form['mues_calle']
         recepcion.mues_colonia = request.form['mues_colonia']

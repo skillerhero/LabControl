@@ -32,19 +32,19 @@
               </div>
               <div class="form-group">
                 <label for="mues_nombre">Nombre:</label>
-                <input type="text" class="form-control" id="mues_nombre" name="mues_nombre" value="{{ recepcion.mues_nombre }}" required>
+                <input type="text" class="form-control" id="mues_nombre" name="mues_nombre" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+" value="{{ recepcion.mues_nombre }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_apellido_paterno">Apellido paterno:</label>
-                <input type="text" class="form-control" id="mues_apellido_paterno" name="mues_apellido_paterno" value="{{ recepcion.mues_apellido_paterno }}" required>
+                <input type="text" class="form-control" id="mues_apellido_paterno" name="mues_apellido_paterno" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+" value="{{ recepcion.mues_apellido_paterno }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_apellido_materno">Apellido materno:</label>
-                <input type="text" class="form-control" id="mues_apellido_materno" name="mues_apellido_materno" value="{{ recepcion.mues_apellido_materno }}" required>
+                <input type="text" class="form-control" id="mues_apellido_materno" name="mues_apellido_materno" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+" value="{{ recepcion.mues_apellido_materno }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_tel">Teléfono:</label>
-                <input type="tel" class="form-control" id="mues_tel" name="mues_tel" required pattern="[0-9]{10}" value="{{ recepcion.mues_tel }}" autocomplete="off" required>
+                <input type="tel" class="form-control" id="mues_tel" name="mues_tel" required pattern="[0-9]{10}" maxlength="10" value="{{ recepcion.mues_tel }}" autocomplete="off" required>
                 <div class="invalid-feedback">Por favor ingresa un número de teléfono válido.</div>
               </div>
               
@@ -75,7 +75,7 @@
               <h2>Datos clínicos</h2>
               <div class="form-group">
                 <label for="mues_horas_ayuno">Horas de ayuno:</label>
-                <input type="number" class="form-control" id="mues_horas_ayuno" name="mues_horas_ayuno" value="{{ recepcion.mues_horas_ayuno }}" required>
+                <input type="number" class="form-control" id="mues_horas_ayuno" name="mues_horas_ayuno" min="0" max="50" value="{{ recepcion.mues_horas_ayuno }}" required>
               </div>
               <div class="form-group">
                 <label for="mues_alimentos">Alimentos consumidos durante la última comida:</label>
@@ -110,15 +110,6 @@
 
 {% block javascripts %} 
 <script>
-$(document).ready(function() {
-  // Validación personalizada para el campo de teléfono
-  $('#registroMuestraForm').submit(function(event) {
-    var telefono = $('#mues_tel').val();
-    if (telefono.length !== 10 || isNaN(telefono)) {
-      event.preventDefault(); // Evita que el formulario se envíe si la validación falla
-      $('#mues_tel').addClass('is-invalid'); // Marca el campo como inválido
-    }
-  });
-});
+
 </script>
 {% endblock javascripts %}
