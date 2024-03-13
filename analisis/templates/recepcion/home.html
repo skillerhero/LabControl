@@ -153,7 +153,7 @@
           tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_folio + '</span></td>';
           tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_nombre + ' ' + muestra.mues_apellido_paterno + ' ' + muestra.mues_apellido_materno + '</span></td>';
           tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + (muestra.mues_sta == 'O' ? 'Open' : 'Finish') + '</span></td>';
-          tableContent += '<td class="text-center"><div class="btn-group" role="group" aria-label="Acciones"><a href="' + muestra.url_detalle + '" class="btn btn-sm btn-info mr-2">Detalles</a><a href="' + muestra.url_editar + '" class="btn btn-sm btn-primary mr-2">Modificar</a><a href="' + muestra.eliminar_muestra + '" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Estás seguro que deseas eliminar esta muestra?">Eliminar</a></div></td>';
+          tableContent += '<td class="text-center"><div class="btn-group" role="group" aria-label="Acciones"><a href="' + url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id) + '" class="btn btn-sm btn-info mr-2">Detalles</a><a href="' + url_for('recepcion.editar_muestra', mues_id=muestra.mues_id) + '" class="btn btn-sm btn-primary mr-2">Modificar</a><a href="' + url_for('recepcion.eliminar_muestra', mues_id=muestra.mues_id)  + '" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Estás seguro que deseas eliminar esta muestra?">Eliminar</a></div></td>';
           tableContent += '</tr>';
         });
         $('.table .list').html(tableContent);

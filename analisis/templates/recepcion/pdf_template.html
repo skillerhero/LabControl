@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,22 +8,27 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px; /* Márgenes externos */
+            margin: 20px;
+            /* Márgenes externos */
             padding: 0;
         }
+
         .header {
             color: #000000;
             text-align: center;
             margin-bottom: 20px;
         }
+
         .separator {
             border-bottom: 2px solid #ccc;
             margin-bottom: 20px;
         }
+
         .title {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .muestra-info {
             background-color: rgb(134, 147, 223);
             color: #fff;
@@ -32,28 +38,33 @@
             padding-left: 2%;
             padding-right: 3%;
         }
+
         .resultados table {
             width: 100%;
             border-collapse: collapse;
         }
-        .resultados th, .resultados td {
+
+        .resultados th,
+        .resultados td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: center;
         }
+
         .resultados th {
             background-color: #5e72e4;
             color: #fff;
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <h1>Laboratorio de Análisis Clínicos y Bacteriológicos CUCEI</h1>
         <div class="separator"></div>
         <h2>Hoja de Resultados</h2>
     </div>
-    
+
     <div class="muestra-info">
         <p><strong>Muestra:</strong> {{ muestra.mues_folio }}</p>
         <p><strong>Estado:</strong> {{ muestra.mues_sta }}</p>
@@ -71,16 +82,27 @@
             </thead>
             <tbody>
                 {% for resultado in resultados %}
-                <tr>
-                    <td>{{ resultado[1].mediciones_analisis_componente }}</td>
-                    <td>{{ resultado[1].mediciones_analisis_unidad }}</td>
-                    <td>{{ resultado[0].resul_resultado }}</td>
-                    <td>{{ resultado[1].mediciones_analisis_rango }}</td>
-                    <td>{{ resultado[0].resul_fuera_de_rango }}</td>
-                </tr>
+                    {% if resultado[0].resul_fuera_de_rango %}
+                    <tr>
+                        <td><b>{{ resultado[1].mediciones_analisis_componente }}</b></td>
+                        <td><b>{{ resultado[1].mediciones_analisis_unidad }}</b></td>
+                        <td><b>{{ resultado[0].resul_resultado }}</b></td>
+                        <td><b>{{ resultado[1].mediciones_analisis_rango }}</b></td>
+                        <td><b>*</b></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>{{ resultado[1].mediciones_analisis_componente }}</td>
+                        <td>{{ resultado[1].mediciones_analisis_unidad }}</td>
+                        <td>{{ resultado[0].resul_resultado }}</td>
+                        <td>{{ resultado[1].mediciones_analisis_rango }}</td>
+                        <td></td>
+                    </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </body>
+
 </html>
