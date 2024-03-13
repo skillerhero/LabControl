@@ -15,7 +15,7 @@ def predict():
     materiales_b = np.load("materialesB.npy")
     materiales_c = np.load("materialesC.npy")
 
-    dia_semana = int(request.form['dia_semana'])
+    dia_semana = int(request.form['dia_semana']) -1 
 
     listInputs=[]
     listOutputs=[]
