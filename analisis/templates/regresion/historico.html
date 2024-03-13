@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Materiales</title>
+</head>
+<body>
+    <h1>Materiales A</h1>
+    <table>
+        {% for fila in lista_a %}
+            <tr>
+                {% for valor in fila %}
+                    <td>{{ valor }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Materiales B</h1>
+    <table>
+        {% for fila in lista_b %}
+            <tr>
+                {% for valor in fila %}
+                    <td>{{ valor }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Materiales C</h1>
+    <table>
+        {% for fila in lista_c %}
+            <tr>
+                {% for valor in fila %}
+                    <td>{{ valor }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
