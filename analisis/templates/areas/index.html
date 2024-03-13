@@ -47,8 +47,14 @@
                         <span>{{ area.area_nombre }}</span>
                     </div>
                     <div style="width: 100px;"> <!-- Ancho fijo para la columna del estado -->
-                        <span class="text-muted">{{ area.area_sta }}</span>
-                    </div>
+                      <span class="text-muted">
+                          {% if area.area_sta == 'A' %}
+                              Activada
+                          {% elif area.area_sta == 'O' %}
+                              Desactivada
+                          {% endif %}
+                      </span>
+                  </div>
                     <div class="btn-group" role="group" aria-label="Acciones">
                         <!--<a href="{{ url_for('areas.detalle_area', area_id=area.area_id) }}" class="btn btn-sm btn-primary mr-2">Detalle</a> -->
                         <a href="{{ url_for('areas.editar_area', area_id=area.area_id) }}" class="btn btn-sm btn-info mr-2">Modificar</a>

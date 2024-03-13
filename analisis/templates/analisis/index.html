@@ -64,7 +64,13 @@
                     <span>${{ ana.ana_costo }}</span>
                   </div>
                   <div style="width: 50px;"> <!-- Ancho fijo para la columna del estado -->
-                    <span class="text-muted">{{ ana.ana_sta }}</span>
+                    <span class="text-muted">
+                      {% if ana.ana_sta == 'A' %}
+                          Activada
+                      {% elif ana.ana_sta == 'O' %}
+                          Desactivada
+                      {% endif %}
+                    </span>
                   </div>
                   <div class="btn-group" role="group" aria-label="Acciones">
                     <!--<a href="{{ url_for('analisis.detalle_analisis', ana_id=ana.ana_id) }}" class="btn btn-sm btn-primary mr-2">Detalle</a>-->
