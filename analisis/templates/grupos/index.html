@@ -53,7 +53,13 @@
                       <span>${{ grupo.grupo_costo }}</span>
                   </div>
                     <div style="width: 50px;"> <!-- Ancho fijo para la columna del estado -->
-                        <span class="text-muted">{{ grupo.grupo_sta }}</span>
+                        <span class="text-muted">
+                          {% if grupo.grupo_sta  == 'A' %}
+                              Activado
+                          {% elif grupo.grupo_sta  == 'O' %}
+                              Desactivado
+                          {% endif %}
+                        </span>
                     </div>
                     <div class="btn-group" role="group" aria-label="Acciones">
                         <a href="{{ url_for('grupos.editar', grupo_id=grupo.grupo_id) }}" class="btn btn-sm btn-info mr-2">Modificar</a>

@@ -4,8 +4,7 @@
       <!-- Elementos en el lado izquierdo -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link pr-3 text-left" href="{{ session.get('ruta_anterior', '/') }}" role="button" aria-haspopup="true" aria-expanded="false">
-            aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link pr-3 text-left" href="javascript:history.back()" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-arrow-left text-white"></i>
           </a>
         </li>
@@ -55,6 +54,7 @@
     </div>
   </div>
 </nav>
+
 
 <!-- Modal de Notificaciones -->
 <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel"

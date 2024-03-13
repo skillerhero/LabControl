@@ -53,13 +53,36 @@
           </div>
           <!-- Sección para mostrar los análisis asociados -->
           <hr>
-          <h2 class="mb-4"><span class="section-title">Análisis Asociados</span></h2>
-          <ul>
-            {% for analisis in analisis_asociados %}
-            <li>{{ analisis[0].ana_nombre }} | Área: {{ analisis[2].area_nombre }} | Status: {{ "Capturado" if analisis[1].resul_sta == "F" else "Sin capturar" }}</li>
-            {% endfor %}
-          </ul>
+<h2 class="mb-4"><span class="section-title">Análisis Asociados</span></h2>
+<style>
+  .custom-list-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distribuye los elementos en tres columnas */
+    padding-left: 0;
+    list-style-type: none;
+  }
 
+  .custom-list-group-item {
+    width: calc(33.33% - 10px); /* Tamaño de cada columna (menos el espacio entre columnas) */
+    margin-bottom: 10px; /* Espacio entre elementos */
+    border: none;
+    padding: 10px;
+    border-radius: 0;
+    background-color: #f8f9fa; /* Color de fondo */
+    box-sizing: border-box;
+  }
+</style>
+<ul class="custom-list-group">
+  {% for analisis in analisis_asociados %}
+  <li class="custom-list-group-item">
+    <strong>{{ analisis[0].ana_nombre }}</strong><br> {{ analisis[2].area_nombre }} - {% if analisis[1].resul_sta == "F" %}Capturado{% else %}Sin capturar{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+
+
+        
           <div class="row">
             <div class="col-lg-12">
               {% if recepcion.mues_sta == 'F' %}
