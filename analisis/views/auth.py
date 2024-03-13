@@ -57,9 +57,9 @@ def login():
         user = User.query.filter_by(user_username=username).first()
 
         if user is None:
-            error += "Nombre de usuario incorrecto."
+            error += "Usuario y/o contraseña incorrecta."
         elif not check_password_hash(user.user_password, password):
-            error += "Contraseña incorrecta."
+            error += "Usuario y/o contraseña incorrecta."
 
         if error != '':
             flash(error)
