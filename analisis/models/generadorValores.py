@@ -15,7 +15,7 @@ np.save("historico_tubos_recoleccion",valores)
 probabilidades=[]
 valores = []
 caja_guantes_por_dia = np.array([0, 1, 2])
-probabilidades = np.array([0.6, 0.3, 0.1])
+probabilidades = np.array([0.4, 0.6, 0.1])
 probabilidades = probabilidades / probabilidades.sum()
 valores = np.random.choice(caja_guantes_por_dia, size=(100,5), p=probabilidades)
 np.save("historico_caja_guantes",valores)
