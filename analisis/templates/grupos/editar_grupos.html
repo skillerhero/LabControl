@@ -3,69 +3,85 @@
 {% block title %} Editar Grupo {% endblock title %}
 
 {% block content %}
-  <!-- Header -->
-  <div class="header bg-primary pb-6">
-    <div class="container-fluid">
-      <div class="header-body">
-        <div class="row align-items-center py-4">
-          <div class="col-lg-6 col-7">
-            <h1 class="text-white">Editar Grupo</h1>
-          </div>
+<!-- Header -->
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h1 class="text-white">Editar Grupo</h1>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Page content -->
-  <div class="container-fluid mt--6">
-    <div class="row justify-content-center">
-      <div class="col-lg-6">
-        <div class="card">
-          <!-- Card body -->
-          <div class="card-body">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                {% for category, message in messages %}
-                  <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
-                  <script>
-                    // Remover el mensaje después de 6 segundos
-                    setTimeout(function() {
-                      document.querySelector('.alert').remove();
-                    }, 6000);
-                  </script>
-                {% endfor %}
-              {% endif %}
-            {% endwith %}
-            <form action="{{ url_for('grupos.editar', grupo_id=grupo.grupo_id) }}" method="POST">
-              <div class="form-group">
-                <label for="grupo_nombre">Nombre del Grupo:</label>
-                <input type="text" class="form-control" id="grupo_nombre" name="grupo_nombre" value="{{ grupo.grupo_nombre }}" required>
-              </div>
-
-              <div class="form-group">
-                <label for="grupo_costo">Costo del Grupo:</label>
-                <input type="text" class="form-control" id="grupo_costo" name="grupo_costo" value="{{ grupo.grupo_costo }}" required>
-              </div>
-
-              <div class="form-group">
-                <label for="grupo_sta">Estatus del Grupo:</label>
-                <select class="form-control" id="grupo_sta" name="grupo_sta" required>
-                  <option value="A" {% if grupo.grupo_sta == 'A' %} selected {% endif %}>Activado</option>
-                  <option value="O" {% if grupo.grupo_sta == 'O' %} selected {% endif %}>Desactivado</option>
-                </select>
-              </div>
-              
-              <div class="row">
-                <div class="col text-right">
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card">
+        <!-- Card body -->
+        <div class="card-body">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+          <script>
+            // Remover el mensaje después de 6 segundos
+            setTimeout(function () {
+              document.querySelector('.alert').remove();
+            }, 6000);
+          </script>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+          <form action="{{ url_for('grupos.editar', grupo_id=grupo.grupo_id) }}" method="POST">
+            <div class="form-group">
+              <label for="grupo_nombre">Nombre del Grupo:</label>
+              <input type="text" class="form-control" id="grupo_nombre" name="grupo_nombre"
+                value="{{ grupo.grupo_nombre }}" required>
             </div>
-              
-              
-            </form>
-          </div>
+
+            <div class="form-group">
+              <label for="grupo_costo">Costo del Grupo:</label>
+              <input type="text" class="form-control" id="grupo_costo" name="grupo_costo"
+                value="{{ grupo.grupo_costo }}" required>
+            </div>
+
+            <div class="form-group">
+              <label for="grupo_sta">Estatus del Grupo:</label>
+              <select class="form-control" id="grupo_sta" name="grupo_sta" required>
+                <option value="A" {% if grupo.grupo_sta=='A' %} selected {% endif %}>Activado</option>
+                <option value="O" {% if grupo.grupo_sta=='O' %} selected {% endif %}>Desactivado</option>
+              </select>
+            </div>
+
+            <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple"
+              name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true">
+              {% for analisis_item in lista_analisis %}
+              {% if analisis_item in lista_analisis_selec %}
+              <option value="{{ analisis_item.ana_id }}" selected>{{ analisis_item.ana_nombre }} - ${{
+                analisis_item.ana_costo }}</option>
+              {% else %}
+              <option value="{{ analisis_item.ana_id }}">{{ analisis_item.ana_nombre }} - ${{ analisis_item.ana_costo }}
+              </option>
+              {% endif %}
+              {% endfor %}
+            </select>
+
+
+            <div class="row">
+              <div class="col text-right">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+              </div>
+            </div>
+
+
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock content %}
