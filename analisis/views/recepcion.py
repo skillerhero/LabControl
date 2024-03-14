@@ -32,7 +32,13 @@ def home():
 @recepcion.route("/create", methods=['GET', 'POST'])
 def registrarMuestra():
     descuentos = Descuento.query.all()
-    lista_analisis = Analisis.query.all()
+    #lista_analisis = Analisis.query.all()
+    lista_analisis = db.session.query(Analisis).\
+    join(MedicionesAnalisis, Analisis.ana_id == MedicionesAnalisis.mediciones_analisis_ana_id_fk).\
+    group_by(Analisis.ana_id).\
+    all()
+
+
     lista_grupos = Grupo.query.all()
     form_data = request.form if request.method == 'POST' else None
     #ESTO ES PARA GENERAR UN FOLIO AUTOMATICO
