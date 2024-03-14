@@ -65,10 +65,10 @@ def editar(grupo_id):
         db.session.commit()
         flash('Grupo editado con éxito.', 'success')
         return redirect(url_for('grupos.editar', grupo_id=grupo_id))
-    lista_analisis_selec = db.session.query(Analisis).join(GruposAnalisisRel, GruposAnalisisRel.gana_ana_id_fk == Analisis.ana_id).join(Grupo, Grupo.grupo_id == GruposAnalisisRel.gana_grupo_id_fk).filter(Grupo.grupo_id == grupo_id).all()
+    lista_analisis_select = db.session.query(Analisis).join(GruposAnalisisRel, GruposAnalisisRel.gana_ana_id_fk == Analisis.ana_id).join(Grupo, Grupo.grupo_id == GruposAnalisisRel.gana_grupo_id_fk).filter(Grupo.grupo_id == grupo_id).all()
     lista_analisis = Analisis.query.all()
 
-    return render_template('grupos/editar_grupos.html', grupo=grupo, lista_analisis_select=lista_analisis_selec, lista_analisis=lista_analisis, segment='editar')
+    return render_template('grupos/editar_grupos.html', grupo=grupo, lista_analisis_select=lista_analisis_select, lista_analisis=lista_analisis, segment='editar')
 
 @grupos.route('/eliminar/<int:grupo_id>')
 def eliminar(grupo_id):
