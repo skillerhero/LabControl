@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, Blueprint, session, g
+from flask import render_template, request, redirect, url_for, Blueprint, session, g, flash
 from analisis import db
 from datetime import datetime 
 from analisis.models.muestra import Muestra
@@ -49,6 +49,9 @@ def agregar_resultados(mues_id):
                 db.session.commit()
                 socketio.emit('notification_update')
                 socketio.emit('refresh')
+                if len(lista_de_analisis) != 1:
+                    flash('Resultado registrado ', 'success')
+
                 print("Resultado modificado con éxito.")
 
         #-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -71,12 +74,13 @@ def agregar_resultados(mues_id):
         else:
             print("No se encontró ningún resultado que cumpla con las condiciones.")
         if len(lista_de_analisis) == 1:
+            flash('Resultados de análisis completado.', 'success')
             return redirect(url_for('home.index'))
         return redirect(url_for('resultados.agregar_resultados', mues_id=mues_id))
     mediciones_por_analisis = {}
     for analisis in lista_de_analisis:
         mediciones_por_analisis[analisis.ana_id] = MedicionesAnalisis.query.filter_by(mediciones_analisis_ana_id_fk=analisis.ana_id).all()
-
+        
     return render_template('resultados/agregar_resultados.html', mediciones_por_analisis=json.dumps({k: [i.serialize for i in v] for k, v in mediciones_por_analisis.items()}), muestra=muestra, lista_de_analisis=lista_de_analisis,segment='agregarresultados')
 
 
