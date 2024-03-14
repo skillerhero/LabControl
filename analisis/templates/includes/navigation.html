@@ -68,7 +68,11 @@
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content" style="padding-bottom: 0;">
       <div class="modal-header text-white">
-        <h5 class="modal-title" id="notificationModalLabel">Notificaciones</h5>
+        {% if g.user.user_area_id_fk == 6 or g.user.user_area_id_fk == 7 %}
+        <h5 class="modal-title" id="notificationModalLabel">Notificaciones Muestras Terminadas</h5>
+        {% else %}
+        <h5 class="modal-title" id="notificationModalLabel">Notificaciones Muestras recibidas</h5>
+        {% endif %}
         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

@@ -9,7 +9,7 @@ modelo = LinearRegression()
 def index():
     return render_template('regresion/index.html')
 
-@regresion.route('/predict', methods=['POST'])
+@regresion.route('/predict', methods=['POST','GET'])
 def predict():
     materiales_a = np.load("historico_caja_guantes.npy")
     materiales_b = np.load("historico_jeringas.npy")
