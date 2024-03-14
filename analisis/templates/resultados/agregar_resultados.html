@@ -3,6 +3,8 @@
 {% block title %} Agregar Resultado {% endblock title %}
 
 {% block content %}
+
+<!-- Card header -->
 <!-- Header -->
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
@@ -22,6 +24,20 @@
     <div class="col-lg-10">
       <div class="card">
         <!-- Card body -->
+        <!-- Card header -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+        <script>
+          // Remover el mensaje después de 6 segundos
+          setTimeout(function () {
+            document.querySelector('.alert').remove();
+          }, 3000);
+        </script>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <div class="card-body">
           <form action="{{ url_for('resultados.agregar_resultados', mues_id=muestra.mues_id) }}" method="POST">
             <div class="form-group">

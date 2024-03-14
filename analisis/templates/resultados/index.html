@@ -3,11 +3,27 @@
 {% block title %} Lista de Resultados {% endblock title %}
 
 {% block content %}
+
+
   <div class="header bg-primary pb-6">
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-5 text-left ml-lg-0 text-center">
+            <!-- Card header -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+            <script>
+              // Remover el mensaje después de 6 segundos
+              setTimeout(function () {
+                document.querySelector('.alert').remove();
+              }, 3500);
+            </script>
+            {% endfor %}
+            {% endif %}
+          {% endwith %}
             <h1 class="text-white">Lista de Resultados</h1>
           </div>
           <div class="col-lg-5 text-right">

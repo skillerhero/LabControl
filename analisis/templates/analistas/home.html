@@ -3,17 +3,7 @@
 {% block title %} Tables {% endblock title %}
 
 {% block content %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<div class="alert alert-danger" role="alert">
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-{% endwith %}
+
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
     <div class="header-body">
@@ -33,6 +23,19 @@
   <div class="row">
     <div class="col">
       <div class="card">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+        <script>
+          // Remover el mensaje después de 6 segundos
+          setTimeout(function () {
+            document.querySelector('.alert').remove();
+          }, 3500);
+        </script>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <!-- Card header -->
         <div class="card-header border-0">
           <h3 class="mb-0">Muestras Recibidas Analistas</h3>
@@ -59,7 +62,8 @@
                   <span class="name mb-0 text-sm">{{muestra.mues_folio}}</span>
                 </td>
                 <td scope="col" class="text-center">
-                  <span class="name mb-0 text-sm">{{muestra.mues_nombre}} {{muestra.mues_apellido_paterno}} {{muestra.mues_apellido_materno}}</span>
+                  <span class="name mb-0 text-sm">{{muestra.mues_nombre}} {{muestra.mues_apellido_paterno}}
+                    {{muestra.mues_apellido_materno}}</span>
                 </td>
                 <td class="text-center">
                   {% if muestra.mues_sta == 'O' %}
@@ -71,8 +75,10 @@
 
                 <td class="text-center">
                   <div class="btn-group" role="group" aria-label="Acciones">
-                    <a href="{{ url_for('home.detalle_muestra', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-primary mr-2">Ver detalles</a>
-                    <a href="{{ url_for('resultados.agregar_resultados', mues_id=muestra.mues_id) }}" class="btn btn-sm btn-info mr-2">Agregar Resultado</a>
+                    <a href="{{ url_for('home.detalle_muestra', mues_id=muestra.mues_id) }}"
+                      class="btn btn-sm btn-primary mr-2">Ver detalles</a>
+                    <a href="{{ url_for('resultados.agregar_resultados', mues_id=muestra.mues_id) }}"
+                      class="btn btn-sm btn-info mr-2">Agregar Resultado</a>
                   </div>
                 </td>
               </tr>
@@ -92,7 +98,8 @@
 {% endblock content %}
 
 {% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
 <script type="module">
   import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
 
