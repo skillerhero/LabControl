@@ -112,7 +112,7 @@ def login_required(view):
 
 def get_user_results():
     if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
-        resultados = db.session.query(Muestra.mues_folio, Muestra.mues_fec_nac,Muestra.mues_nombre + ' ' + Muestra.mues_apellido_paterno + ' ' + Muestra.mues_apellido_materno)\
+        resultados = db.session.query(Muestra.mues_folio, Muestra.mues_alta_fec ,Muestra.mues_nombre + ' ' + Muestra.mues_apellido_paterno + ' ' + Muestra.mues_apellido_materno)\
             .join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id)\
             .join(Analisis, Resultado.resul_ana_id_fk == Analisis.ana_id)\
             .filter(Muestra.mues_sta == 'F')\
