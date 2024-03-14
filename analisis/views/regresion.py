@@ -15,50 +15,62 @@ def predict():
     materiales_b = np.load("historico_jeringas.npy")
     materiales_c = np.load("historico_tubos_recoleccion.npy")
 
-    dia_semana = int(request.form['dia_semana']) -1 
+    total_caja_guantes = int(0)
+    total_jeringa = int(0)
+    total_tubos_recoleccion = int(0)
 
-    listInputs=[]
-    listOutputs=[]
-    x = materiales_a[:,dia_semana]
-    valoresAnteriores=3
-    for i in range(valoresAnteriores,len(x)):
-        entrada=np.reshape(x[i-valoresAnteriores:i],-1)
-        listInputs.append(entrada)
-        listOutputs.append(x[i])
-    listInputs=np.asanyarray(listInputs)
-    listOutputs=np.asanyarray(listOutputs).ravel()
-    modelo.fit(listInputs,listOutputs)
+    caja_guantes = []
+    jeringas = []
+    tubos_recoleccion = []
+    for dia in range(5):
+        listInputs=[]
+        listOutputs=[]
+        x = materiales_a[:,dia]
+        valoresAnteriores=3
+        for i in range(valoresAnteriores,len(x)):
+            entrada=np.reshape(x[i-valoresAnteriores:i],-1)
+            listInputs.append(entrada)
+            listOutputs.append(x[i])
+        listInputs=np.asanyarray(listInputs)
+        listOutputs=np.asanyarray(listOutputs).ravel()
+        modelo.fit(listInputs,listOutputs)
+        prediccion_a = int(modelo.predict([materiales_a[-3:,dia]])[0])
+        total_caja_guantes += prediccion_a
+        caja_guantes.append(prediccion_a)
 
-    prediccion_a = int(modelo.predict([materiales_a[-3:,dia_semana]])[0])
+        listInputs=[]
+        listOutputs=[]
+        x = materiales_b[:,dia]
+        valoresAnteriores=3
+        for i in range(valoresAnteriores,len(x)):
+            entrada=np.reshape(x[i-valoresAnteriores:i],-1)
+            listInputs.append(entrada)
+            listOutputs.append(x[i])
+        listInputs=np.asanyarray(listInputs)
+        listOutputs=np.asanyarray(listOutputs).ravel()
+        modelo.fit(listInputs,listOutputs)
+        prediccion_b = int(modelo.predict([materiales_b[-3:,dia]])[0])
+        total_jeringa += prediccion_b
+        jeringas.append(prediccion_b)
 
-
-    listInputs=[]
-    listOutputs=[]
-    x = materiales_b[:,dia_semana]
-    valoresAnteriores=3
-    for i in range(valoresAnteriores,len(x)):
-        entrada=np.reshape(x[i-valoresAnteriores:i],-1)
-        listInputs.append(entrada)
-        listOutputs.append(x[i])
-    listInputs=np.asanyarray(listInputs)
-    listOutputs=np.asanyarray(listOutputs).ravel()
-    modelo.fit(listInputs,listOutputs)
-
-    prediccion_b = int(modelo.predict([materiales_b[-3:,dia_semana]])[0])
-
-    listInputs=[]
-    listOutputs=[]
-    x = materiales_c[:,dia_semana]
-    valoresAnteriores=3
-    for i in range(valoresAnteriores,len(x)):
-        entrada=np.reshape(x[i-valoresAnteriores:i],-1)
-        listInputs.append(entrada)
-        listOutputs.append(x[i])
-    listInputs=np.asanyarray(listInputs)
-    listOutputs=np.asanyarray(listOutputs).ravel()
-    modelo.fit(listInputs,listOutputs)
-    prediccion_c = int(modelo.predict([materiales_c[-3:,dia_semana]])[0])
-    return render_template('regresion/result.html', prediccion_a=prediccion_a, prediccion_b=prediccion_b, prediccion_c=prediccion_c)
+        listInputs=[]
+        listOutputs=[]
+        x = materiales_c[:,dia]
+        valoresAnteriores=3
+        for i in range(valoresAnteriores,len(x)):
+            entrada=np.reshape(x[i-valoresAnteriores:i],-1)
+            listInputs.append(entrada)
+            listOutputs.append(x[i])
+        listInputs=np.asanyarray(listInputs)
+        listOutputs=np.asanyarray(listOutputs).ravel()
+        modelo.fit(listInputs,listOutputs)
+        prediccion_c = int(modelo.predict([materiales_c[-3:,dia]])[0])
+        total_tubos_recoleccion += prediccion_c
+        tubos_recoleccion.append(prediccion_c)
+    caja_guantes.append(total_caja_guantes)
+    jeringas.append(total_jeringa)
+    tubos_recoleccion.append(total_tubos_recoleccion)
+    return render_template('regresion/result.html', caja_guantes=caja_guantes, jeringas=jeringas, tubos_recoleccion=tubos_recoleccion)
 
 @regresion.route('/historico', methods=['GET', 'POST'])
 def historico():
@@ -83,3 +95,19 @@ def historico():
 
     # Pasar los datos a la plantilla
     return render_template('regresion/historico.html', materiales=materiales, total_pages=total_pages, current_page=current_page)
+
+@regresion.route('/editar', methods=['GET', 'POST'])
+def editar():
+    data = np.load('historico_tubos_recoleccion.npy')
+    if request.method == 'POST':
+        # Aquí puedes agregar la lógica para manipular los datos
+        # Por ejemplo, para agregar una fila:
+        if 'add' in request.form:
+            new_row = np.array([request.form.get('valor1'), request.form.get('valor2'), request.form.get('valor3'), request.form.get('valor4'), request.form.get('valor5')])
+            data = np.vstack([data, new_row])
+        # Para eliminar una fila:
+        elif 'delete' in request.form:
+            row_to_delete = int(request.form.get('fila'))
+            data = np.delete(data, row_to_delete, axis=0)
+        np.save('historico_tubos_recoleccion.npy', data)
+    return render_template('regresion/editar.html', data=data.tolist())
