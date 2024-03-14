@@ -10,6 +10,9 @@
         <div class="col-lg-6 col-7">
           <h1 class="text-white">Resultados de Predicción</h1>
         </div>
+        <div class="col-lg-6 col-5 text-right">
+          <a href="{{url_for('regresion.historico')}}" class="btn btn-sm btn-neutral">Histórico</a>
+        </div>
       </div>
     </div>
   </div>
@@ -25,27 +28,45 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-4">
-              <div class="card">
-                <div class="card-body" style="background-color: rgb(0,112,184);">
-                  <h5 class="text-white">Cajas de guantes:</h5>
-                  <h2 class="text-white">{{ prediccion_a }} unidades </h2>
+              <div class="material-info">
+                <h4>Cajas de guantes</h4>
+                <div class="day-info">
+                  <p><strong>Lunes:</strong> {{ caja_guantes[0] }} unidades</p>
+                  <p><strong>Martes:</strong> {{ caja_guantes[1] }} unidades</p>
+                  <p><strong>Miércoles:</strong> {{ caja_guantes[2] }} unidades</p>
+                  <p><strong>Jueves:</strong> {{ caja_guantes[3] }} unidades</p>
+                  <p><strong>Viernes:</strong> {{ caja_guantes[4] }} unidades</p>
                 </div>
+                <hr>
+                <p class="total-info">Total Semana: {{ caja_guantes[5] }} unidades</p>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="card">
-                <div class="card-body" style="background-color: rgb(0,112,184);">
-                  <h5 class="text-white">Jeringas:</h5>
-                  <h2 class="text-white">{{ prediccion_b }} unidades</h2>
+              <div class="material-info">
+                <h4>Jeringas</h4>
+                <div class="day-info">
+                  <p><strong>Lunes:</strong> {{ jeringas[0] }} unidades</p>
+                  <p><strong>Martes:</strong> {{ jeringas[1] }} unidades</p>
+                  <p><strong>Miércoles:</strong> {{ jeringas[2] }} unidades</p>
+                  <p><strong>Jueves:</strong> {{ jeringas[3] }} unidades</p>
+                  <p><strong>Viernes:</strong> {{ jeringas[4] }} unidades</p>
                 </div>
+                <hr>
+                <p class="total-info">Total Semana: {{ jeringas[5] }} unidades</p>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="card">
-                <div class="card-body" style="background-color: rgb(0,112,184);">
-                  <h5 class="text-white">Tubos de recolección:</h5>
-                  <h2 class="text-white">{{ prediccion_c }} unidades</h2>
+              <div class="material-info">
+                <h4>Tubos de recolección</h4>
+                <div class="day-info">
+                  <p><strong>Lunes:</strong> {{ tubos_recoleccion[0] }} unidades</p>
+                  <p><strong>Martes:</strong> {{ tubos_recoleccion[1] }} unidades</p>
+                  <p><strong>Miércoles:</strong> {{ tubos_recoleccion[2] }} unidades</p>
+                  <p><strong>Jueves:</strong> {{ tubos_recoleccion[3] }} unidades</p>
+                  <p><strong>Viernes:</strong> {{ tubos_recoleccion[4] }} unidades</p>
                 </div>
+                <hr>
+                <p class="total-info">Total Semana: {{ tubos_recoleccion[5] }} unidades</p>
               </div>
             </div>
           </div>

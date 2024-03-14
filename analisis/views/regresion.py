@@ -70,6 +70,9 @@ def predict():
     caja_guantes.append(total_caja_guantes)
     jeringas.append(total_jeringa)
     tubos_recoleccion.append(total_tubos_recoleccion)
+
+    print(caja_guantes, jeringas, tubos_recoleccion)
+
     return render_template('regresion/result.html', caja_guantes=caja_guantes, jeringas=jeringas, tubos_recoleccion=tubos_recoleccion)
 
 @regresion.route('/historico', methods=['GET', 'POST'])
