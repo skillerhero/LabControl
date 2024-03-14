@@ -58,7 +58,9 @@
                     <div class="btn-group" role="group" aria-label="Acciones">
                         <!--<a href="{{ url_for('areas.detalle_area', area_id=area.area_id) }}" class="btn btn-sm btn-primary mr-2">Detalle</a> -->
                         <a href="{{ url_for('areas.editar_area', area_id=area.area_id) }}" class="btn btn-sm btn-info mr-2">Modificar</a>
+                        {% if area.area_id != 6 and area.area_id != 7 %}
                         <a href="{{ url_for('areas.eliminar_area', area_id=area.area_id) }}" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Está seguro que desea eliminar el área '{{ area.area_nombre }}'?">Eliminar</a>
+                        {% endif %}
                     </div>
                 </li>
               {% endfor %}

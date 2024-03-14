@@ -36,11 +36,14 @@ def getMuestras():
     print(muestras)
     for muestra in muestras:
         muestra_dict = muestra.to_dict()
-        muestra_dict['url_detalle'] = url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id)
-        muestra_dict['url_editar'] = url_for('recepcion.editar_muestra', mues_id=muestra.mues_id)
-        muestra_dict['url_eliminar'] = url_for('recepcion.eliminar_muestra', mues_id=muestra.mues_id)
-        muestra_dict['url_agregar_resultados'] = url_for('resultados.agregar_resultados', mues_id=muestra.mues_id)
-        muestras_dict.append(muestra_dict)
+        if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
+            muestra_dict['url_detalle'] = url_for('recepcion.detalle_muestra', mues_id=muestra.mues_id)
+            muestra_dict['url_editar'] = url_for('recepcion.editar_muestra', mues_id=muestra.mues_id)
+            muestra_dict['url_eliminar'] = url_for('recepcion.eliminar_muestra', mues_id=muestra.mues_id)
+        else:
+            muestra_dict['url_detalle'] = url_for('home.detalle_muestra', mues_id=muestra.mues_id)
+            muestra_dict['url_agregar_resultados'] = url_for('resultados.agregar_resultados', mues_id=muestra.mues_id)
+            muestras_dict.append(muestra_dict)
     print('muestra_dict: ')
     print(muestras_dict)
     return jsonify(muestras_dict)
