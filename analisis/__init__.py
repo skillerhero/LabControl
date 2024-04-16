@@ -2,6 +2,21 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 
+#----------------------------------------------------------------------------------------------------------------------------------
+import os
+import platform
+import subprocess
+dump_cmd = f"mysqldump --defaults-extra-file=analisis\my.cnf -u admin -h databaserafael.cj2mqqcw6wf0.us-east-2.rds.amazonaws.com analisis > analisis_backup.sql"
+dump_cmd2 = f"mysql -u admin -p admin analisis < analisis_backup.sql"
+if platform.system() == 'Windows':
+    try:
+        subprocess.run(dump_cmd, shell=True, check=True)
+        subprocess.run(dump_cmd2, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        pass
+        print(f"Error al hacer el volcado de la base de datos: {str(e)}")
+
+#----------------------------------------------------------------------------------------------------------------------------------
 app = Flask(__name__)
 socketio = SocketIO(app=app, cors_allowed_origins='*')
 app.config.from_object('config.DevelopmentConfig')
