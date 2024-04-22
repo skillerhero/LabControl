@@ -129,7 +129,8 @@ def registrarMuestra():
 def detalle_muestra(mues_id):
     recepcion = Muestra.query.get_or_404(mues_id)
     user_area_id = g.user.user_area_id_fk
-    
+    print('recepcion: ')
+    print(recepcion)
     # Obtener los análisis asociados a la muestra y al área del usuario
     analisis_asociados = []
     if user_area_id is not None:

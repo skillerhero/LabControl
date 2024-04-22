@@ -1,20 +1,29 @@
 from analisis import db
 import datetime
+
+from sqlalchemy_utils import EncryptedType
+from cryptography.fernet import Fernet
+def cargar_clave():
+    return open("clave.key", "rb").read()
+
+key = cargar_clave()
+
+
 class Muestra(db.Model):
     __tablename__='muestras'
     mues_id =db.Column(db.Integer,primary_key=True)
     mues_sta=db.Column(db.String(1),default='O')
     mues_alta_fec=db.Column(db.DateTime(timezone=True), server_default=("CURRENT_TIMESTAMP"))
     mues_folio=db.Column(db.String(20))
-    mues_nombre=db.Column(db.String(80))
-    mues_apellido_paterno=db.Column(db.String(80))
-    mues_apellido_materno=db.Column(db.String(80))
-    mues_calle=db.Column(db.String(80))
+    mues_nombre=db.Column(EncryptedType(db.String, key))
+    mues_apellido_paterno=db.Column(EncryptedType(db.String, key))
+    mues_apellido_materno=db.Column(EncryptedType(db.String, key))
+    mues_calle=db.Column(EncryptedType(db.String, key))
     mues_num_ext=db.Column(db.String(8))
     mues_num_int=db.Column(db.String(8))
-    mues_colonia=db.Column(db.String(80))
-    mues_tel=db.Column(db.String(15))
-    mues_email=db.Column(db.String(80))
+    mues_colonia=db.Column(EncryptedType(db.String, key))
+    mues_tel=db.Column(EncryptedType(db.String, key))
+    mues_email=db.Column(EncryptedType(db.String, key))
     mues_horas_ayuno=db.Column(db.Integer)
     mues_alimentos=db.Column(db.String(1024))
     mues_enfermedades=db.Column(db.String(1024))
@@ -49,7 +58,7 @@ class Muestra(db.Model):
         self.mues_fec_nac = mues_fec_nac
 
     def __repr__(self) -> str:
-        return f'mues_id:{self.mues_id}, mues_folio:{self.mues_folio}'
+        return f'mues_id:{self.mues_id}, mues_folio:{self.mues_folio}, mues_nombre: {self.mues_nombre}'
     def to_dict(self):
         return {
             'mues_alta_fec': self.mues_alta_fec,
@@ -60,4 +69,3 @@ class Muestra(db.Model):
             'mues_sta': self.mues_sta,
             'mues_id': self.mues_id
         }
-    
