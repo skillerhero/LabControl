@@ -9,10 +9,12 @@ from analisis.models.resultado import Resultado
 from analisis.models.area import Area
 from analisis.models.grupos_analisis_rel import GruposAnalisisRel
 from analisis.models.mediciones_analisis import MedicionesAnalisis
-from analisis import db
+from analisis import db, usando_bd_local
 from flask import make_response, flash, session, g
 from weasyprint import HTML
 from analisis import socketio
+import platform
+import subprocess
 
 recepcion = Blueprint('recepcion', __name__, url_prefix='/recepcion')
 
@@ -26,8 +28,27 @@ def home():
     descuentos = Descuento.query.all()
     analisis = Analisis.query.all()
     grupos = Grupo.query.all()
-    return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, grupos=grupos, segment="home")
+    return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, grupos=grupos, usando_bd_local=usando_bd_local,segment="home")
 
+
+@recepcion.route("/subirBDLocal", methods=['GET', 'POST'])
+def subirBDLocal():
+    dump_cmd = "mysqldump --defaults-extra-file=analisis/my2.cnf -u root analisis > analisis.sql"
+    dump_cmd2 = "mysql --defaults-extra-file=analisis/my.cnf -u admin -h databaserafael.cj2mqqcw6wf0.us-east-2.rds.amazonaws.com analisis < analisis.sql"
+    if platform.system() == 'Windows':
+        try:
+            print("Obteniendo bd local")
+            subprocess.run(dump_cmd, shell=True, check=True)
+            print("Reemplazando la bd remota")
+            subprocess.run(dump_cmd2, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error al subir la base de datos: {str(e)}")
+    muestras = Muestra.query.all()
+    descuentos = Descuento.query.all()
+    analisis = Analisis.query.all()
+    grupos = Grupo.query.all()
+    flash('BD subida con éxito', 'success')
+    return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, grupos=grupos, usando_bd_local=usando_bd_local,segment="home")
 
 @recepcion.route("/create", methods=['GET', 'POST'])
 def registrarMuestra():

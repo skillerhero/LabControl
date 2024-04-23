@@ -18,6 +18,9 @@
           <a href="{{url_for('analisis.index')}}" class="btn btn-sm btn-neutral">Análisis</a>
           <a href="{{url_for('grupos.index')}}" class="btn btn-sm btn-neutral">Grupos</a>
           <a href="{{url_for('regresion.predict')}}" class="btn btn-sm btn-neutral">Histórico</a>
+          {% if usando_bd_local == True %}
+          <a href="{{url_for('recepcion.subirBDLocal')}}" class="btn btn-sm btn-neutral">Subir BD local</a>
+          {% endif %}
         </div>
         <div class="col-lg-6 col-6 text-right"> <!-- Botón de nueva muestra -->
           <a href="{{url_for('recepcion.registrarMuestra')}}" class="btn btn-sm btn-neutral">Nueva Muestra</a>
