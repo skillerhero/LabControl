@@ -20,13 +20,13 @@
       <div class="card">
         <div class="card-body">
           <div class="btn-group d-flex justify-content-center" role="group">
-            <button type="button" class="btn btn-white active" data-material="A" onclick="showMaterial('A')">Material A</button>
-            <button type="button" class="btn btn-white" data-material="B" onclick="showMaterial('B')">Material B</button>
-            <button type="button" class="btn btn-white" data-material="C" onclick="showMaterial('C')">Material C</button>
+            <button type="button" class="btn btn-white active" data-material="A" onclick="showMaterial('A')">Caja de guantes</button>
+            <button type="button" class="btn btn-white" data-material="B" onclick="showMaterial('B')">Jeringas</button>
+            <button type="button" class="btn btn-white" data-material="C" onclick="showMaterial('C')">Tubos de recolección</button>
           </div>
 
           <div id="materialA" style="display: block">
-            <h1><br />Caja de guantes</h1>
+<!--             <h1><br />Caja de guantes</h1> -->
             <table class="table">
               {% for fila in materiales['A'][current_page-1] %}
               <tr>
@@ -39,7 +39,7 @@
           </div>
 
           <div id="materialB" style="display: none">
-            <h1><br />Jeringas</h1>
+          <!--   <h1><br />Jeringas</h1> -->
             <table class="table">
               {% for fila in materiales['B'][current_page-1] %}
               <tr>
@@ -52,7 +52,7 @@
           </div>
 
           <div id="materialC" style="display: none">
-            <h1><br />Tubos de recolección</h1>
+            <!-- <h1><br />Tubos de recolección</h1> -->
             <table class="table">
               {% for fila in materiales['C'][current_page-1] %}
               <tr>
