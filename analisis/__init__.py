@@ -4,7 +4,6 @@ from flask_socketio import SocketIO
 import platform
 import subprocess
 import filecmp
-import mysql.connector
 
 DB_USER_REMOTO = 'admin'
 DB_PASSWORD_REMOTO = 'TN#z2bQX94&bd$n'
@@ -40,8 +39,8 @@ try:
     # if cnx.is_connected():
     #     print("Conexión exitosa. Usando la base de datos remota.")
     #     cnx.close()
-except mysql.connector.Error as err:
-    print(f"Algo salió mal: {err}.")
+except:
+    print(f"Algo salió mal.")
 db = SQLAlchemy(app)
 
 #----------------------------------------------------------------------------------------------------------------------------------
@@ -83,6 +82,7 @@ if platform.system() == 'Windows':
             'database': DB_NAME,
             'raise_on_warnings': True
         }
+        import mysql.connector
         cnx = mysql.connector.connect(**config)
         if cnx.is_connected():
             print("Conexión exitosa.")
