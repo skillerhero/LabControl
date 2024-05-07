@@ -74,6 +74,7 @@ def subirBDLocal():
             print(f"Error al subir la base de datos: {str(e)}")
 #----------------------------------------------------------------------------------------------------------------------------------
 if platform.system() == 'Windows':
+    import mysql.connector
     try:
         config = {
             'user': DB_USER_REMOTO,
@@ -82,7 +83,6 @@ if platform.system() == 'Windows':
             'database': DB_NAME,
             'raise_on_warnings': True
         }
-        import mysql.connector
         cnx = mysql.connector.connect(**config)
         if cnx.is_connected():
             print("Conexión exitosa.")

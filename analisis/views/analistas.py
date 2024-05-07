@@ -4,7 +4,8 @@ from analisis.models.muestra import Muestra
 from analisis.models.descuento import Descuento
 from analisis.models.analisis import Analisis
 from analisis.models.resultado import Resultado
-from analisis import db
+from analisis.models.grupos import Grupo
+from analisis import db, usando_bd_local
 from flask import g, jsonify
 
 home = Blueprint('home', __name__, url_prefix='/home')
@@ -76,7 +77,8 @@ def indexRecepcion():
     db.session.commit()
     print("muestras recepcion: ", muestras)
     segment = 'recepcion'  # Define el valor de segment
-    return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, segment='indexRecepcion')
+    grupos = Grupo.query.all()
+    return render_template('recepcion/home.html', muestras=muestras, descuentos=descuentos, analisis=analisis, grupos=grupos, usando_bd_local=usando_bd_local,segment="home")
 
 @home.route('/detalle_muestra/<int:mues_id>', methods=['GET', 'POST'])
 def detalle_muestra(mues_id):

@@ -24,6 +24,8 @@ def get_user(id):
 
 @recepcion.route("/")
 def home():
+    print('usando_bd_local:')
+    print(usando_bd_local)
     muestras = Muestra.query.all()
     descuentos = Descuento.query.all()
     analisis = Analisis.query.all()

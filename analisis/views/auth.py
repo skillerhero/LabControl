@@ -111,12 +111,20 @@ def login_required(view):
     return wrapped_view
 
 def get_user_results():
+    print('user area id fk: ')
+    print(session.get('user_area_id_fk'))
     if session.get('user_area_id_fk') == 6 or session.get('user_area_id_fk') == 7:
-        resultados = db.session.query(Muestra.mues_folio, Muestra.mues_alta_fec ,Muestra.mues_nombre + ' ' + Muestra.mues_apellido_paterno + ' ' + Muestra.mues_apellido_materno)\
+        # resultados = db.session.query(Muestra.mues_folio, Muestra.mues_alta_fec ,Muestra.mues_nombre + ' ' + Muestra.mues_apellido_paterno + ' ' + Muestra.mues_apellido_materno)\
+        #     .join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id)\
+        #     .join(Analisis, Resultado.resul_ana_id_fk == Analisis.ana_id)\
+        #     .filter(Muestra.mues_sta == 'F')\
+        #     .group_by(Muestra.mues_nombre)\
+        #     .all()
+        resultados = db.session.query(Muestra.mues_folio, Muestra.mues_alta_fec ,func.concat(Muestra.mues_nombre, ' ', Muestra.mues_apellido_paterno, ' ', Muestra.mues_apellido_materno))\
             .join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id)\
             .join(Analisis, Resultado.resul_ana_id_fk == Analisis.ana_id)\
             .filter(Muestra.mues_sta == 'F')\
-            .group_by(Muestra.mues_nombre)\
+            .group_by(Muestra.mues_folio, Muestra.mues_alta_fec, Muestra.mues_nombre, Muestra.mues_apellido_paterno, Muestra.mues_apellido_materno)\
             .all()
     else:
         resultados = db.session.query(Analisis.ana_nombre, Muestra.mues_nombre)\
