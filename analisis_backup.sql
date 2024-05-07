@@ -63,7 +63,7 @@ CREATE TABLE `areas` (
   `area_nombre` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL DEFAULT '',
   `area_sta` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL DEFAULT 'A',
   PRIMARY KEY (`area_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +139,7 @@ CREATE TABLE `grupos` (
   `grupo_sta` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL DEFAULT 'A',
   `grupo_costo` decimal(20,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`grupo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci COMMENT='tabla para los nombre de los grupos';
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci COMMENT='tabla para los nombre de los grupos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +148,7 @@ CREATE TABLE `grupos` (
 
 LOCK TABLES `grupos` WRITE;
 /*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
-INSERT INTO `grupos` VALUES (1,'Perfil Hepático con TP','A',461.00),(2,'Perfil Hepático sin TP','A',383.40),(3,'Perfil de Lípidos','A',345.00),(4,'Perfil Óseo I','A',259.00),(5,'Perfil Ovárico','A',733.00),(6,'Perfil Ovarico conTSH','A',819.00),(7,'Perfil Renal','A',560.00),(8,'Perfil Reúmatico','A',474.00),(9,'Perfil Rotavirus','A',418.00),(10,'Perfil Tiroideo I de 5 determinaciones','A',534.50),(11,'Perfil Tiroideo II de 3 determinaciones','A',284.50),(12,'Perfil Veterinario I','A',276.00),(13,'Perfil Veterinario II','A',310.00),(14,'Perfil Veterinario III','A',379.00),(15,'Perfil Veterinario IV','A',534.50),(16,'Química Sanguínea de 3 determinaciones','A',142.00),(17,'Química Sanguínea de 4 determinaciones','A',172.00),(18,'Química Sanguínea de 6 determinaciones','A',237.00),(19,'Química Sanguínea de 18 determinaciones','A',448.00),(20,'Química Sanguínea de 20 determinaciones','A',534.50),(21,'Química Sanguínea de 24 determinaciones','A',672.00),(22,'Química Sanguínea de 27 determinaciones','A',686.00),(23,'Química Sanguínea de 35 determinaciones','A',1250.00),(25,'prueba','O',1.00),(26,'Pruebaa','O',1.00),(27,'test','A',1.00),(28,'test222','A',1.00),(29,'aaaaaaaa','A',11111.00),(30,'test555','A',21.00);
+INSERT INTO `grupos` VALUES (1,'Perfil Hepático con TP','A',461.00),(2,'Perfil Hepático sin TP','A',383.40),(3,'Perfil de Lípidos','A',345.00),(4,'Perfil Óseo I','A',259.00),(5,'Perfil Ovárico','A',733.00),(6,'Perfil Ovarico conTSH','A',819.00),(7,'Perfil Renal','A',560.00),(8,'Perfil Reúmatico','A',474.00),(9,'Perfil Rotavirus','A',418.00),(10,'Perfil Tiroideo I de 5 determinaciones','A',534.50),(11,'Perfil Tiroideo II de 3 determinaciones','A',284.50),(12,'Perfil Veterinario I','A',276.00),(13,'Perfil Veterinario II','A',310.00),(14,'Perfil Veterinario III','A',379.00),(15,'Perfil Veterinario IV','A',534.50),(16,'Química Sanguínea de 3 determinaciones','A',142.00),(17,'Química Sanguínea de 4 determinaciones','A',172.00),(18,'Química Sanguínea de 6 determinaciones','A',237.00),(19,'Química Sanguínea de 18 determinaciones','A',448.00),(20,'Química Sanguínea de 20 determinaciones','A',534.50),(21,'Química Sanguínea de 24 determinaciones','A',672.00),(22,'Química Sanguínea de 27 determinaciones','A',686.00),(23,'Química Sanguínea de 35 determinaciones','A',1250.00),(25,'prueba','O',1.00),(26,'Pruebaa','O',1.00),(27,'test','A',1.00),(28,'test222','A',1.00),(29,'aaaaaaaa','A',11111.00),(30,'test555','A',21.00),(33,'test26','A',16.00),(34,'test16','A',12.00);
 /*!40000 ALTER TABLE `grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +172,7 @@ CREATE TABLE `grupos_analisis_rel` (
 
 LOCK TABLES `grupos_analisis_rel` WRITE;
 /*!40000 ALTER TABLE `grupos_analisis_rel` DISABLE KEYS */;
-INSERT INTO `grupos_analisis_rel` VALUES (0,2),(0,3),(0,5),(1,33),(1,97),(1,99),(1,139),(1,156),(1,163),(1,164),(2,33),(2,97),(2,99),(2,139),(2,163),(2,164),(3,45),(3,46),(3,47),(3,48),(3,119),(3,165),(3,171),(4,36),(4,97),(4,98),(4,139),(5,89),(5,110),(5,111),(5,135),(5,136),(6,89),(6,110),(6,111),(6,112),(6,135),(6,136),(8,2),(8,92),(8,97),(8,137),(8,145),(10,112),(10,149),(11,112),(12,34),(12,97),(12,164),(13,34),(13,97),(13,164),(14,34),(14,91),(14,97),(14,139),(14,164),(15,34),(15,87),(15,91),(15,139),(15,164),(18,48),(18,165);
+INSERT INTO `grupos_analisis_rel` VALUES (0,1),(0,2),(0,3),(0,5),(1,33),(1,97),(1,99),(1,139),(1,156),(1,163),(1,164),(2,33),(2,97),(2,99),(2,139),(2,163),(2,164),(3,45),(3,46),(3,47),(3,48),(3,119),(3,165),(3,171),(4,36),(4,97),(4,98),(4,139),(5,89),(5,110),(5,111),(5,135),(5,136),(6,89),(6,110),(6,111),(6,112),(6,135),(6,136),(8,2),(8,92),(8,97),(8,137),(8,145),(10,112),(10,149),(11,112),(12,34),(12,97),(12,164),(13,34),(13,97),(13,164),(14,34),(14,91),(14,97),(14,139),(14,164),(15,34),(15,87),(15,91),(15,139),(15,164),(18,48),(18,165);
 /*!40000 ALTER TABLE `grupos_analisis_rel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -346,7 +346,7 @@ CREATE TABLE `users` (
   `user_password` text CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci,
   `user_perfil_id_fk` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -355,7 +355,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (6,7,'admin','scrypt:32768:8:1$mLnG1rhvsFGIg05T$0d03cae4de979350eb39e06031232b2065234cc28983bb2fddc307c3b9a3d6554624a253111a183984f2d33d92c7d7f7c85c72b736fdcb97248bbaa02e000b6a',0),(40,7,'PRUEBA','scrypt:32768:8:1$UnR4AOx02sEiYkBg$49f4fc30863b678c64e18fc4573005a33618c3c67b401da490a865195173647bdcf621f8072c4489774a8ceb76c4eb382e375fdbc60ab1cd4fdb6cc165b12151',0),(41,1,'uri','scrypt:32768:8:1$1sABDe1h5de8xSJV$5c1b926bbb36d69275ef3e83bc05f92e98731938f956e6a9dc1cf5c8aa156b4b4a6065fb35cea766fc4ae6529be72595dd3d3607796549a7247ae6a232030c6e',0);
+INSERT INTO `users` VALUES (6,7,'admin','scrypt:32768:8:1$mLnG1rhvsFGIg05T$0d03cae4de979350eb39e06031232b2065234cc28983bb2fddc307c3b9a3d6554624a253111a183984f2d33d92c7d7f7c85c72b736fdcb97248bbaa02e000b6a',0),(40,7,'PRUEBA','scrypt:32768:8:1$UnR4AOx02sEiYkBg$49f4fc30863b678c64e18fc4573005a33618c3c67b401da490a865195173647bdcf621f8072c4489774a8ceb76c4eb382e375fdbc60ab1cd4fdb6cc165b12151',0),(41,1,'uri','scrypt:32768:8:1$1sABDe1h5de8xSJV$5c1b926bbb36d69275ef3e83bc05f92e98731938f956e6a9dc1cf5c8aa156b4b4a6065fb35cea766fc4ae6529be72595dd3d3607796549a7247ae6a232030c6e',0),(42,7,'admin2','scrypt:32768:8:1$zObLgaJs336ZJMYV$e2fb1d3a5968dd681ee515034339fd85110a6f0e9e6f43a9a62be5298cf81ca1143ef8aee4a4dcd35b4315ad27c64ec97bd715674a1215e01d4bbfba177aa56a',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
@@ -369,4 +369,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-06 18:50:14
+-- Dump completed on 2024-05-06 19:32:36

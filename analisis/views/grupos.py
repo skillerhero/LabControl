@@ -38,7 +38,7 @@ def agregar():
             grupo = Grupo.query.filter_by(grupo_nombre=grupo_nombre).first()
             analisis = request.form.getlist('analisis[]')
             for ana in analisis:
-                nuevo_grupos_analisis_rel = GruposAnalisisRel(gana_grupo_id_fk=grupo.grupo_nombre,gana_ana_id_fk=ana)
+                nuevo_grupos_analisis_rel = GruposAnalisisRel(gana_grupo_id_fk=grupo.grupo_id,gana_ana_id_fk=ana)
                 db.session.add(nuevo_grupos_analisis_rel)
                 db.session.commit()
             flash('Grupo creado exitosamente.', 'success')
