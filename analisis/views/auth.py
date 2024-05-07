@@ -136,6 +136,8 @@ def get_user_results():
         .add_columns(Muestra.mues_apellido_paterno, Muestra.mues_folio, Muestra.mues_alta_fec)\
         .group_by(Resultado.resul_ana_id_fk, Resultado.resul_mues_id_fk)\
         .all()
+    print('resultados: ')
+    print(resultados)
     return resultados
 
 @auth.route('/get_user_results_ajax',methods=['GET','POST'])

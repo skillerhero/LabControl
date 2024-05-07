@@ -145,34 +145,39 @@
   socket.on('notification_update', updateTable);
 
   function updateTable() {
-    $.ajax({
-      url: '{{ url_for("home.getMuestras") }}',
-      type: 'GET',
-      success: function (data) {
-        var tableContent = '';
-        $.each(data, function (i, muestra) {
-          var formattedDate = new Date(muestra.mues_alta_fec).toLocaleString('es-MX', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-          });
-          tableContent += '<tr scope="row">';
-          tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + formattedDate + '</span></td>';
-          tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_folio + '</span></td>';
-          tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_nombre + ' ' + muestra.mues_apellido_paterno + ' ' + muestra.mues_apellido_materno + '</span></td>';
-          tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + (muestra.mues_sta == 'O' ? 'Abierto' : 'Finalizado') + '</span></td>';
-          tableContent += '<td class="text-center"><div class="btn-group" role="group" aria-label="Acciones"><a href="' + muestra.url_detalle + '" class="btn btn-sm btn-info mr-2">Detalles</a><a href="' + muestra.url_editar + '" class="btn btn-sm btn-primary mr-2">Modificar</a><a href="' + muestra.url_eliminar + '" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Estás seguro que deseas eliminar esta muestra?">Eliminar</a></div></td>';
-          tableContent += '</tr>';
-        });
-        $('.table .list').html(tableContent);
-      },
-      error: function (xhr, status, error) {
-        console.error(error);
-      }
-    });
+    // $.ajax({
+    //   url: '{{ url_for("home.getMuestras") }}',
+    //   type: 'GET',
+    //   success: function (data) {
+    //     console.log('data:');
+    //     console.log(data);
+    //     var tableContent = '';
+    //     $.each(data, function (i, muestra) {
+    //       console.log('muestra:');
+    //       console.log(muestra);
+    //       var formattedDate = new Date(muestra.mues_alta_fec).toLocaleString('es-MX', {
+    //         year: 'numeric',
+    //         month: '2-digit',
+    //         day: '2-digit',
+    //         hour: '2-digit',
+    //         minute: '2-digit',
+    //         second: '2-digit'
+    //       });
+    //       tableContent += '<tr scope="row">';
+    //       tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + formattedDate + '</span></td>';
+    //       tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_folio + '</span></td>';
+    //       tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + muestra.mues_nombre + ' ' + muestra.mues_apellido_paterno + ' ' + muestra.mues_apellido_materno + '</span></td>';
+    //       tableContent += '<td class="text-center"><span class="name mb-0 text-sm">' + (muestra.mues_sta == 'O' ? 'Abierto' : 'Finalizado') + '</span></td>';
+    //       tableContent += '<td class="text-center"><div class="btn-group" role="group" aria-label="Acciones"><a href="' + muestra.url_detalle + '" class="btn btn-sm btn-primary mr-2">Ver detalles</a><a href="' + muestra.url_agregar_resultados + '" class="btn btn-sm btn-info mr-2">Agregar Resultado</a></div></td>';
+    //       tableContent += '</tr>';
+    //     });
+    //     $('.table .list').html(tableContent);
+    //   },
+    //   error: function (xhr, status, error) {
+    //     console.error(error);
+    //   }
+    // });
+    location.reload();
   }
   document.querySelectorAll('.delete-btn').forEach(btn => {
     btn.addEventListener('click', function (e) {
