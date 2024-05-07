@@ -62,7 +62,7 @@
                 <div class="form-group mr-4" id="paraquejale">
                   <label class="form-control-label" for="analisis">Análisis</label>
                   <select class="form-control select optional select-tags select2-hidden-accessible" multiple="multiple"
-                    name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true" value="{{ form.analisis }}">
+                    name="analisis[]" id="analisis" tabindex="-1" aria-hidden="true" value="{{ lista_analisis }}">
                     {% for analisis_item in lista_analisis %}
                     <option value="{{ analisis_item.ana_id }}">{{ analisis_item.ana_nombre }} - ${{
                       analisis_item.ana_costo }}</option>
