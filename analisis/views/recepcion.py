@@ -157,13 +157,21 @@ def detalle_muestra(mues_id):
     # Obtener los análisis asociados a la muestra y al área del usuario
     analisis_asociados = []
     if user_area_id is not None:
+        # analisis_asociados = Analisis.query \
+        # .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
+        # .join(Area, Area.area_id == Analisis.ana_area_id_fk) \
+        # .filter(Resultado.resul_mues_id_fk == mues_id) \
+        # .group_by(Resultado.resul_ana_id_fk) \
+        # .with_entities(Analisis, Resultado, Area) \
+        # .all()
         analisis_asociados = Analisis.query \
         .join(Resultado, Resultado.resul_ana_id_fk == Analisis.ana_id) \
         .join(Area, Area.area_id == Analisis.ana_area_id_fk) \
         .filter(Resultado.resul_mues_id_fk == mues_id) \
-        .group_by(Resultado.resul_ana_id_fk) \
+        .group_by(Resultado.resul_ana_id_fk, Analisis.ana_id, Analisis.ana_nombre, Analisis.ana_costo, Analisis.ana_area_id_fk, Analisis.ana_sta, Resultado.resul_id, Resultado.resul_medicion_analisis_id_fk, Resultado.resul_ana_id_fk, Resultado.resul_mues_id_fk, Resultado.resul_fecha, Resultado.resul_resultado, Resultado.resul_fuera_de_rango, Resultado.resul_sta, Area.area_id, Area.area_nombre, Area.area_sta) \
         .with_entities(Analisis, Resultado, Area) \
         .all()
+
     else:
         analisis_asociados = []
 
