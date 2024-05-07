@@ -120,7 +120,7 @@ def get_user_results():
         #     .filter(Muestra.mues_sta == 'F')\
         #     .group_by(Muestra.mues_nombre)\
         #     .all()
-        resultados = db.session.query(Muestra.mues_folio, Muestra.mues_alta_fec ,Muestra.mues_nombre)\
+        resultados = db.session.query(Muestra.mues_folio ,Muestra.mues_nombre)\
             .join(Resultado, Resultado.resul_mues_id_fk == Muestra.mues_id)\
             .join(Analisis, Resultado.resul_ana_id_fk == Analisis.ana_id)\
             .filter(Muestra.mues_sta == 'F')\
