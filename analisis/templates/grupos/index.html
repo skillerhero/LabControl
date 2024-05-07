@@ -61,9 +61,9 @@
                             {% endif %}
                           </span>
                         </div>
-                        <div class="col-auto mr-6"> <!-- Utilizamos mr-auto para mover los botones a la izquierda -->
+                        <div class="col-auto mr-7"> <!-- Utilizamos mr-auto para mover los botones a la izquierda -->
                           <div class="btn-group" role="group" aria-label="Acciones">
-                            <a href="{{ url_for('grupos.editar', grupo_id=grupo.grupo_id) }}" class="btn btn-sm btn-info">Modificar</a>
+                            <!-- <a href="{{ url_for('grupos.editar', grupo_id=grupo.grupo_id) }}" class="btn btn-sm btn-info">Modificar</a>-->
                             <a href="{{ url_for('grupos.eliminar', grupo_id=grupo.grupo_id) }}" class="btn btn-sm btn-danger delete-btn" data-confirm="¿Está seguro que desea eliminar el análisis '{{ grupo.grupo_nombre }}'?">Eliminar</a>
                           </div>
                         </div>
